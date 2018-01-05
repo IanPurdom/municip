@@ -1,0 +1,10 @@
+<h1>Welcome to deputies pages!</h1>
+
+<div>
+<% @deputies.each do |deputy| %>
+  <%= deputy.first_name %>
+  <%= deputy.last_name  %>
+  <%= deputy.title %>
+<% end %>
+</div>
+
