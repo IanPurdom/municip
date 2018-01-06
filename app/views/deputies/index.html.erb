@@ -1,10 +1,22 @@
 <h1>Welcome to deputies pages!</h1>
 
-<div>
-<% @deputies.each do |deputy| %>
-  <%= deputy.first_name %>
-  <%= deputy.last_name  %>
-  <%= deputy.title %>
-<% end %>
+<div class="container">
+  <div class="row">
+  <% @deputies.each do |deputy| %>
+    <div class="card">
+      <div class="card-description">
+        <h1><%= deputy.first_name %> <%= deputy.last_name %></h2>
+        <h2><%= deputy.title %></h2>
+        <p><%= deputy.profession %></p>
+      </div>
+      <img class="card-user" src="https://kitt.lewagon.com/placeholder/users/tgenaitay">
+    </div>
+  <% end %>
+  </div>
+
+  <div>
+     <%= link_to 'Completer mon équipe', new_deputy_path, class:"btn btn-warning" %>
+  </div>
+
 </div>
 

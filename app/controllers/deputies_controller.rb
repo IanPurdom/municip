@@ -10,11 +10,19 @@ before_action :set_deputy, only: [:show, :edit, :update, :destroy]
   end
 
   def new           # GET /deputies/new
+    @deputy = Deputy.new
     authorize @deputy
   end
 
   def create        # POST /deputies
+    @deputy = Deputy.new(deputy_params)
+    @deputy.user = current_user
     authorize @deputy
+    if @deputy.save
+      redirect_to deputies_path
+    else
+      render :new
+    end
   end
 
   def edit          # GET /deputies/:id/edit
