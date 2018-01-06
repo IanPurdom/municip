@@ -10,10 +10,41 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171224143124) do
+ActiveRecord::Schema.define(version: 20180105113117) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "cities", force: :cascade do |t|
+    t.bigint "user_id"
+    t.integer "zip_code"
+    t.string "departement"
+    t.string "region"
+    t.string "intercommunalite"
+    t.integer "population"
+    t.integer "density"
+    t.integer "debt"
+    t.string "current_maire"
+    t.string "photo_1"
+    t.string "photo_2"
+    t.string "photo_3"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name", null: false
+    t.index ["user_id"], name: "index_cities_on_user_id"
+  end
+
+  create_table "deputies", force: :cascade do |t|
+    t.string "first_name", null: false
+    t.string "last_name", null: false
+    t.string "title", null: false
+    t.string "profession"
+    t.string "photo"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_deputies_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -30,8 +61,11 @@ ActiveRecord::Schema.define(version: 20171224143124) do
     t.datetime "updated_at", null: false
     t.string "first_name", null: false
     t.string "last_name", null: false
+    t.string "photo"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "cities", "users"
+  add_foreign_key "deputies", "users"
 end

@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  zip_code: 1
+  departement: MyString
+  region: MyString
+  intercommunalite: MyString
+  population: 1
+  density: 1
+  debt: 1
+  current_maire: MyString
+  photo_1: MyString
+  photo_2: MyString
+  photo_3: MyString
+
+two:
+  user: two
+  zip_code: 1
+  departement: MyString
+  region: MyString
+  intercommunalite: MyString
+  population: 1
+  density: 1
+  debt: 1
+  current_maire: MyString
+  photo_1: MyString
+  photo_2: MyString
+  photo_3: MyString
