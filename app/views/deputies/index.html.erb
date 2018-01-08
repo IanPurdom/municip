@@ -9,7 +9,13 @@
         <h2><%= deputy.title %></h2>
         <p><%= deputy.profession %></p>
       </div>
-      <%= cl_image_tag deputy.photo, height: 300, width: 400, crop: :fill %>
+      <% if deputy[:photo].nil? %>
+        <%= image_tag "empty_photo.jpg", height: 300, width: 400, crop: :fill %>
+      <% else %>
+        <%= cl_image_tag deputy.photo, height: 300, width: 400, crop: :fill %>
+      <% end %>
+      <%= link_to 'modifier', edit_deputy_path(deputy) %>
+      <%= link_to 'Supprimer', deputy_path(deputy), method: :delete %>
     </div>
   <% end %>
   </div>

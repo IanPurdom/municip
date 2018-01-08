@@ -9,4 +9,12 @@ class DeputyPolicy < ApplicationPolicy
     true
   end
 
+  def update?
+    record.user == user
+  end
+
+  def destroy?
+    update?
+  end
+
 end
