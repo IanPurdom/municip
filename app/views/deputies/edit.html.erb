@@ -1,4 +1,6 @@
-  <div class="grid">
+<div class="container">
+  <h1>Modifier profil adjoint</h1>
+    <div class="grid">
     <div class="f-new">
       <ul class="new-form">
         <%= simple_form_for(@deputy) do |f| %>
@@ -9,9 +11,13 @@
           <%= f.input :profession %>
           <%#= f.label :category  %>
           <%= f.input :photo %>
-          <%= f.submit 'Ajouter', class: "btn-photo" %>
+          <%= f.submit 'Modifier', class: "btn-photo" %>
           <!-- [...] -->
         <% end %>
       </ul>
     </div>
+    <%= link_to 'Annuler', deputies_path, class:"btn btn-warning" %>
   </div>
+
+</div>
+
