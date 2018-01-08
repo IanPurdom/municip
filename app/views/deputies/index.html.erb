@@ -9,7 +9,7 @@
         <h2><%= deputy.title %></h2>
         <p><%= deputy.profession %></p>
       </div>
-      <img class="card-user" src="https://kitt.lewagon.com/placeholder/users/tgenaitay">
+      <%= cl_image_tag deputy.photo, height: 300, width: 400, crop: :fill %>
     </div>
   <% end %>
   </div>

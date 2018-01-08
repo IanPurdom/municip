@@ -1,0 +1,17 @@
+  <div class="grid">
+    <div class="f-new">
+      <ul class="new-form">
+        <%= simple_form_for(@deputy) do |f| %>
+          <!-- [...] -->
+          <%= f.input :title%>
+          <%= f.input :first_name %>
+          <%= f.input :last_name %>
+          <%= f.input :profession %>
+          <%#= f.label :category  %>
+          <%= f.input :photo %>
+          <%= f.submit 'Ajouter', class: "btn-photo" %>
+          <!-- [...] -->
+        <% end %>
+      </ul>
+    </div>
+  </div>
