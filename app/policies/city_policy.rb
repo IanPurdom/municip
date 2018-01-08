@@ -6,6 +6,15 @@ class CityPolicy < ApplicationPolicy
   end
 
   def create?
-    return true
+    true
   end
+
+  def update?
+    record.user == user
+  end
+
+  def destroy?
+    update?
+  end
+
 end
