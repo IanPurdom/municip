@@ -1,0 +1,21 @@
+<div>
+  <h1><%= @city.name %></h1>
+  <h2><%= @city.zip_code %></h2>
+  <h3><%= @city.departement %></h3>
+  <h3><%= @city.region %></h3>
+  <h4><%= @city.intercommunalite %></h4>
+  <br>
+  <h2><%= @city.population %></h2>
+  <h2><%= @city.density %></h2>
+  <br>
+  <h3><%= @city.debt %></h3>
+  <br>
+  <h3><%= @city.current_maire %></h3>
+  <br>
+  <%= cl_image_tag @city.photo_1, height: 300, width: 400, crop: :fill %>
+  <%= cl_image_tag @city.photo_2, height: 300, width: 400, crop: :fill %>
+  <%= cl_image_tag @city.photo_3, height: 300, width: 400, crop: :fill %>
+  <br>
+  <%= link_to 'Modifier', edit_city_path(@city) %>
+  <%= link_to 'Supprimer', city_path(@city), method: :delete %>
+</div>
