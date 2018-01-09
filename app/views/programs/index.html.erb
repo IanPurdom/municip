@@ -1,0 +1,23 @@
+<h1>Programs#index</h1>
+<p>Find me in app/views/programs/index.html.erb</p>
+  <div>
+     <%= link_to 'Ajouter un programme', new_program_path, class:"btn btn-warning" %>
+  </div>
+
+<div class="container">
+  <div class="row">
+  <% @programs.each do |program| %>
+    <div class="card">
+      <div class="card-description">
+        <h1><%= program.title %></h1>
+        <h2><%= program.category.name %></h2>
+        <p><%= program.content %></p>
+      </div>
+      <%= link_to 'modifier', edit_program_path(program) %>
+      <%= link_to 'Supprimer', program_path(program), method: :delete %>
+    </div>
+  <% end %>
+  </div>
+
+
+</div>

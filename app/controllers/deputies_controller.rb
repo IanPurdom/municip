@@ -15,11 +15,9 @@ before_action :set_deputy, only: [:show, :edit, :update, :destroy]
   end
 
   def create        # POST /deputies
+    raise
     @deputy = Deputy.new(deputy_params)
     @deputy.user = current_user
-    # if @deputy[:photo].nil?
-    #   @deputy.photo = Rails.root.join("app/assets/images/logo.png").open
-    # end
     authorize @deputy
     if @deputy.save
       redirect_to deputies_path
