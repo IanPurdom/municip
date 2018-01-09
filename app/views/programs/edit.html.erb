@@ -1,0 +1,23 @@
+<h1>Programs#edit</h1>
+<p>Find me in app/views/programs/edit.html.erb</p>
+
+
+<div class="container">
+  <h1>Modifier le programme</h1>
+   <div class="grid">
+    <div class="f-new">
+      <ul class="new-form">
+        <%= simple_form_for(@program) do |f| %>
+          <!-- [...] -->
+          <%= f.input :title%>
+          <%= f.input :category_id, collection: @categories.collect{|category| [category.name, category.id]} %>
+          <%= f.input :content %>
+          <%= f.submit 'Modifier', class: "btn-photo" %>
+          <!-- [...] -->
+        <% end %>
+      </ul>
+    </div>
+    <%= link_to 'Annuler', programs_path, class:"btn btn-warning" %>
+  </div>
+
+</div>
