@@ -7,11 +7,12 @@
   border-radius: 3px;
   border: 1px solid #3b454e;
   box-shadow: 0px 1px 3px 0px rgba(0,4,15,1);
+  margin: 15px;
 }
 
 .card-description {
   position: absolute;
-  top: 67px;
+  top: 73px;
   right: 10px;
 }
 
@@ -30,33 +31,52 @@
   position: absolute;
   height: 81px;
   width: 82px;
-  left: 9px;
-  top: 80px;
+  left: 19px;
+  top: 89px;
   border-radius: 156px;
 }
 
-.modify {
- position: absolute;
- bottom: 5px;
- right:105px;
-}
-
-.delete {
- position: absolute;
- bottom: 5px;
- right:5px;
-}
-
-.title {
+.card-title {
   position: absolute;
-  margin-left: 10px;
+  left: 23px;
+  top: 7px;
   color: black;
-  font-size: 27px;
-  left: 20px;
-  top: -4px;
-  font-weight: bold;
+  border-bottom: 2px solid #3F4D91;
+  width: 292px;
 };
 
-.all-card-deputies {
-  flex: 0 0 40%;
+.card-title-header {
+  font-weight: bold;
+  font-size: 27px;
+  text-align: center;
+}
+
+.card-bottom {
+  position: absolute;
+  background-color: #E1E3E5;
+  bottom:0px;
+  right:0px;
+  width: 338px;
+  border-left: 1px solid #3b454e;
+  border-top: 1px solid #3b454e;
+  text-align: right;
+  font-size:26px;
+}
+
+.deputy-header{
+  margin-bottom: 30px;
+}
+
+.fa-plus-circle {
+  color: #3F4D91;
+  font-size: 36px;
+  margin-left: 20px;
+}
+
+.fa-remove {
+ color: #C72845
+}
+
+.fa-edit {
+ color: #3F4D91
 }
