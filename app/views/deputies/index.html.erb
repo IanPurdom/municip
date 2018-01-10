@@ -1,21 +1,21 @@
-<h1>Welcome to deputies pages!</h1>
+<h1>Mon équipe municipale</h1>
 
 <div class="container">
   <div class="row">
   <% @deputies.each do |deputy| %>
     <div class="card">
+      <h1 class="title"><%= deputy.title %></h2>
       <div class="card-description">
-        <h1><%= deputy.first_name %> <%= deputy.last_name %></h2>
-        <h2><%= deputy.title %></h2>
+        <h2><%= deputy.first_name %> <%= deputy.last_name %></h2>
         <p><%= deputy.profession %></p>
       </div>
       <% if deputy[:photo].nil? %>
-        <%= image_tag "empty_photo.jpg", height: 300, width: 400, crop: :fill %>
+        <%= image_tag "empty_photo.jpg", class: "deputy_photo" %>
       <% else %>
-        <%= cl_image_tag deputy.photo, height: 300, width: 400, crop: :fill %>
+        <%= cl_image_tag deputy.photo, class: "deputy_photo" %>
       <% end %>
-      <%= link_to 'modifier', edit_deputy_path(deputy) %>
-      <%= link_to 'Supprimer', deputy_path(deputy), method: :delete %>
+      <%= link_to 'Modifier', edit_deputy_path(deputy), class: "modify" %>
+      <%= link_to 'Supprimer', deputy_path(deputy), method: :delete, class: "delete" %>
     </div>
   <% end %>
   </div>

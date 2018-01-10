@@ -1,5 +1,5 @@
 .card {
-  height: 275px;
+  height: 350px;
   text-shadow: 0 1px 3px rgba(0,0,0,0.6);
   background-color: gray;
   background-position: center;
@@ -41,3 +41,33 @@
 .card-link:hover {
   opacity: 0.1;
 }
+
+.deputy_photo {
+  position: absolute;
+  height: 273px;
+  width: 279px;
+  left: 20px;
+  bottom: 20px;
+  border-radius: 156px;
+}
+
+.modify{
+  position: absolute
+}
+
+.modify {
+ position: absolute;
+ bottom: 5px;
+ right:105px;
+}
+
+.delete {
+ position: absolute;
+ bottom: 5px;
+ right:5px;
+}
+
+
+.title {
+  margin-left: 10px;
+};
