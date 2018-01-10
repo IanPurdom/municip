@@ -1,58 +1,38 @@
 .card {
-  height: 350px;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.6);
-  background-color: gray;
-  background-position: center;
+  height: 384px;
+  width: 338px;
+  background-color: white;
   color: white;
   position: relative;
-  margin: 40px 80px 40px 80px;
-}
-.card-user {
-  position: absolute;
-  left: 10px;
-  top: 50px;
-  width: 40px;
-  border-radius: 50%;
+  border-radius: 3px;
+  border: 1px solid #3b454e;
+  box-shadow: 0px 1px 3px 0px rgba(0,4,15,1);
 }
 
 .card-description {
   position: absolute;
-  bottom: 10px;
+  top: 67px;
   right: 10px;
 }
+
 .card-description h2 {
-  font-size: 24px;
+  font-size: 25px;
+  color: black;
 }
 .card-description p {
-  font-size: 14px;
+  font-size: 18px;
   opacity: 0.7;
+  color: black;
   font-weight: lighter;
-}
-.card-link {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  width: 100%;
-  z-index: 2;
-  background: black;
-  opacity: 0;
-}
-.card-link:hover {
-  opacity: 0.1;
 }
 
 .deputy_photo {
   position: absolute;
-  height: 273px;
-  width: 279px;
-  left: 20px;
-  bottom: 20px;
+  height: 81px;
+  width: 82px;
+  left: 9px;
+  top: 80px;
   border-radius: 156px;
-}
-
-.modify{
-  position: absolute
 }
 
 .modify {
@@ -67,7 +47,16 @@
  right:5px;
 }
 
-
 .title {
+  position: absolute;
   margin-left: 10px;
+  color: black;
+  font-size: 27px;
+  left: 20px;
+  top: -4px;
+  font-weight: bold;
 };
+
+.all-card-deputies {
+  flex: 0 0 40%;
+}

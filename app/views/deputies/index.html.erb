@@ -1,28 +1,29 @@
-<h1>Mon équipe municipale</h1>
-
+<div>
+  <h1 class="page_title">Mon équipe municipale</h1>
+</div>
 <div class="container">
   <div class="row">
   <% @deputies.each do |deputy| %>
-    <div class="card">
-      <h1 class="title"><%= deputy.title %></h2>
-      <div class="card-description">
-        <h2><%= deputy.first_name %> <%= deputy.last_name %></h2>
-        <p><%= deputy.profession %></p>
+    <div class="col-xs-6 col-sm-3 col-md-4">
+      <div class="card">
+        <h1 class="title"><%= deputy.title %></h1>
+          <div class="card-description">
+            <h2><%= deputy.first_name %> <%= deputy.last_name %></h2>
+            <p><%= deputy.profession %></p>
+          </div>
+          <% if deputy[:photo].nil? %>
+            <%= image_tag "empty_photo.jpg", class: "deputy_photo" %>
+          <% else %>
+            <%= cl_image_tag deputy.photo, class: "deputy_photo" %>
+          <% end %>
+            <%= link_to 'Modifier', edit_deputy_path(deputy), class: "modify" %>
+            <%= link_to 'Supprimer', deputy_path(deputy), method: :delete, class: "delete" %>
+          <% end %>
       </div>
-      <% if deputy[:photo].nil? %>
-        <%= image_tag "empty_photo.jpg", class: "deputy_photo" %>
-      <% else %>
-        <%= cl_image_tag deputy.photo, class: "deputy_photo" %>
-      <% end %>
-      <%= link_to 'Modifier', edit_deputy_path(deputy), class: "modify" %>
-      <%= link_to 'Supprimer', deputy_path(deputy), method: :delete, class: "delete" %>
     </div>
-  <% end %>
   </div>
-
   <div>
-     <%= link_to 'Completer mon équipe', new_deputy_path, class:"btn btn-warning" %>
+  <%= link_to 'Completer mon équipe', new_deputy_path, class:"btn btn-warning" %>
   </div>
-
 </div>
 
