@@ -1,2 +1,47 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<div class="home-header">
+  <h1 class="page_title">Tableau de bord</h1>
+</div>
+
+<div class="container">
+  <div class="encart-ville">
+    <div class="city-name">
+      <h2><%= @city.name %></h2>
+    </div>
+      <div class="city-details">
+        <div class= "city-tab-admin">
+          <p><strong>Code postal: </strong><%= @city.zip_code %></p>
+          <p><strong>Departement: </strong><%= @city.departement %></p>
+          <p><strong>Région: </strong> <%= @city.region %></p>
+          <%= link_to ' voir plus...', city_path(@city), class: "fa fa-arrow-circle-right" %>
+        </div>
+        <div class= "city-tab-photo"><%= cl_image_tag @city.photo_1, height: 200, width: 233, crop: :fill %>
+        </div>
+      </div>
+  </div>
+
+
+  <div class="encart-deputy">
+    <div class="deputy-tab-title">
+      <h2>Mon équipe</h2>
+    </div>
+    <% @deputies.each do |deputy| %>
+      <p><strong><%= deputy.title %>:</strong></p>
+      <p><%= deputy.first_name %> <%= deputy.last_name  %></p>
+    <% end  %>
+    <%= link_to ' voir plus...', deputies_path, class: "fa fa-arrow-circle-right" %>
+  </div>
+
+
+  <div class="encart-prog-complet">
+    <div class="prog-tab-title">
+      <h2>Programme</h2>
+    </div>
+    <% @categories.each do |category| %>
+      <p><strong><%= category.name %></strong></p>
+    <% end  %>
+    <%= link_to ' voir plus...', programs_path, class: "fa fa-arrow-circle-right" %>
+  </div>
+
+</div>
+
+

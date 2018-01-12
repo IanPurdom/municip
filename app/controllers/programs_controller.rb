@@ -2,6 +2,7 @@ class ProgramsController < ApplicationController
 before_action :set_program, only: [:show, :edit, :update, :destroy]
 
   def index
+    @categories = Category.all
     @programs = policy_scope(Program)
   end
 

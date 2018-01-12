@@ -1,31 +1,29 @@
-<div class="deputy-header">
+<div class="home-header">
   <h1 class="page_title">Mon équipe municipale</h1>
-  <%= link_to ' Ajouter', new_deputy_path, class: "fa fa-plus-circle" %>
+</div>
+<div>
+  <%= link_to ' Ajouter un adjoint', new_deputy_path, class: "btn-add" %>
 </div>
 <div class="container">
-  <div class="row">
   <% @deputies.each do |deputy| %>
-    <div class="col-xs-12 col-sm-6 col-md-4">
-      <div class="card">
-        <div class="card-title">
-          <h1 class="card-title-header"><%= deputy.title %></h1>
-        </div>
-        <div class="card-description">
+    <div class="encart-program">
+      <div class="cat-title">
+        <h1><%= deputy.title %></h1>
+      </div>
+      <%= link_to "", edit_deputy_path(deputy), class: "fa fa-edit" %>
+      <%= link_to "", deputy_path(deputy), method: :delete, class: "fa fa-remove" %>
+      <div class="dep-details">
+        <div>
           <h2><%= deputy.first_name %> <%= deputy.last_name %></h2>
           <p><%= deputy.profession %></p>
         </div>
         <% if deputy[:photo].nil? %>
-          <%= image_tag "empty_photo.jpg", class: "deputy_photo" %>
+        <%= image_tag "empty_photo.jpg", class: "deputy-photo" %>
         <% else %>
-          <%= cl_image_tag deputy.photo, class: "deputy_photo" %>
+        <%= cl_image_tag deputy.photo, class: "deputy-photo" %>
         <% end %>
-        <div class="card-bottom">
-          <%= link_to "", edit_deputy_path(deputy), class: "fa fa-remove" %>
-          <%= link_to "", deputy_path(deputy), method: :delete, class: "fa fa-edit" %>
-        </div>
       </div>
     </div>
   <% end %>
-  </div>
 </div>
 
