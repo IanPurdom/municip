@@ -1,1 +1,57 @@
 // Specific CSS for your home-page
+.page_title {
+  width: 855px;
+  height: 72px;
+  font-size: 48px;
+  text-align: center;
+  color: #F2F2F2;
+  background-color: black;
+  padding:5px;
+  border-radius: 0px 50px 50px 0px;
+}
+
+.home-header{
+  margin-bottom: 30px;
+}
+
+.encart-ville {
+  width: 460px;
+  margin: 40px 0px 40px 0px;
+}
+
+.city-name {
+  background-color: #DD0031;
+  color: white;
+  text-align: center;
+  border-radius: 50px 50px 50px 50px;
+}
+
+.city-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.encart-deputy {
+  width: 460px;
+  margin: 40px 0px 40px 0px;
+}
+
+.deputy-tab-title {
+  background-color: #2C365E;
+  color: white;
+  text-align: center;
+  border-radius: 50px 50px 50px 50px;
+}
+
+.encart-prog-complet {
+  width: 460px;
+  margin: 40px 0px 40px 0px;
+}
+
+.prog-tab-title {
+  background-color: #8DA7BE;
+  color: white;
+  text-align: center;
+  border-radius: 50px 50px 50px 50px;
+}

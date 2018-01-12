@@ -1,0 +1,21 @@
+.header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 50px;
+}
+
+.header h1 {
+  font-size: 60px;
+  border: 1px solid;
+  padding: 32px;
+}
+
+.fa-arrow-left {
+  font-size: 30px;
+}
+
+.btn-photo {
+  font-size: 50px;
+  width: 300px;
+}

@@ -1,23 +1,25 @@
-<h1>Programs#index</h1>
-<p>Find me in app/views/programs/index.html.erb</p>
-  <div>
-     <%= link_to 'Ajouter un programme', new_program_path, class:"btn btn-warning" %>
-  </div>
-
+<div class="home-header">
+  <h1 class="program-title">Programmes</h1>
+</div>
+<div>
+  <%= link_to 'Ajouter un programme', new_program_path, class: "btn-add" %>
+</div>
 <div class="container">
-  <div class="row">
-  <% @programs.each do |program| %>
-    <div class="card">
-      <div class="card-description">
-        <h1><%= program.title %></h1>
-        <h2><%= program.category.name %></h2>
-        <p><%= program.content %></p>
+  <% @categories.each do |category| %>
+    <% if @programs.where(category_id: category.id) != [] %>
+    <div class="encart-program">
+      <div class="cat-title">
+        <h1><%= category.name %></h1>
       </div>
-      <%= link_to 'modifier', edit_program_path(program) %>
-      <%= link_to 'Supprimer', program_path(program), method: :delete %>
-    </div>
+        <% @programs.where(category_id: category.id).each do |program|%>
+        <div class="prog-title">
+          <h3><%= program.title %></h3>
+         <%= link_to "", edit_program_path(program), class: "fa fa-edit" %>
+          <%= link_to "", program_path(program), method: :delete, class: "fa fa-remove" %>
+        </div>
+        <p><%= program.content %></p>
+      <% end %>
+      </div>
+    <% end %>
   <% end %>
-  </div>
-
-
 </div>

@@ -1,27 +1,30 @@
-<h1>Cities#new</h1>
-<p>Find me in app/views/cities/new.html.erb</p>
-
- <h1>Ajouter votre ville</h1>
-   <div class="grid">
-    <div class="f-new">
-      <ul class="new-form">
-        <%= simple_form_for @city do |f| %>
-          <%= f.input :name%>
-          <%= f.input :zip_code %>
-          <%= f.input :departement %>
-          <%= f.input :region %>
-          <%= f.input :intercommunalite %>
-          <%= f.input :population %>
-          <%= f.input :density %>
-          <%= f.input :debt %>
-          <%= f.input :current_maire %>
-          <%= f.input :photo_1 %>
-          <%= f.input :photo_2 %>
-          <%= f.input :photo_3 %>
-          <%= f.submit 'Créer', class: "btn-photo" %>
-          <!-- [...] -->
-        <% end %>
-      </ul>
-    </div>
-    <%= link_to 'Annuler', root_path, class:"btn btn-warning" %>
+<div class="container">
+  <div class="header">
+  <h1>Ajouter votre ville</h1>
+  <%= link_to ' Annuler', root_path, class: "fa fa-arrow-left" %>
   </div>
+    <div class="row">
+     <div class="grid">
+      <div class="f-new">
+        <ul class="new-form">
+          <%= simple_form_for @city do |f| %>
+            <%= f.input :name%>
+            <%= f.input :zip_code %>
+            <%= f.input :departement %>
+            <%= f.input :region %>
+            <%= f.input :intercommunalite %>
+            <%= f.input :population %>
+            <%= f.input :density %>
+            <%= f.input :debt %>
+            <%= f.input :current_maire %>
+            <%= f.input :photo_1 %>
+            <%= f.input :photo_2 %>
+            <%= f.input :photo_3 %>
+            <%= f.submit 'Créer', class: "btn-photo" %>
+            <!-- [...] -->
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
