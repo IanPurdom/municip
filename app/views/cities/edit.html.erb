@@ -1,8 +1,11 @@
-<h1>Cities#edit</h1>
-<p>Find me in app/views/cities/edit.html.erb</p>
-
- <h1>Modifier votre ville</h1>
-   <div class="grid">
+<div class="home-header">
+  <h1 class="program-title">Modifier <%= @city.name %></h1>
+</div>
+<div>
+  <%= link_to 'Annuler', city_path(@city), class:"btn-add" %>
+</div>
+<div class="container">
+  <div class="grid">
     <div class="f-new">
       <ul class="new-form">
         <%= simple_form_for @city do |f| %>
@@ -18,10 +21,10 @@
           <%= f.input :photo_1 %>
           <%= f.input :photo_2 %>
           <%= f.input :photo_3 %>
-          <%= f.submit 'Modifier', class: "btn-photo" %>
+          <%= f.submit 'Modifier'%>
           <!-- [...] -->
         <% end %>
       </ul>
     </div>
-    <%= link_to 'Annuler',  city_path(@city), class:"btn btn-warning" %>
   </div>
+</div>

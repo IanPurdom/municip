@@ -1,13 +1,13 @@
+<div class="home-header">
+  <h1 class="program-title"><%= @city.name %></h1>
+</div>
 <div>
+<div>
+  <%= link_to 'Modifier', edit_city_path(@city), class: "btn-add" %>
+</div>
+<div class="container">
   <div class=city-admin>
-    <div class="header">
-      <h1><%= @city.name %></h1>
-      <div>
-        <%= link_to '', edit_city_path(@city),class: "fa fa-edit" %>
-        <%= link_to '', city_path(@city), method: :delete, class: "fa fa-remove" %>
-      </div>
-    </div>
-    <p><strong>Code Postal: </strong><%= @city.zip_code %></p>
+        <p><strong>Code Postal: </strong><%= @city.zip_code %></p>
     <p><strong>Departement: </strong><%= @city.departement %></p>
     <p><strong>Région: </strong><%= @city.region %></p>
     <p><strong>Intercommunalité: </strong><%= @city.intercommunalite %></p>
