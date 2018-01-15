@@ -1,22 +1,25 @@
+<div class="home-header">
+  <h1 class="program-title">Ajouter un adjoint</h1>
+</div>
+<div>
+  <%= link_to 'Annuler', deputies_path, class:"btn-add" %>
+</div>
+<div>
 <div class="container">
-  <h1>Ajouter un Adjoint</h1>
    <div class="grid">
     <div class="f-new">
       <ul class="new-form">
         <%= simple_form_for(@deputy) do |f| %>
-          <!-- [...] -->
           <%= f.input :title%>
           <%= f.input :first_name %>
           <%= f.input :last_name %>
           <%= f.input :profession %>
-          <%#= f.label :category  %>
           <%= f.input :photo %>
-          <%= f.submit 'Ajouter', class: "btn-photo" %>
+          <%= f.submit 'Ajouter' %>
           <!-- [...] -->
         <% end %>
       </ul>
     </div>
-    <%= link_to 'Annuler', deputies_path, class:"btn btn-warning" %>
   </div>
 
 </div>

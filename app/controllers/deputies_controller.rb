@@ -15,7 +15,6 @@ before_action :set_deputy, only: [:show, :edit, :update, :destroy]
   end
 
   def create        # POST /deputies
-    raise
     @deputy = Deputy.new(deputy_params)
     @deputy.user = current_user
     authorize @deputy
