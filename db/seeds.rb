@@ -8,8 +8,6 @@
 
 puts "cleaning seeds..."
 
-Deputy.destroy_all
-City.destroy_all
 Program.destroy_all
 Category.destroy_all
 User.destroy_all
@@ -17,8 +15,9 @@ User.destroy_all
 puts "creating seeds..."
 
 puts "creating users..."
-User.create!(first_name: "Charles", last_name: "Bazin", email: "charles@mail.com", photo: "image/upload/v1515578859/q38jatr8rzd673e61tu4.jpg", password: '123456')
-
+user = User.new(first_name: "Charles", last_name: "Bazin", email: "charles@mail.com", photo: "image/upload/v1515578859/q38jatr8rzd673e61tu4.jpg", password: '123456')
+user.photo = Rails.root.join("db/images/#{user.first_name}_#{user.last_name}.jpg").open
+user.save!
 
 puts "creating deputies..."
 
@@ -64,7 +63,8 @@ new_city = City.new(
 )
 new_city.user = User.find_by(first_name: "Charles")
 new_city.photo_1 = Rails.root.join("db/images/mairie_1.jpg").open
-new_city.photo_1 = Rails.root.join("db/images/mairie_2.jpg").open
+new_city.photo_2 = Rails.root.join("db/images/mairie_2.jpg").open
+new_city.photo_3 = Rails.root.join("db/images/mairie_3.jpg").open
 new_city.save
 
 puts "creating categories..."
@@ -84,7 +84,6 @@ programs["programs"].each do |program|
   # Category.create!(categories[n])
   u = Program.new(program)
   u.category = Category.find_by(name: categories[n])
-  p u
   u.save
   n += 1
 end

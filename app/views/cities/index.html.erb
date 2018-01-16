@@ -1,0 +1,35 @@
+<% @cities.each do |city| %>
+<div class="home-header">
+  <h1 class="program-title"><%= city.name %></h1>
+</div>
+<div>
+  <%= link_to 'Modifier', edit_city_path(city), class: "btn-add" %>
+</div>
+<div class="container">
+  <div class="encart-program">
+    <div class="cat-title">
+      <h1>Administratif</h1>
+    </div>
+    <p><strong>Code Postal: </strong><%= city.zip_code %></p>
+    <p><strong>Maire actuel: </strong><%= city.current_maire %></p>
+    <p><strong>Departement: </strong><%= city.departement %></p>
+    <p><strong>Région: </strong><%= city.region %></p>
+    <p><strong>Intercommunalité: </strong><%= city.intercommunalite %></p>
+  </div>
+  <div class="encart-program">
+    <div class="cat-title">
+      <h1>Démographie</h1>
+    </div>
+    <p><strong>Population: </strong><%= city.population %></p>
+    <p><strong>Densité: </strong><%= city.density %></p>
+  </div>
+  <div class="encart-program">
+    <div class="cat-title">
+      <h1>Diaporama</h1>
+    </div>
+    <%= cl_image_tag city.photo_1, height: 300, width: 400, crop: :fill %>
+    <%= cl_image_tag city.photo_2, height: 300, width: 400, crop: :fill %>
+    <%= cl_image_tag city.photo_3, height: 300, width: 400, crop: :fill %>
+  </div>
+</div>
+<% end %>
