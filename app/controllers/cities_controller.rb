@@ -1,6 +1,10 @@
 class CitiesController < ApplicationController
 before_action :set_city, only: [:show, :edit, :update, :destroy]
 
+  def index
+    @cities = policy_scope(City).where(user: current_user)
+  end
+
   def show
   end
 

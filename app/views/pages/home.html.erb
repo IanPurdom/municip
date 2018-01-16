@@ -12,21 +12,26 @@
           <p><strong>Code postal: </strong><%= @city.zip_code %></p>
           <p><strong>Departement: </strong><%= @city.departement %></p>
           <p><strong>Région: </strong> <%= @city.region %></p>
-          <%= link_to ' voir plus...', city_path(@city), class: "fa fa-arrow-circle-right" %>
+          <%= link_to ' voir plus...', cities_path, class: "fa fa-arrow-circle-right" %>
         </div>
         <div class= "city-tab-photo"><%= cl_image_tag @city.photo_1, height: 200, width: 233, crop: :fill %>
         </div>
       </div>
   </div>
 
-
   <div class="encart-deputy">
     <div class="deputy-tab-title">
       <h2>Mon équipe</h2>
     </div>
     <% @deputies.each do |deputy| %>
-      <p><strong><%= deputy.title %>:</strong></p>
-      <p><%= deputy.first_name %> <%= deputy.last_name  %></p>
+        <div class="dep-name-photo">
+          <p><strong><%= deputy.title %>: </strong><%= deputy.first_name %> <%= deputy.last_name %></p>
+          <% if deputy[:photo].nil? %>
+             <%= image_tag "empty_photo.jpg", class: "deputy-photo-home" %>
+          <% else %>
+            <%= cl_image_tag deputy.photo, class: "deputy-photo-home"%>
+          <% end %>
+        </div>
     <% end  %>
     <%= link_to ' voir plus...', deputies_path, class: "fa fa-arrow-circle-right" %>
   </div>
@@ -34,7 +39,7 @@
 
   <div class="encart-prog-complet">
     <div class="prog-tab-title">
-      <h2>Programme</h2>
+      <h2>Le programme du FN</h2>
     </div>
     <% @categories.each do |category| %>
       <p><strong><%= category.name %></strong></p>
