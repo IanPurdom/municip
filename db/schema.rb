@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180109091350) do
+ActiveRecord::Schema.define(version: 20180120114559) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,12 +23,12 @@ ActiveRecord::Schema.define(version: 20180109091350) do
 
   create_table "cities", force: :cascade do |t|
     t.bigint "user_id"
-    t.integer "zip_code"
+    t.string "zip_code"
     t.string "departement"
     t.string "region"
     t.string "intercommunalite"
-    t.integer "population"
-    t.integer "density"
+    t.string "population"
+    t.string "density"
     t.integer "debt"
     t.string "current_maire"
     t.string "photo_1"
@@ -37,6 +37,13 @@ ActiveRecord::Schema.define(version: 20180109091350) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "name", null: false
+    t.string "canton"
+    t.string "code_commune"
+    t.string "gentile"
+    t.string "coordinates"
+    t.string "height"
+    t.string "superficy"
+    t.string "website"
     t.index ["user_id"], name: "index_cities_on_user_id"
   end
 

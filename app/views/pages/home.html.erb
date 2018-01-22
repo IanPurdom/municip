@@ -3,6 +3,16 @@
 </div>
 
 <div class="container">
+
+
+<% if @city.nil? %>
+  <div class="encart-ville">
+    <div class="city-name">
+      <h2>Ma ville</h2>
+    </div>
+  <%= link_to 'Ajouter ma ville...', new_city_path, class: "fa fa-arrow-circle-right" %>
+  </div>
+<% else %>
   <div class="encart-ville">
     <div class="city-name">
       <h2><%= @city.name %></h2>
@@ -18,6 +28,8 @@
         </div>
       </div>
   </div>
+<% end %>
+
 
   <div class="encart-deputy">
     <div class="deputy-tab-title">

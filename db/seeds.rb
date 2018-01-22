@@ -51,12 +51,12 @@ end
 puts "creating city..."
 
 new_city = City.new(
-  zip_code: 27130,
+  zip_code: "27130",
   departement: "l'Eure",
   region: "Normandie",
   intercommunalite: "Communauté de communes Normandie Sud Eure",
-  population: 320,
-  density: 25,
+  population: "320",
+  density: "25",
   debt: nil,
   current_maire: "Philippe Obadia",
   name: "Les Barils"
