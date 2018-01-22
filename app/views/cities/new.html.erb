@@ -1,29 +1,55 @@
+<%= @city.name %>
 <div class="home-header">
-  <h1 class="program-title">Modifier <%= @city.name %></h1>
+  <h1 class="program-title">Ajouter ma ville</h1>
 </div>
 <div>
   <%= link_to 'Annuler', root_path, class:"btn-add" %>
 </div>
 <div class="container">
   <div class="grid">
+    <div class="encart-program">
+      <div class="cat-title">
+        <h3>Formulaire pré-rempli</h3>
+      </div>
+    </div>
+    <div class="f-new">
+      <ul>
+     <%= simple_form_for @city, namespace: "wiki", remote: :true, url: retrieve_cities_path do |f| %>
+     <%= f.input :name, label: "Rentrez le nom de votre ville"%>
+     <%= f.submit 'Wikipedia'%>
+      <% end %>
+   </ul>
+  </div>
+  <div class="encart-program">
+    <div class="cat-title">
+      <h3>Remplir manuellement</h3>
+    </div>
+  </div>
     <div class="f-new">
       <ul class="new-form">
         <%= simple_form_for @city do |f| %>
           <%= f.input :name%>
           <%= f.input :zip_code %>
+          <%= f.input :code_commune %>
           <%= f.input :departement %>
+          <%= f.input :canton %>
           <%= f.input :region %>
           <%= f.input :intercommunalite %>
           <%= f.input :population %>
           <%= f.input :density %>
-          <%= f.input :debt %>
+          <%= f.input :superficy %>
+          <%= f.input :height %>
           <%= f.input :current_maire %>
+          <%= f.input :website %>
+          <%= f.input :gentile %>
+          <%= f.input :debt %>
+          <%= f.input :coordinates %>
           <%= f.input :photo_1 %>
           <%= f.input :photo_2 %>
           <%= f.input :photo_3 %>
-          <%= f.submit 'Modifier'%>
+          <%= f.submit 'Ajouter'%>
           <!-- [...] -->
-        <% end %>
+          <% end %>
       </ul>
     </div>
   </div>

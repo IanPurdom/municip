@@ -17,4 +17,8 @@ class CityPolicy < ApplicationPolicy
     update?
   end
 
+  def retrieve?
+    true
+  end
+
 end

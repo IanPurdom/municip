@@ -5,23 +5,39 @@
 <div>
   <%= link_to 'Modifier', edit_city_path(city), class: "btn-add" %>
 </div>
+<br>
+<br>
+<div>
+  <%= link_to 'Supprimer', city_path(city), method: :delete, class: "btn-add" %>
+</div>
 <div class="container">
   <div class="encart-program">
     <div class="cat-title">
       <h1>Administratif</h1>
     </div>
-    <p><strong>Code Postal: </strong><%= city.zip_code %></p>
-    <p><strong>Maire actuel: </strong><%= city.current_maire %></p>
     <p><strong>Departement: </strong><%= city.departement %></p>
     <p><strong>Région: </strong><%= city.region %></p>
+    <p><strong>Canton: </strong><%= city.canton %></p>
     <p><strong>Intercommunalité: </strong><%= city.intercommunalite %></p>
+    <p><strong>Maire actuel: </strong><%= city.current_maire %></p>
+    <p><strong>Code Postal: </strong><%= city.zip_code %></p>
+    <p><strong>Code Commune: </strong><%= city.code_commune %></p>
   </div>
   <div class="encart-program">
     <div class="cat-title">
       <h1>Démographie</h1>
     </div>
+    <p><strong>Gentilé: </strong><%= city.gentile %></p>
     <p><strong>Population: </strong><%= city.population %></p>
     <p><strong>Densité: </strong><%= city.density %></p>
+  </div>
+  <div class="encart-program">
+    <div class="cat-title">
+      <h1>Géographie</h1>
+    </div>
+    <p><strong>Coordonnées: </strong><%= city.coordinates %></p>
+    <p><strong>Altitude: </strong><%= city.height %></p>
+    <p><strong>Superficie: </strong><%= city.superficy %></p>
   </div>
   <div class="encart-program">
     <div class="cat-title">
@@ -33,3 +49,6 @@
   </div>
 </div>
 <% end %>
+
+
+
