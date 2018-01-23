@@ -98,15 +98,6 @@ before_action :set_city, only: [:show, :edit, :update, :destroy]
 
   private
 
-  def set_city
-    @city = City.find(params[:id])
-    authorize @city
-  end
-
-  def city_params
-    params.require(:city).permit(:id, :user_id, :name, :zip_code, :code_commune, :canton, :superficy, :website, :coordinates, :height, :gentile, :departement, :region, :intercommunalite, :population, :density, :debt, :current_maire, :photo_1, :photo_2, :photo_3 )
-  end
-
   def check_url(my_url)
     url = URI.parse(my_url)
     req = Net::HTTP.new(url.host, url.port)
@@ -114,5 +105,15 @@ before_action :set_city, only: [:show, :edit, :update, :destroy]
     res = req.request_head(url.path)
     res.code == "200"
   end
+
+  def set_city
+    @city = City.find(city_params[:id])
+    authorize @city
+  end
+
+  def city_params
+    params.require(:city).permit(:id, :user_id, :name, :zip_code, :code_commune, :canton, :superficy, :website, :coordinates, :height, :gentile, :departement, :region, :intercommunalite, :population, :density, :debt, :current_maire)
+  end
+
 
 end

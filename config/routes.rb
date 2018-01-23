@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
+  get 'photos/create'
+
+  get 'photos/destroy'
+
   devise_for :users
   resources :deputies
   resources :cities do
+    resources :photos, only: [:create, :destroy]
     collection do
       post 'retrieve', to: "cities#retrieve"
     end
