@@ -36,8 +36,18 @@
   <div class="encart-program">
     <div class="cat-title">
       <h1>Diaporama</h1>
+        <%= @photos.each do |ph| %>
+        <%= ph.photo %>
+        <%= ph.id %>
+        <%= ph.city_id %>
+        <% end %>
+     <div>
+       <%= simple_form_for [@city, @photo] do |f| %>
+       <%= f.input :photo %>s
+       <%= f.submit %>
+       <% end %>
+     </div>
     </div>
   </div>
 </div>
-<% end %>
 

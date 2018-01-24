@@ -9,6 +9,8 @@ before_action :set_city, only: [:show, :edit, :update, :destroy]
   end
 
   def show
+    @photos = Photo.where(city_id: params[:id])
+    @photo = Photo.new
   end
 
   def new
@@ -21,7 +23,7 @@ before_action :set_city, only: [:show, :edit, :update, :destroy]
     @city.user = current_user
     authorize @city
     if @city.save
-      redirect_to cities_path
+      redirect_to city_path(@city)
     else
       render :new
     end
@@ -107,7 +109,7 @@ before_action :set_city, only: [:show, :edit, :update, :destroy]
   end
 
   def set_city
-    @city = City.find(city_params[:id])
+    @city = City.find(params[:id])
     authorize @city
   end
 
