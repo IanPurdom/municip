@@ -51,10 +51,11 @@
       <%= cl_image_tag picture.photo, class: "city-photo-show" %>
       <% end %>
     </div>
+    <br>
     <div>
       <%= simple_form_for [@city, @photo] do |f| %>
       <%= f.file_field :photo %>
-      <%= f.submit %>
+      <%= f.submit "Ajouter"%>
       <% end %>
     </div>
   </div>

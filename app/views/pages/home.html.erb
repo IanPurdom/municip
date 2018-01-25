@@ -25,6 +25,9 @@
           <%= link_to ' voir plus...', city_path(@city), class: "fa fa-arrow-circle-right" %>
         </div>
         <div class= "city-tab-photo">
+        <% unless @city.photos == []  %>
+          <%= cl_image_tag @city.photos.first.photo, class:'home-city-photo'%>
+        <% end %>
         </div>
       </div>
   </div>
