@@ -40,7 +40,7 @@
         <%= cl_image_tag ph.photo , height: 300, width: 400, crop: :fill %>
         <% end %>
      <div>
-        <%= simple_form_for [@city, @photo], html:  {multipart: true} do |f| %>
+        <%= simple_form_for [@city, @photo] do |f| %>
         <%= f.file_field :photo %>
         <%= f.submit %>
        <% end %>
