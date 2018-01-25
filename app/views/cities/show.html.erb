@@ -1,11 +1,20 @@
-<div class="home-header">
-  <h1 class="program-title"><%= @city.name %></h1>
+<div class="header-show-flex">
+  <div class="home-header">
+    <h1 class="program-title"><%= @city.name %></h1>
+  </div>
+  <div>
+    <div>
+      <%= link_to 'Modifier', edit_city_path(@city), class: "btn-show" %>
+    </div>
+    <br>
+    <br>
+    <div>
+      <%= link_to 'Supprimer', city_path(@city), method: :delete, class: "btn-show" %>
+    </div>
+  </div>
 </div>
 <div>
-  <%= link_to 'Modifier', edit_city_path(@city), class: "btn-add" %>
-</div>
-<div class="container">
-  <div class="encart-program">
+  <div class="rubrique-show">
     <div class="cat-title">
       <h1>Administratif</h1>
     </div>
@@ -17,7 +26,7 @@
     <p><strong>Code Postal: </strong><%= @city.zip_code %></p>
     <p><strong>Code Commune: </strong><%= @city.code_commune %></p>
   </div>
-  <div class="encart-program">
+  <div class="rubrique-show">
     <div class="cat-title">
       <h1>Démographie</h1>
     </div>
@@ -25,7 +34,7 @@
     <p><strong>Population: </strong><%= @city.population %></p>
     <p><strong>Densité: </strong><%= @city.density %></p>
   </div>
-  <div class="encart-program">
+  <div class="rubrique-show">
     <div class="cat-title">
       <h1>Géographie</h1>
     </div>
@@ -33,18 +42,20 @@
     <p><strong>Altitude: </strong><%= @city.height %></p>
     <p><strong>Superficie: </strong><%= @city.superficy %></p>
   </div>
-  <div class="encart-program">
+  <div class="diaporama">
     <div class="cat-title">
       <h1>Diaporama</h1>
-        <%= @photos.each do |ph| %>
-        <%= cl_image_tag ph.photo , height: 300, width: 400, crop: :fill %>
-        <% end %>
-     <div>
-        <%= simple_form_for [@city, @photo] do |f| %>
-        <%= f.file_field :photo %>
-        <%= f.submit %>
-       <% end %>
-     </div>
+    </div>
+    <div>
+      <% @photos.each do |picture| %>
+      <%= cl_image_tag picture.photo, class: "city-photo-show" %>
+      <% end %>
+    </div>
+    <div>
+      <%= simple_form_for [@city, @photo] do |f| %>
+      <%= f.file_field :photo %>
+      <%= f.submit %>
+      <% end %>
     </div>
   </div>
 </div>

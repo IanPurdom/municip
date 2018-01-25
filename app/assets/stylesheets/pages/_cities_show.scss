@@ -1,3 +1,9 @@
+.header-show-flex{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 28px;
+}
+
 .city-admin {
   margin-left: 25px
 }
@@ -10,4 +16,16 @@
 .city_display {
   display: flex;
   justify-content: space-between;
+}
+
+.rubrique-show{
+  width: 608px;
+  margin: 22px 0px 36px 46px;
+  line-height: 0.428571;
+}
+
+.diaporama{
+  width: 808px;
+  margin: 22px 0px 36px 46px;
+  line-height: 1.428571;
 }
