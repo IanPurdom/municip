@@ -2,7 +2,7 @@
   <h1 class="program-title">Modifier <%= @city.name %></h1>
 </div>
 <div>
-  <%= link_to 'Annuler', cities_path, class:"btn-add" %>
+  <%= link_to 'Annuler', city_path(@city), class:"btn-add" %>
 </div>
 <div class="container">
   <div class="grid">
@@ -25,9 +25,6 @@
           <%= f.input :gentile %>
           <%= f.input :debt %>
           <%= f.input :coordinates %>
-          <%= f.input :photo_1 %>
-          <%= f.input :photo_2 %>
-          <%= f.input :photo_3 %>
           <%= f.submit 'Modifier'%>
           <!-- [...] -->
         <% end %>

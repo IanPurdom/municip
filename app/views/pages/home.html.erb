@@ -22,9 +22,12 @@
           <p><strong>Code postal: </strong><%= @city.zip_code %></p>
           <p><strong>Departement: </strong><%= @city.departement %></p>
           <p><strong>Région: </strong> <%= @city.region %></p>
-          <%= link_to ' voir plus...', cities_path, class: "fa fa-arrow-circle-right" %>
+          <%= link_to ' voir plus...', city_path(@city), class: "fa fa-arrow-circle-right" %>
         </div>
-        <div class= "city-tab-photo"><%= cl_image_tag @city.photo_1, height: 200, width: 233, crop: :fill %>
+        <div class= "city-tab-photo">
+        <% unless @city.photos == []  %>
+          <%= cl_image_tag @city.photos.first.photo, class:'home-city-photo'%>
+        <% end %>
         </div>
       </div>
   </div>

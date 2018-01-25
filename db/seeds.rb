@@ -62,10 +62,17 @@ new_city = City.new(
   name: "Les Barils"
 )
 new_city.user = User.find_by(first_name: "Charles")
-new_city.photo_1 = Rails.root.join("db/images/mairie_1.jpg").open
-new_city.photo_2 = Rails.root.join("db/images/mairie_2.jpg").open
-new_city.photo_3 = Rails.root.join("db/images/mairie_3.jpg").open
 new_city.save
+
+puts "creating city's photos..."
+
+
+for i in 1..4
+picture = Photo.new(city_id: new_city[:id])
+picture.photo = Rails.root.join("db/images/mairie_#{i}.jpg").open
+picture.save
+p picture
+end
 
 puts "creating categories..."
 
