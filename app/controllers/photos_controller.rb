@@ -2,7 +2,6 @@ class PhotosController < ApplicationController
 
   def create
     @photo = Photo.create(city_id: params[:city_id], photo: params[:photo])
-    raise
     authorize @photo
     redirect_to city_path(params[:city_id])
   end
@@ -16,7 +15,7 @@ class PhotosController < ApplicationController
   private
 
   # def photo_params
-  #   params.require.(:photo).permit(:id, :city_id, :photo)
+  #   params.require.(:city, :photo).permit(:city_id, :photo)
   # end
 
 end
