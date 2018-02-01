@@ -1,5 +1,7 @@
 require 'open-uri' # Open an url
 require "net/http"
+require 'uri'
+require 'json'
 
 class CitiesController < ApplicationController
 before_action :set_city, only: [:show, :edit, :update, :destroy]
@@ -11,6 +13,35 @@ before_action :set_city, only: [:show, :edit, :update, :destroy]
   def show
     @photos = Photo.where(city_id: params[:id])
     @photo = Photo.new
+
+    unless @city.latitude.nil? || @city.longitude.nil?
+         @markers = [{
+            lat: @city.latitude,
+            lng: @city.longitude#,
+          # infoWindow: { content: render_to_string(partial: "/flats/map_box", locals: { flat: flat }) }
+          }]
+    end
+
+    unless @city.code_commune.nil?
+      filepath = "db/polygon.json"
+      serialized_polygons = File.read(filepath)
+      polygons = JSON.parse(serialized_polygons)
+      coord = []
+      polygons["features"].each do |feature|
+       coord = feature["geometry"]["coordinates"].flatten(1) if feature["properties"]["code"] == @city.code_commune
+      end
+
+      coord
+
+      unless coord == []
+       @coordinates = []
+       coord.each do |c|
+          @coordinates << {lat: c[1], lng: c[0]}
+        end
+      @coordinates
+      end
+    end
+
   end
 
   def new
@@ -43,14 +74,18 @@ before_action :set_city, only: [:show, :edit, :update, :destroy]
   end
 
   def retrieve
-    city = city_params[:name].split.map{|word| word.capitalize}.join(" ")
-    my_url = "https://fr.wikipedia.org/wiki/#{city.gsub(" ", "_")}"
-    # url = "https://fr.wikipedia.org/wiki/Les_Barils"
 
+    # unless city_params[:name] =~ /-/i
+    # city = city_params[:name].split.map{|word| word.capitalize}.join(" ")
+    # end
 
-    if check_url(my_url)
+    city = city_params[:name].sub!(", France", "")
+    url = "https://fr.wikipedia.org/wiki/#{city.gsub(" ", "_")}"
+    encoded_url = URI.encode(url)
 
-      html = open(my_url).read
+    if check_url(encoded_url)
+
+      html = open(encoded_url).read
       html_doc = Nokogiri::HTML(html)
 
       city_details = []
@@ -117,5 +152,5 @@ before_action :set_city, only: [:show, :edit, :update, :destroy]
     params.require(:city).permit(:id, :user_id, :name, :zip_code, :code_commune, :canton, :superficy, :website, :coordinates, :height, :gentile, :departement, :region, :intercommunalite, :population, :density, :debt, :current_maire)
   end
 
-
 end
+

@@ -38,7 +38,8 @@
     <div class="cat-title">
       <h1>Géographie</h1>
     </div>
-    <p><strong>Coordonnées: </strong><%= @city.coordinates %></p>
+    <p><strong>Latitude: </strong><%= @city.latitude %></p>
+    <p><strong>Longitude: </strong><%= @city.longitude %></p>
     <p><strong>Altitude: </strong><%= @city.height %></p>
     <p><strong>Superficie: </strong><%= @city.superficy %></p>
   </div>
@@ -48,7 +49,10 @@
     </div>
     <div>
       <% @photos.each do |picture| %>
-      <%= cl_image_tag picture.photo, class: "city-photo-show" %>
+        <div class="card "
+          style="background-image: url('<%= cl_image_path picture.photo, height: 300, width: 400, crop: :fill %>')">
+        <%= link_to "", city_photo_path(@city.id, picture.id), method: :delete, class: "fa fa-trash del-pos-card"  %>
+      </div>
       <% end %>
     </div>
     <br>
@@ -59,5 +63,12 @@
       <% end %>
     </div>
   </div>
+  <div
+  id="map"
+  style="width: 50%;
+  height: 500px;"
+  data-markers="<%= @markers.to_json %>"
+  data-coordinates="<%= @coordinates.to_json%>"
+></div>
 </div>
 
