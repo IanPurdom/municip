@@ -15,7 +15,7 @@
     <div class="f-new">
       <ul>
      <%= simple_form_for @city, namespace: "wiki", remote: :true, url: retrieve_cities_path do |f| %>
-     <%= f.input :name, label: "Rentrez le nom de votre ville"%>
+     <%= f.input :name, input_html: { class: 'city_name' }, label: "Rentrez le nom de votre ville"%>
      <%= f.submit 'Wikipedia'%>
       <% end %>
    </ul>
@@ -28,7 +28,7 @@
     <div class="f-new">
       <ul class="new-form">
         <%= simple_form_for @city do |f| %>
-          <%= f.input :name%>
+          <%= f.input :name %>
           <%= f.input :zip_code %>
           <%= f.input :code_commune %>
           <%= f.input :departement %>

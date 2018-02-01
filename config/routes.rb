@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   get 'photos/create'
 
-  get 'photos/destroy'
+  get 'photos/:id/destroy', to: "photos#destroy"
 
   devise_for :users
   resources :deputies

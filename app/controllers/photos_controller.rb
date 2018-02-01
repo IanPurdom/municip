@@ -11,7 +11,8 @@ class PhotosController < ApplicationController
   def destroy
     @photo = Photo.find(params[:id])
     @photo.destroy
-    redirect_to city_path(@city)
+    authorize @photo
+    redirect_to city_path(params[:city_id])
   end
 
   private

@@ -9,8 +9,12 @@
 
     <% if user_signed_in? %>
       <!-- Links when logged in -->
-      <%= link_to "Ma ville", cities_path, class: "navbar-wagon-item navbar-wagon-link" %>
-      <%= link_to "Mon équipe", deputies_path, class: "navbar-wagon-item navbar-wagon-link" %>
+      <% unless current_user.cities == []  %>
+        <%= link_to "Ma ville", city_path(current_user.cities.first), class: "navbar-wagon-item navbar-wagon-link" %>
+      <% end  %>
+      <% unless current_user.deputies == []  %>
+        <%= link_to "Mon équipe", deputies_path, class: "navbar-wagon-item navbar-wagon-link" %>
+      <% end  %>
       <%= link_to "Le Programme du FN", programs_path, class: "navbar-wagon-item navbar-wagon-link" %>
 
       <!-- Avatar with dropdown menu -->
