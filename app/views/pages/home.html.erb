@@ -3,8 +3,6 @@
 </div>
 
 <div class="container">
-
-
 <% if @city.nil? %>
   <div class="encart-ville">
     <div class="city-name">
@@ -33,7 +31,6 @@
   </div>
 <% end %>
 
-
   <div class="encart-deputy">
     <div class="deputy-tab-title">
       <h2>Mon équipe</h2>
@@ -51,6 +48,19 @@
     <%= link_to ' voir plus...', deputies_path, class: "fa fa-arrow-circle-right" %>
   </div>
 
+  <div class="encart-prog-complet">
+    <div class="prog-tab-title">
+      <h2>Questionnaires</h2>
+    </div>
+    <% @categories.each do |category| %>
+  <% if @questionnaires.where(category_id: category.id) != [] %>
+    <h4><strong><%= category.name %> :</strong></h4>
+      <% @questionnaires.where(category_id: category.id).each do |questionnaire|%>
+        <p><%= link_to questionnaire.title, questionnaire_interviews_path(questionnaire, Interview.new), method: :post %></p>
+      <% end %>
+    <% end %>
+  <% end %>
+  </div>
 
   <div class="encart-prog-complet">
     <div class="prog-tab-title">

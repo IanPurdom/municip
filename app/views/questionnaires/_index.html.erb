@@ -1,0 +1,14 @@
+<div class="container">
+  <% @categories.each do |category| %>
+    <% if @questionnaires.where(category_id: category.id) != [] %>
+      </div>
+        <h4><strong><%= category.name %> :</strong></h4>
+        <% @questionnaires.where(category_id: category.id).each do |questionnaire|%>
+          <p><%= questionnaire.title %></p>
+        </div>
+      <% end %>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+

@@ -1,14 +1,9 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
-
 puts "cleaning seeds..."
 
 Program.destroy_all
+Interview.destroy_all
+Question.destroy_all
+Questionnaire.destroy_all
 Category.destroy_all
 User.destroy_all
 
@@ -71,7 +66,7 @@ for i in 1..4
 picture = Photo.new(city_id: new_city[:id])
 picture.photo = Rails.root.join("db/images/mairie_#{i}.jpg").open
 picture.save
-p picture
+# p picture
 end
 
 puts "creating categories..."
@@ -86,13 +81,68 @@ puts "creating programs & categories..."
 file = "db/programs.yml"
 programs = YAML.load(open(file).read)
 
-n = 0
+program_ids = []
+# n = 0
 programs["programs"].each do |program|
   # Category.create!(categories[n])
   u = Program.new(program)
-  u.category = Category.find_by(name: categories[n])
+  u.category = Category.find_by(name: "Sécurité")
   u.save
-  n += 1
+  # n += 1
+  program_ids << u.id
+  # p program_ids
+end
+
+puts "creating questionnaire..."
+
+category = Category.find_by(name: "Sécurité")
+questionnaire = Questionnaire.create(title: "le constat sur la ville", category: category, root_question_id: 1)
+
+puts "creating interview..."
+
+interview = Interview.create(user: user, questionnaire: questionnaire)
+
+puts "creating answers..."
+
+yes = Answer.create(answer: "Oui")
+no = Answer.create(answer: "Non")
+
+puts "creating questions..."
+
+questions = [
+  {question:"Diriez-vous que votre commune connait des problèmes d’insécurité ?"
+  },
+  {question:"Disposez-vous de chiffres concernant la délinquance dans votre commune ?"
+  },
+  {question:"La délinquance est-elle plus forte que dans les autres communes ?"
+  }
+]
+
+question_ids = []
+questions.each do |question|
+  q = Question.create(questionnaire: questionnaire, question: question)
+  question_ids << q.id
+  # p question_ids
+end
+
+puts "creating answers_to_questions..."
+
+aq_0 = AnswersToQuestion.create(question_id: question_ids[0], answer_id: yes.id, next_question_id: question_ids[1])
+aq_1 = AnswersToQuestion.create(question_id: question_ids[0], answer_id: no.id)
+aq_2 = AnswersToQuestion.create(question_id: question_ids[1], answer_id: yes.id, next_question_id: question_ids[2])
+aq_3 = AnswersToQuestion.create(question_id: question_ids[2], answer_id: yes.id)
+
+atq = [aq_0.id, aq_1.id, aq_2.id, aq_3.id]
+# p atq
+
+puts "creating program_to_answers..."
+
+for i in 0..3
+# p i
+pta = ProgramToAnswer.new(answers_to_question_id: atq[i], program_id: program_ids[i])
+pta.save
+# p pta
+i+=1
 end
 
 puts "seeds done"

@@ -10,10 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180126090829) do
+ActiveRecord::Schema.define(version: 20180205203633) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "answers", force: :cascade do |t|
+    t.text "answer"
+    t.integer "next_question_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "answers_to_questions", force: :cascade do |t|
+    t.bigint "question_id"
+    t.bigint "answer_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "next_question_id"
+    t.index ["answer_id"], name: "index_answers_to_questions_on_answer_id"
+    t.index ["question_id"], name: "index_answers_to_questions_on_question_id"
+  end
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -58,12 +75,31 @@ ActiveRecord::Schema.define(version: 20180126090829) do
     t.index ["user_id"], name: "index_deputies_on_user_id"
   end
 
+  create_table "interviews", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "questionnaire_id"
+    t.integer "last_question_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["questionnaire_id"], name: "index_interviews_on_questionnaire_id"
+    t.index ["user_id"], name: "index_interviews_on_user_id"
+  end
+
   create_table "photos", force: :cascade do |t|
     t.string "photo"
     t.bigint "city_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["city_id"], name: "index_photos_on_city_id"
+  end
+
+  create_table "program_to_answers", force: :cascade do |t|
+    t.bigint "program_id"
+    t.bigint "answers_to_question_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["answers_to_question_id"], name: "index_program_to_answers_on_answers_to_question_id"
+    t.index ["program_id"], name: "index_program_to_answers_on_program_id"
   end
 
   create_table "programs", force: :cascade do |t|
@@ -73,6 +109,23 @@ ActiveRecord::Schema.define(version: 20180126090829) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["category_id"], name: "index_programs_on_category_id"
+  end
+
+  create_table "questionnaires", force: :cascade do |t|
+    t.string "title"
+    t.bigint "category_id"
+    t.integer "root_question_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_questionnaires_on_category_id"
+  end
+
+  create_table "questions", force: :cascade do |t|
+    t.bigint "questionnaire_id"
+    t.text "question"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["questionnaire_id"], name: "index_questions_on_questionnaire_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -95,8 +148,16 @@ ActiveRecord::Schema.define(version: 20180126090829) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "answers_to_questions", "answers"
+  add_foreign_key "answers_to_questions", "questions"
   add_foreign_key "cities", "users"
   add_foreign_key "deputies", "users"
+  add_foreign_key "interviews", "questionnaires"
+  add_foreign_key "interviews", "users"
   add_foreign_key "photos", "cities"
+  add_foreign_key "program_to_answers", "answers_to_questions"
+  add_foreign_key "program_to_answers", "programs"
   add_foreign_key "programs", "categories"
+  add_foreign_key "questionnaires", "categories"
+  add_foreign_key "questions", "questionnaires"
 end
