@@ -5,6 +5,7 @@ class User < ApplicationRecord
   has_many :deputies, dependent: :destroy
   has_many :cities, dependent: :destroy
   has_many :photos, through: :cities
+  has_many :interviews
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 end

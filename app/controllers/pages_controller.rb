@@ -6,5 +6,6 @@ class PagesController < ApplicationController
     @city = City.where(user: current_user).first
     @deputies = policy_scope(Deputy).where(user: current_user)
     @categories = Category.all
+    @questionnaires = Questionnaire.all
   end
 end
