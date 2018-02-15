@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  program: MyText
+  user: one
+  interview: one
+  question: one
+  category: one
+
+two:
+  program: MyText
+  user: two
+  interview: two
+  question: two
+  category: two

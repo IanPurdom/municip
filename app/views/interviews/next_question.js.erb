@@ -1,0 +1,53 @@
+var interview_id = "<%= @interview.id %>";
+var next_question_id = "<%= @next_question.id %>";
+var n = '<%= @answers.length %>';
+
+var answer_1 = '<%= raw @answers[0] %>';
+var answer_2 = '<%= raw @answers[1] %>';
+var answer_3 = '<%= raw @answers[2] %>';
+var answer_4 = '<%= raw @answers[3] %>';
+var answer_5 = '<%= raw @answers[4] %>';
+
+var a2q_1 = '<%= raw @a2q_ids[0] %>';
+var a2q_2 = '<%= raw @a2q_ids[1] %>';
+var a2q_3 = '<%= raw @a2q_ids[2] %>';
+var a2q_4 = '<%= raw @a2q_ids[3] %>';
+var a2q_5 = '<%= raw @a2q_ids[4] %>';
+
+function clearProgram() {
+  document.getElementById("user_program_program").value = "";
+  document.getElementById("user_program_program_id").value = "";
+};
+
+function nextQuestion() {
+  var question = document.getElementById('question');
+  question.innerText = "<%= j @next_question.question %>";
+  nextAnswers(question)
+};
+
+function nextAnswers(question) {
+  document.querySelectorAll("answer").remove
+  for (let i = 1; i <= n; i++) {
+    if (eval(`answer_${i}`) != "") {
+      let a = document.createElement("a");
+      a.appendChild(document.createTextNode(eval(`answer_${i}`)));
+      let a2q_id = eval(`a2q_${i}`)
+      setAttributes(a, {"class": "answer", "data-remote": "true", "rel": "nofollow", "data-method": "patch", "href": `/interviews/${interview_id}/get_program?answers_to_question=${a2q_id}&question=${next_question_id}`});
+      let li = document.createElement("li");
+      question.appendChild(li);
+      li.appendChild(a)
+      document.getElementById("user_program_question_id").value = next_question_id
+    }else{
+      console.log("We have a problem!")
+    };
+  };
+};
+
+function setAttributes(el, attrs) {
+  for(var key in attrs) {
+    el.setAttribute(key, attrs[key]);
+  }
+};
+
+clearProgram();
+nextQuestion();

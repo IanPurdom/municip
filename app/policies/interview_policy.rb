@@ -9,4 +9,12 @@ class InterviewPolicy < ApplicationPolicy
     true
   end
 
+  def get_program?
+    record.user == user
+  end
+
+  def next_question?
+    record.user == user
+  end
+
 end
