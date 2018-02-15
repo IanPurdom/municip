@@ -1,10 +1,14 @@
 puts "cleaning seeds..."
 
+
+UserProgram.destroy_all
 Program.destroy_all
 Interview.destroy_all
 Question.destroy_all
 Questionnaire.destroy_all
+Interview.destroy_all
 Category.destroy_all
+Answer.destroy_all
 User.destroy_all
 
 puts "creating seeds..."
@@ -110,17 +114,20 @@ no = Answer.create(answer: "Non")
 puts "creating questions..."
 
 questions = [
-  {question:"Diriez-vous que votre commune connait des problèmes d’insécurité ?"
+  {question:"Diriez-vous que votre commune connait des problèmes d’insécurité ?",
+   questionnaire: questionnaire
   },
-  {question:"Disposez-vous de chiffres concernant la délinquance dans votre commune ?"
+  {question:"Disposez-vous de chiffres concernant la délinquance dans votre commune ?",
+   questionnaire: questionnaire
   },
-  {question:"La délinquance est-elle plus forte que dans les autres communes ?"
+  {question:"La délinquance est-elle plus forte que dans les autres communes ?",
+   questionnaire: questionnaire
   }
 ]
 
 question_ids = []
 questions.each do |question|
-  q = Question.create(questionnaire: questionnaire, question: question)
+  q = Question.create(question)
   question_ids << q.id
   # p question_ids
 end
@@ -131,6 +138,9 @@ aq_0 = AnswersToQuestion.create(question_id: question_ids[0], answer_id: yes.id,
 aq_1 = AnswersToQuestion.create(question_id: question_ids[0], answer_id: no.id)
 aq_2 = AnswersToQuestion.create(question_id: question_ids[1], answer_id: yes.id, next_question_id: question_ids[2])
 aq_3 = AnswersToQuestion.create(question_id: question_ids[2], answer_id: yes.id)
+
+aq_4 = AnswersToQuestion.create(question_id: question_ids[1], answer_id: no.id)
+aq_5 = AnswersToQuestion.create(question_id: question_ids[2], answer_id: no.id)
 
 atq = [aq_0.id, aq_1.id, aq_2.id, aq_3.id]
 # p atq
