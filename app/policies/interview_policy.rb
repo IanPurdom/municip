@@ -17,4 +17,8 @@ class InterviewPolicy < ApplicationPolicy
     record.user == user
   end
 
+  def end_interview?
+    record.user == user
+  end
+
 end

@@ -1,6 +1,3 @@
-console.log("<%= j @program.content %>")
-console.log("<%= @a2q_id %>")
-
 function getProgram(answer) {
 document.getElementById("user_program_program").value = "<%= j @program.content %>";
 document.getElementById("user_program_program_id").value = "<%= @program.id %>";
@@ -9,6 +6,5 @@ document.getElementById("user_program_a2q_id").value = "<%= @a2q_id %>";
 
 var answer = document.querySelector(".answer");
 answer.addEventListener('click', getProgram(answer));
-
 
 
