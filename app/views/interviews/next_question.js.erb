@@ -26,7 +26,7 @@ function nextQuestion() {
 };
 
 function nextAnswers(question) {
-  document.querySelectorAll("answer").remove
+  document.querySelectorAll("answer").remove;
   for (let i = 1; i <= n; i++) {
     if (eval(`answer_${i}`) != "") {
       let a = document.createElement("a");

@@ -139,11 +139,11 @@ aq_1 = AnswersToQuestion.create(question_id: question_ids[0], answer_id: no.id)
 aq_2 = AnswersToQuestion.create(question_id: question_ids[1], answer_id: yes.id, next_question_id: question_ids[2])
 aq_3 = AnswersToQuestion.create(question_id: question_ids[2], answer_id: yes.id)
 
-aq_4 = AnswersToQuestion.create(question_id: question_ids[1], answer_id: no.id)
-aq_5 = AnswersToQuestion.create(question_id: question_ids[2], answer_id: no.id)
+aq_4 = AnswersToQuestion.create(question_id: question_ids[2], answer_id: no.id)
+aq_5 = AnswersToQuestion.create(question_id: question_ids[1], answer_id: no.id)
 
 atq = [aq_0.id, aq_1.id, aq_2.id, aq_3.id]
-# p atq
+atq_no_prog = [aq_4.id, aq_5.id]
 
 puts "creating program_to_answers..."
 
@@ -151,6 +151,14 @@ for i in 0..3
 # p i
 pta = ProgramToAnswer.new(answers_to_question_id: atq[i], program_id: program_ids[i])
 pta.save
+# p pta
+i+=1
+end
+
+#for the one using the no_program // program_id => program.yml the last one i.e program_ids[4] !
+for i in 0..1
+pta_no_prog = ProgramToAnswer.new(answers_to_question_id: atq_no_prog[i], program_id:program_ids[4] )
+pta_no_prog.save
 # p pta
 i+=1
 end
