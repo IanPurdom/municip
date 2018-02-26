@@ -1,3 +1,5 @@
+interview_id = <%= @interview.id%>
+
 function clear() {
   var question = document.getElementById("question");
   var grid = document.querySelector(".grid");
@@ -10,12 +12,29 @@ function add_text(container) {
   div.appendChild(document.createTextNode("Bravo! Vous avez fini le questionnaire"))
   div.setAttribute = ("class", "end_text")
   container.appendChild(div)
+
   var div2 = document.createElement("div");
   var a = document.createElement("a")
   a.appendChild(document.createTextNode("Retour à l'acceuil"))
   setAttributes(a, {"href": "/"})
   div2.appendChild(a)
   div.appendChild(div2)
+
+  var div3 = document.createElement("div");
+  var a1 = document.createElement("a")
+  a1.appendChild(document.createTextNode("Recommencer le questionnaire"))
+  setAttributes(a1, {"href": `/interviews/${interview_id}/retry`})
+  div3.appendChild(a1)
+  div.appendChild(div3)
+
+  var div4 = document.createElement("div");
+  var a2 = document.createElement("a")
+  a2.appendChild(document.createTextNode("Visualiser vos réponses"))
+  setAttributes(a2, {"href": `/interviews/${interview_id}/show_program`})
+  div4.appendChild(a2)
+  div.appendChild(div4)
+
+
 };
 
 function add_button(container) {

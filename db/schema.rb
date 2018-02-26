@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180212172241) do
+ActiveRecord::Schema.define(version: 20180219141052) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,7 +81,9 @@ ActiveRecord::Schema.define(version: 20180212172241) do
     t.integer "last_question_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "status_id"
     t.index ["questionnaire_id"], name: "index_interviews_on_questionnaire_id"
+    t.index ["status_id"], name: "index_interviews_on_status_id"
     t.index ["user_id"], name: "index_interviews_on_user_id"
   end
 
@@ -128,6 +130,12 @@ ActiveRecord::Schema.define(version: 20180212172241) do
     t.index ["questionnaire_id"], name: "index_questions_on_questionnaire_id"
   end
 
+  create_table "statuses", force: :cascade do |t|
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "user_programs", force: :cascade do |t|
     t.text "program"
     t.bigint "user_id"
@@ -167,6 +175,7 @@ ActiveRecord::Schema.define(version: 20180212172241) do
   add_foreign_key "cities", "users"
   add_foreign_key "deputies", "users"
   add_foreign_key "interviews", "questionnaires"
+  add_foreign_key "interviews", "statuses"
   add_foreign_key "interviews", "users"
   add_foreign_key "photos", "cities"
   add_foreign_key "program_to_answers", "answers_to_questions"

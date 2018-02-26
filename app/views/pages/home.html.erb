@@ -1,7 +1,6 @@
 <div class="home-header">
   <h1 class="page_title">Tableau de bord</h1>
 </div>
-
 <div class="container">
 <% if @city.nil? %>
   <div class="encart-ville">
@@ -30,7 +29,6 @@
       </div>
   </div>
 <% end %>
-
   <div class="encart-deputy">
     <div class="deputy-tab-title">
       <h2>Mon équipe</h2>
@@ -53,25 +51,37 @@
       <h2>Questionnaires</h2>
     </div>
     <% @categories.each do |category| %>
-  <% if @questionnaires.where(category_id: category.id) != [] %>
-    <h4><strong><%= category.name %> :</strong></h4>
-      <% @questionnaires.where(category_id: category.id).each do |questionnaire|%>
-        <p><%= link_to questionnaire.title, questionnaire_interviews_path(questionnaire, Interview.new), method: :post %></p>
+      <% if @questionnaires.where(category_id: category.id) != [] %>
+        <h4><strong><%= category.name %> :</strong></h4>
+          <% @questionnaires.where(category_id: category.id).each do |questionnaire|%>
+            <% if questionnaire.interviews.find_by(user: current_user).nil? %>
+              <div class="questionnaires">
+                <p><%= link_to questionnaire.title, questionnaire_interviews_path(questionnaire, Interview.new), method: :post %></p>
+                <i class="fa fa-play-circle"></i>
+              </div>
+            <% else %>
+              <div class="questionnaires">
+                <p><%= link_to questionnaire.title, interview_path(@interviews.find_by(questionnaire: questionnaire).id)%></p>
+                <% if @interviews.find_by(questionnaire: questionnaire).status.status == "done" %>
+                  <i class="fa fa-check-circle"></i>
+                <% else %>
+                  <i class="fa fa-hourglass-start" ></i>
+                <% end  %>
+              </div>
+            <% end %>
+          <% end %>
       <% end %>
     <% end %>
-  <% end %>
   </div>
 
   <div class="encart-prog-complet">
     <div class="prog-tab-title">
-      <h2>Le programme</h2>
+      <h2>Mon programme</h2>
     </div>
-    <% @categories.each do |category| %>
-      <p><strong><%= category.name %></strong></p>
-    <% end  %>
-    <%= link_to ' voir plus...', programs_path, class: "fa fa-arrow-circle-right" %>
+    <%= link_to "L'integralité du programme", user_programs_path, class: "fa fa-arrow-circle-right" %>
+    <%# @categories.each do |category| %>
+    <%# if @user_programs.where(category_id: category) != [] %>
+    <%# link_to category.name, user_program_path() %>
+    <%# end %>
   </div>
-
 </div>
-
-

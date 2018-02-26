@@ -1,28 +1,26 @@
 class InterviewsController < ApplicationController
-before_action :set_interview, only: [:show, :edit, :update, :destroy, :get_program, :next_question, :end_interview]
+before_action :set_interview, only: [:show, :edit, :update, :destroy, :get_program, :next_question, :end_interview, :retry, :show_program]
 
   def show
-    @question = @interview.questionnaire.questions[0]
-    @user_program = UserProgram.new
+    if @interview.status.status == "in_progress"
+      @question = Question.find(@interview.last_question_id)
+      @user_program = UserProgram.new
+    else
+      redirect_to show_program_interview_path(@interview)
+    end
   end
 
   def create
     interviews = policy_scope(Interview).where("user_id = ? AND questionnaire_id = ?",
     current_user.id, Questionnaire.find(params[:questionnaire_id]).id)
-    if interviews.any?
-      @interview = interviews.first
-      authorize @interview
+    @questionnaire = Questionnaire.find(params[:questionnaire_id])
+    @interview = Interview.new(user: current_user,questionnaire: @questionnaire,status: Status.find_by(status: "in_progress"))
+    @interview.last_question_id = @interview.questionnaire.questions[0].id
+    authorize @interview
+    if @interview.save
       redirect_to interview_path(@interview)
     else
-      @interview = Interview.new
-      @interview.user = current_user
-      @interview.questionnaire = Questionnaire.find(params[:questionnaire_id])
-      authorize @interview
-      if @interview.save
-        redirect_to interview_path(@interview)
-      else
-        redirect_to root_path
-      end
+      redirect_to root_path
     end
   end
 
@@ -45,6 +43,9 @@ before_action :set_interview, only: [:show, :edit, :update, :destroy, :get_progr
     p2a = ProgramToAnswer.find_by(program_id: params[:program_id])
     @a2q = AnswersToQuestion.find(p2a.answers_to_question_id)
     @next_question = Question.find(@a2q.next_question_id)
+    #send the next_question id to interview.last_question in order to go back to the last question when we reopen the interview
+    @interview.last_question_id = @next_question.id
+    @interview.save
     # get the a2q id to send to ajax for href update
     # because we dont'necessarly have the same answers for each question: yes, no, don't know etc..
     a2q_next = AnswersToQuestion.where(question_id: @next_question.id)
@@ -65,13 +66,29 @@ before_action :set_interview, only: [:show, :edit, :update, :destroy, :get_progr
   end
 
   def end_interview
+    @interview.status = Status.find_by(status: "done")
+    @interview.save
     respond_to do |format|
       format.html
       format.js
-      end
+    end
+  end
+
+  def retry
+    @user_program = UserProgram.where(interview: @interview)
+    @user_program.destroy_all
+    @interview.last_question_id = @interview.questionnaire.questions[0].id
+    @interview.status = Status.find_by(status: "in_progress")
+    @interview.save
+    redirect_to interview_path(@interview)
+  end
+
+  def show_program
+    @user_programs = @interview.user_programs
   end
 
   private
+
   def set_interview
     @interview = Interview.find(params[:id])
     authorize @interview

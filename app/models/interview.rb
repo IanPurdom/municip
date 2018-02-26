@@ -1,4 +1,5 @@
 class Interview < ApplicationRecord
+  belongs_to :status
   belongs_to :user
   belongs_to :questionnaire
   has_many :questions, through: :questionnaires, source: :question

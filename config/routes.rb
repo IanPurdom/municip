@@ -23,6 +23,8 @@ Rails.application.routes.draw do
     patch 'get_program', to: "interviews#get_program"
     get 'next_question', to: "interviews#next_question"
     get 'end_interview', to:"interviews#end_interview"
+    get 'retry', to:"interviews#retry"
+    get 'show_program', to: "interviews#show_program"
     end
   end
   resources :user_programs, only: [:show, :index, :edit, :update, :destroy]
