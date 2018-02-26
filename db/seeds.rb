@@ -100,11 +100,18 @@ end
 puts "creating questionnaire..."
 
 category = Category.find_by(name: "Sécurité")
-questionnaire = Questionnaire.create(title: "le constat sur la ville", category: category, root_question_id: 1)
+questionnaire = Questionnaire.create(title: "Le constat sur la ville", category: category, root_question_id: 1)
+questionnaire_2 = Questionnaire.create(title: "", category: category, root_question_id: 1)
 
-puts "creating interview..."
+# puts "creating interview..."
 
-interview = Interview.create(user: user, questionnaire: questionnaire)
+# interview = Interview.create(user: user, questionnaire: questionnaire)
+
+puts "creating status.."
+
+Status.create(status: "in_progress")
+Status.create(status: "done")
+
 
 puts "creating answers..."
 

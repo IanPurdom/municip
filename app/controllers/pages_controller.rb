@@ -7,5 +7,6 @@ class PagesController < ApplicationController
     @deputies = policy_scope(Deputy).where(user: current_user)
     @categories = Category.all
     @questionnaires = Questionnaire.all
+    @interviews = policy_scope(Interview).where(user: current_user)
   end
 end

@@ -21,4 +21,13 @@ class InterviewPolicy < ApplicationPolicy
     record.user == user
   end
 
+  def retry?
+    record.user == user
+  end
+
+  def show_program?
+    record.user == user
+  end
+
+
 end
