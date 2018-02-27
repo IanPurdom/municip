@@ -10,10 +10,14 @@
     <div class="f-new">
       <ul class="new-form">
         <%= simple_form_for @deputy do |f| %>
-          <%= f.input :title%>
-          <%= f.input :first_name %>
-          <%= f.input :last_name %>
-          <%= f.input :profession %>
+          <%= f.input :title, :label => "Titre"%>
+          <%= f.input :category_id, :label => "Catégorie",collection: @categories.collect{|category| [category.name, category.id]} %>
+          <%= f.input :first_name, :label => "Prénon" %>
+          <%= f.input :last_name, :label => "Nom" %>
+          <%= f.input :profession, :label => "Profession" %>
+          <%= f.input :family, :label => "Situation familliale" %>
+          <%= f.input :address, :label => "Adresse" %>
+          <%= f.input :description, :label => "Descriptif", input_html: {rows: 10}  %>
           <%= f.input :photo %>
           <%= f.submit 'Modifier' %>
         <% end %>

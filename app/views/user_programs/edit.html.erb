@@ -1,0 +1,21 @@
+<div class="home-header">
+  <h1 class="program-title">Modifier votre réponse</h1>
+</div>
+<div>
+  <%= link_to 'Annuler', show_program_interview_path(@user_program.interview), class:"btn-add" %>
+</div>
+<div class="container">
+   <div class="grid">
+    <div class="f-new">
+      <ul class="new-form">
+        <%= simple_form_for(@user_program) do |f| %>
+          <%= f.input :program, as: :text, input_html: {rows: 20} %>
+          <%= f.hidden_field :interview_id %>
+          <%= f.submit 'Modifier'%>
+          <!-- [...] -->
+        <% end %>
+      </ul>
+    </div>
+  </div>
+
+</div>

@@ -11,6 +11,7 @@ before_action :set_deputy, only: [:show, :edit, :update, :destroy]
 
   def new           # GET /deputies/new
     @deputy = Deputy.new
+    @categories = Category.all
     authorize @deputy
   end
 
@@ -26,9 +27,13 @@ before_action :set_deputy, only: [:show, :edit, :update, :destroy]
   end
 
   def edit          # GET /deputies/:id/edit
+    @categories = Category.all
   end
 
   def update        # PATCH /deputies/:id
+    @deputy.update(deputy_params)
+    @deputy.save
+    redirect_to deputies_path
   end
 
   def destroy       # DELETE /deputies/:id
@@ -44,7 +49,7 @@ before_action :set_deputy, only: [:show, :edit, :update, :destroy]
   end
 
   def deputy_params
-    params.require(:deputy).permit(:id, :first_name, :last_name, :title, :profession, :user_id, :photo)
+    params.require(:deputy).permit(:id, :first_name, :last_name, :title, :profession, :user_id, :photo, :family, :description, :category_id, :address)
   end
 
 end

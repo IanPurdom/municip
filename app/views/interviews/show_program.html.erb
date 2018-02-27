@@ -10,16 +10,15 @@
 <div><%= link_to "Recommencer le questionnaire", retry_interview_path(@interview), class: "btn-add" %>
 </div>
 <div class="container">
-    <div class="encart-program">
-      <div class="cat-title">
-        <h1><%= @interview.questionnaire.title %></h1>
-      </div>
-        <%#= @interview.user_programs[0].program %>
+  <div class="encart-program">
+    <div class="cat-title">
+      <h1><%= @interview.questionnaire.title %></h1>
     </div>
-      <% @user_programs.each do |user_program|%>
-      <h4><%= Question.find(user_program.question_id).question %></h4>
-      <p><%= user_program.program %></p>
-      <%= link_to "", edit_user_program_path(user_program), class: "fa fa-edit" %>
-      <%= link_to "", user_program_path(user_program), method: :delete, class: "fa fa-remove" %>
-    <% end %>
+      <%#= @interview.user_programs[0].program %>
+  </div>
+    <% @user_programs.each do |user_program|%>
+    <h4><%= Question.find(user_program.question_id).question %></h4>
+    <p><%= user_program.program %></p>
+    <%= link_to "", edit_user_program_path(user_program), class: "fa fa-edit" %>
+  <% end %>
 </div>
