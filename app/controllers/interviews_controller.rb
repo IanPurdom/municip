@@ -1,10 +1,22 @@
 class InterviewsController < ApplicationController
 before_action :set_interview, only: [:show, :edit, :update, :destroy, :get_program, :next_question, :end_interview, :retry, :show_program]
 
+  def index
+    category_ids = Interview.distinct.pluck(:category_id)
+    @categories = []
+    category_ids.each do |id|
+      @categories << Category.find(id)
+    end
+    @city = City.find_by(user: current_user)
+    @interviews = policy_scope(Interview).where(user: current_user)
+    @categories
+  end
+
   def show
     if @interview.status.status == "in_progress"
       @question = Question.find(@interview.last_question_id)
       @user_program = UserProgram.new
+      @answers = @question.answers
     else
       redirect_to show_program_interview_path(@interview)
     end
@@ -14,7 +26,7 @@ before_action :set_interview, only: [:show, :edit, :update, :destroy, :get_progr
     interviews = policy_scope(Interview).where("user_id = ? AND questionnaire_id = ?",
     current_user.id, Questionnaire.find(params[:questionnaire_id]).id)
     @questionnaire = Questionnaire.find(params[:questionnaire_id])
-    @interview = Interview.new(user: current_user,questionnaire: @questionnaire,status: Status.find_by(status: "in_progress"))
+    @interview = Interview.new(user: current_user, questionnaire: @questionnaire, status: Status.find_by(status: "in_progress"), category: @questionnaire.category)
     @interview.last_question_id = @interview.questionnaire.questions[0].id
     authorize @interview
     if @interview.save
