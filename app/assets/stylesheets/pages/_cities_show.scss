@@ -13,20 +13,32 @@
   justify-content: space-around;
 }
 
-.city_display {
-  display: flex;
-  justify-content: space-between;
+.city-board {
+  display:grid;
+  grid-template-columns: 400px 1fr;
+  grid-template-rows: 50% 50%;
+  border: solid 3px;
+  border-radius: 3px;
 }
 
 .rubrique-show{
-  width: 608px;
-  margin: 22px 0px 36px 46px;
-  line-height: 0.428571;
+  grid-row: 1 / span 1;
+  grid-column: 1 / span 1;
+  line-height: 0.828571;
+  padding: 15px;
 }
 
-.diaporama{
-  width: 808px;
-  margin: 22px 0px 36px 46px;
-  line-height: 1.428571;
+#map{
+  grid-row: 1 / span 1;
+  grid-column: 2 / span 2;
+}
+
+.photo-city {
+  display: flex;
+  justify-content: space-around;
+}
+
+.city-button {
+  text-align: center;
 }
 

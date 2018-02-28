@@ -41,6 +41,11 @@ before_action :set_user_program, only: [:edit, :update, :destroy]
     redirect_to show_program_interview_path(user_program_params[:interview_id])
   end
 
+  def destroy
+    @user_program.destroy
+    redirect_to interviews_path
+  end
+
   private
 
   def set_user_program
