@@ -1,32 +1,28 @@
+<div class="home-header">
+<h1 id="title" class="program-title"><%= @interview.questionnaire.title %></h1>
+</div>
 <div class="container">
-  <h1 id="title"><%= @interview.questionnaire.title %></h3>
-    <% if @interview.status.status == "in_progress" %>
-      <ul id="question"><%= @question.question%>
-        <% @answers.each do |answer| %>
-          <li>
-        <%= link_to answer.answer, get_program_interview_path(answers_to_question: @question.answers_to_questions.find_by(answer_id: answer), question: @question), method: :patch, class: 'answer', remote: true%>
-        </li>
-        <% end %>
-      </ul>
-    <br>
-    <br>
-       <div class="grid">
-        <div class="f-new">
-          <ul class="new-form">
-            <%= simple_form_for [@interview, @user_program], remote: true do |f| %>
-            <%= f.input :program, :label => "Contenu", as: :text, input_html: {rows: 20} %>
-            <%= f.hidden_field :question_id, :value => @question.id %>
-            <%= f.hidden_field :category_id, :value => @interview.questionnaire.category_id %>
-            <%= f.hidden_field :program_id, :value => nil %>
-            <%= f.hidden_field :a2q_id, :value => nil %>
-            <%= f.submit 'Valider'%>
-            <% end %>
-          </ul>
-        </div>
-      </div>
-    <% else %>
-    <div class="end_text">Bravo! Vous avez fini le questionnaire</div>
-    <div><%= link_to "Retour à l'acceuil", root_path %></div>
-    <div><%= link_to "Recommencer le questionnaire", retry_interview_path(@interview) %></div>
+  <ul id="question"><%= @question.question%>
+    <% @answers.each do |answer| %>
+    <li>
+      <%= link_to answer.answer, get_program_interview_path(answers_to_question: @question.answers_to_questions.find_by(answer_id: answer), question: @question), method: :patch, class: 'answer', remote: true%>
+    </li>
     <% end %>
+  </ul>
+  <br>
+  <br>
+     <div class="grid">
+      <div class="f-new">
+        <ul class="new-form">
+          <%= simple_form_for [@interview, @user_program], remote: true do |f| %>
+          <%= f.input :program, :label => "Votre réponse:", as: :text, input_html: {rows: 20} %>
+          <%= f.hidden_field :question_id, :value => @question.id %>
+          <%= f.hidden_field :category_id, :value => @interview.questionnaire.category_id %>
+          <%= f.hidden_field :program_id, :value => nil %>
+          <%= f.hidden_field :a2q_id, :value => nil %>
+          <%= f.submit 'Valider'%>
+          <% end %>
+        </ul>
+      </div>
+    </div>
 </div>
