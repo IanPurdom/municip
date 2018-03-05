@@ -27,7 +27,7 @@ before_action :set_interview, only: [:show, :edit, :update, :destroy, :get_progr
     interviews = policy_scope(Interview).where("user_id = ? AND questionnaire_id = ?",
     current_user.id, Questionnaire.find(params[:questionnaire_id]).id)
     @questionnaire = Questionnaire.find(params[:questionnaire_id])
-    @interview = Interview.new(user: current_user, questionnaire: @questionnaire, status: Status.find_by(status: "in_progress"), category: @questionnaire.category)
+    @interview = Interview.new(user: current_user, questionnaire: @questionnaire, status: Status.find_by(status: "in_progress"), category: @questionnaire.category, order: @questionnaire.order)
     @interview.last_question_id = @interview.questionnaire.questions[0].id
     authorize @interview
     if @interview.save
