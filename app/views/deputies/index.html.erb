@@ -31,9 +31,17 @@
       </div>
       <br>
       <%= link_to "", edit_deputy_path(deputy), class: "fa fa-edit" %>
-      <%= link_to "", deputy_path(deputy), method: :delete, class: "fa fa-remove" %>
+      <button type="button" class="delete-deputy-button fa fa-remove" onClick="deleteDep(this.id)"></button>
+      <%= link_to "", deputy_path(deputy), method: :delete, class:"hidden delete-deputy"%>
     </div>
   </div>
   <% end %>
+ <%# content_for :after_js do %>
+      <!-- method deleteDeputy is defined in app/javascript/packs/swal_deputy.js -->
+ <%= javascript_pack_tag 'swal_deputy' %>
+  <script>
+  const deleteDep = ((clicked_id) => {
+    deleteDeputy(clicked_id);
+  });
+  </script>
 </div>
-

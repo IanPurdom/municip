@@ -25,7 +25,20 @@
   grid-row: 1 / span 1;
   grid-column: 1 / span 1;
   line-height: 0.828571;
-  padding: 15px;
+  background-color: #E6ECE2;
+  border-right: 2px solid black;
+}
+
+.rub-title {
+  padding: 10px;
+  font-size: 25px;
+  font-weight: bold;
+  background-color: #133859;
+  color: white;
+}
+
+.rub-p {
+  padding: 11px;
 }
 
 #map{

@@ -10,23 +10,29 @@
     </div>
     <div class="city-board">
       <div class="rubrique-show">
-          <h3>Administratif</h3>
-        <p><strong>Departement: </strong><%= @city.departement %></p>
-        <p><strong>Région: </strong><%= @city.region %></p>
-        <p><strong>Canton: </strong><%= @city.canton %></p>
-        <p><strong>Intercommunalité: </strong><%= @city.intercommunalite %></p>
-        <p><strong>Maire actuel: </strong><%= @city.current_maire %></p>
-        <p><strong>Code Postal: </strong><%= @city.zip_code %></p>
-        <p><strong>Code Commune: </strong><%= @city.code_commune %></p>
-          <h3>Démographie</h3>
-        <p><strong>Gentilé: </strong><%= @city.gentile %></p>
-        <p><strong>Population: </strong><%= @city.population %></p>
-        <p><strong>Densité: </strong><%= @city.density %></p>
-          <h3>Géographie</h3>
-        <p><strong>Latitude: </strong><%= @city.latitude %></p>
-        <p><strong>Longitude: </strong><%= @city.longitude %></p>
-        <p><strong>Altitude: </strong><%= @city.height %></p>
-        <p><strong>Superficie: </strong><%= @city.superficy %></p>
+        <div class="rub-title">Administratif</div>
+        <div class="rub-p">
+          <p><strong>Departement: </strong><%= @city.departement %></p>
+          <p><strong>Région: </strong><%= @city.region %></p>
+          <p><strong>Canton: </strong><%= @city.canton %></p>
+          <p><strong>Intercommunalité: </strong><%= @city.intercommunalite %></p>
+          <p><strong>Maire actuel: </strong><%= @city.current_maire %></p>
+          <p><strong>Code Postal: </strong><%= @city.zip_code %></p>
+          <p><strong>Code Commune: </strong><%= @city.code_commune %></p>
+          </div>
+        <div class="rub-title">Démographie</div>
+        <div class="rub-p">
+          <p><strong>Gentilé: </strong><%= @city.gentile %></p>
+          <p><strong>Population: </strong><%= @city.population %></p>
+          <p><strong>Densité: </strong><%= @city.density %></p>
+        </div>
+        <div class="rub-title">Géographie</div>
+        <div class="rub-p">
+          <p><strong>Latitude: </strong><%= @city.latitude %></p>
+          <p><strong>Longitude: </strong><%= @city.longitude %></p>
+          <p><strong>Altitude: </strong><%= @city.height %></p>
+          <p><strong>Superficie: </strong><%= @city.superficy %></p>
+        </div>
       </div>
       <div
       id="map"
@@ -41,7 +47,8 @@
       <% @photos.each do |picture| %>
         <div class="card "
           style="background-image: url('<%= cl_image_path picture.photo, height: 300, width: 400, crop: :fill %>')">
-        <%= link_to "", city_photo_path(@city.id, picture.id), method: :delete, class: "fa fa-trash del-pos-card"  %>
+        <a type="button" class="delete-city-photo-button fa fa-trash del-pos-card"></a>
+        <%= link_to "", city_photo_path(@city.id, picture.id), method: :delete, class: "delete-city-photo hidden"  %>
       </div>
       <% end %>
     </div>
@@ -56,8 +63,10 @@
   <br>
     <div class="city-button">
       <%= link_to 'Modifier ma ville', edit_city_path(@city), class: "btn-restart btn-orange" %>
-      <%= link_to 'Supprimer ma ville', city_path(@city), method: :delete, class: "btn-restart btn-red" %>
+      <button type=button id="delete-city-button" class="btn-restart btn-red">Supprimer ma Ville</button>
+      <%= link_to 'Supprimer ma ville', city_path(@city), method: :delete, class: "hidden", id:"delete-city" %>
     </div>
   <br>
   <br>
 </div>
+ <%= javascript_pack_tag 'swal_city' %>
