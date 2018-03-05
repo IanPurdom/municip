@@ -6,12 +6,20 @@ Program.destroy_all
 Interview.destroy_all
 Question.destroy_all
 Questionnaire.destroy_all
-Interview.destroy_all
+Deputy.destroy_all
 Category.destroy_all
 Answer.destroy_all
 User.destroy_all
 
 puts "creating seeds..."
+
+puts "creating categories..."
+
+categories = ["Finance", "Urbanisme", "Sécurité"]
+
+categories.each do |category|
+  Category.create!(name: category)
+end
 
 puts "creating users..."
 user = User.new(first_name: "Charles", last_name: "Bazin", email: "charles@mail.com", photo: "image/upload/v1515578859/q38jatr8rzd673e61tu4.jpg", password: '123456')
@@ -25,24 +33,28 @@ deputies = [
   last_name: "Dugenoux",
   title: "Adjoint aux finances",
   profession: "Expert comptable",
-  user: User.last
+  user: User.last,
+  category: Category.find_by(name: "Finance")
 },
 { first_name: "Patrick",
   last_name: "François",
   title: "Adjoint à la sécurité",
   profession: "Consultant",
-  user: User.last
+  user: User.last,
+  category: Category.find_by(name: "Sécurité")
 },
 { first_name: "Franck",
   last_name: "Duchemin",
   title: "Adjoint à l'urbanisme",
   profession: "Architecte",
-  user: User.last
+  user: User.last,
+  category: Category.find_by(name: "Urbanisme")
 }
 ]
 
-deputies.each_with_index do |deputy|
+deputies.each do |deputy|
   new_deputy = Deputy.new(deputy)
+  p new_deputy
   new_deputy.photo =  Rails.root.join("db/images/#{new_deputy.last_name}.jpeg").open
   new_deputy.save
 end
@@ -73,13 +85,6 @@ picture.save
 # p picture
 end
 
-puts "creating categories..."
-
-categories = ["Finance", "Urbanisme", "Sécurité"]
-
-categories.each do |category|
-  Category.create!(name: category)
-end
 
 puts "creating programs & categories..."
 file = "db/programs.yml"
@@ -146,9 +151,9 @@ deux = Answer.create(answer: "Les deux")
 puts "creating questionnaires..."
 
 category = Category.find_by(name: "Sécurité")
-questionnaire = Questionnaire.create(title: "Le constat sur la ville", category: category, root_question_id: 1)
-questionnaire_2 = Questionnaire.create(title: "Bilan de l’action municipale passée", category: category, root_question_id: 1)
-questionnaire_3 = Questionnaire.create(title: "Analyse de la délinquance", category: category, root_question_id: 1)
+questionnaire = Questionnaire.create(title: "Le constat sur la ville", category: category, root_question_id: 1, order: 1)
+questionnaire_2 = Questionnaire.create(title: "Bilan de l’action municipale passée", category: category, root_question_id: 1, order: 2)
+questionnaire_3 = Questionnaire.create(title: "Analyse de la délinquance", category: category, root_question_id: 1, order: 3)
 
 # puts "creating interview..."
 

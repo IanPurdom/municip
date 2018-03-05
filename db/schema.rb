@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180227144640) do
+ActiveRecord::Schema.define(version: 20180305170749) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -88,6 +88,7 @@ ActiveRecord::Schema.define(version: 20180227144640) do
     t.datetime "updated_at", null: false
     t.bigint "status_id"
     t.bigint "category_id"
+    t.integer "order"
     t.index ["category_id"], name: "index_interviews_on_category_id"
     t.index ["questionnaire_id"], name: "index_interviews_on_questionnaire_id"
     t.index ["status_id"], name: "index_interviews_on_status_id"
@@ -99,7 +100,11 @@ ActiveRecord::Schema.define(version: 20180227144640) do
     t.bigint "city_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "category_id"
+    t.bigint "user_id"
+    t.index ["category_id"], name: "index_photos_on_category_id"
     t.index ["city_id"], name: "index_photos_on_city_id"
+    t.index ["user_id"], name: "index_photos_on_user_id"
   end
 
   create_table "program_to_answers", force: :cascade do |t|
@@ -126,6 +131,7 @@ ActiveRecord::Schema.define(version: 20180227144640) do
     t.integer "root_question_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "order"
     t.index ["category_id"], name: "index_questionnaires_on_category_id"
   end
 
@@ -186,7 +192,9 @@ ActiveRecord::Schema.define(version: 20180227144640) do
   add_foreign_key "interviews", "questionnaires"
   add_foreign_key "interviews", "statuses"
   add_foreign_key "interviews", "users"
+  add_foreign_key "photos", "categories"
   add_foreign_key "photos", "cities"
+  add_foreign_key "photos", "users"
   add_foreign_key "program_to_answers", "answers_to_questions"
   add_foreign_key "program_to_answers", "programs"
   add_foreign_key "programs", "categories"

@@ -10,7 +10,7 @@
       <h1><%= category.name %></h1>
     </div>
   </div>
-  <% @interviews.where(category: category).each do |interview| %>
+  <% @interviews.where(category: category).order(:order).each do |interview| %>
     <h4><%= interview.questionnaire.title %></h4>
     <% interview.user_programs.each do |user_program| %>
     <p><%= user_program.program %></p>
