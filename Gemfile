@@ -36,3 +36,6 @@ gem 'carrierwave', '~> 1.2'
 gem 'nokogiri', '~> 1.6', '>= 1.6.6.2'
 gem "geocoder"
 gem 'addressable', '~> 2.5', '>= 2.5.2'
+gem 'sweetalert2', '~> 0.0.4'
+gem 'rails-sweetalert2-confirm'
+gem 'jquery-rails'

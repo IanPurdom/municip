@@ -21,6 +21,8 @@
   <br>
   <br>
   <div class="centerize">
-    <%= link_to "Recommencer le questionnaire", retry_interview_path(@interview), class: "btn-restart btn-red"%>
+    <button type="button" id="retry-button" class="btn-restart btn-red">Recommencer le questionnaire</button>
+    <%= link_to "Recommencer le questionnaire", retry_interview_path(@interview), type:"button", class: "hidden", id:"retry"%>
   </div>
 </div>
+ <%= javascript_pack_tag 'swal_user_prog' %>

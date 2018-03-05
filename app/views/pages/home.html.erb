@@ -4,21 +4,21 @@
 <div class="container">
 <% if @city.nil? %>
   <div class="encart-ville">
-    <div class="city-name">
+    <div class="tab-title red">
       <h2>Ma ville</h2>
     </div>
   <%= link_to 'Ajouter ma ville...', new_city_path, class: "fa fa-arrow-circle-right" %>
   </div>
 <% else %>
   <div class="encart-ville">
-    <div class="city-name">
+    <div class="tab-title red">
       <h2><%= @city.name %></h2>
     </div>
       <div class="city-details">
         <div class= "city-tab-admin">
-          <p><strong>Code postal: </strong><%= @city.zip_code %></p>
-          <p><strong>Departement: </strong><%= @city.departement %></p>
-          <p><strong>Région: </strong> <%= @city.region %></p>
+          <p class="home-sub-title"><strong>Code postal: </strong><%= @city.zip_code %></p>
+          <p class="home-sub-title"><strong>Departement: </strong><%= @city.departement %></p>
+          <p class="home-sub-title"><strong>Région: </strong> <%= @city.region %></p>
           <%= link_to ' voir plus...', city_path(@city), class: "fa fa-arrow-circle-right" %>
         </div>
         <div class= "city-tab-photo">
@@ -30,12 +30,12 @@
   </div>
 <% end %>
   <div class="encart-deputy">
-    <div class="deputy-tab-title">
+    <div class="tab-title dark-blue">
       <h2>Mon équipe</h2>
     </div>
     <% @deputies.each do |deputy| %>
         <div class="dep-name-photo">
-          <p><strong><%= deputy.title %>: </strong><%= deputy.first_name %> <%= deputy.last_name %></p>
+          <p class="home-sub-title"><strong><%= deputy.title %>: </strong><%= deputy.first_name %> <%= deputy.last_name %></p>
           <% if deputy[:photo].nil? %>
              <%= image_tag "empty_photo.jpg", class: "deputy-photo-home" %>
           <% else %>
@@ -47,7 +47,7 @@
   </div>
 
   <div class="encart-prog-complet">
-    <div class="prog-tab-title">
+    <div class="tab-title green">
       <h2>Questionnaires</h2>
     </div>
     <% @categories.each do |category| %>
@@ -56,12 +56,12 @@
           <% @questionnaires.where(category_id: category.id).each do |questionnaire|%>
             <% if questionnaire.interviews.find_by(user: current_user).nil? %>
               <div class="questionnaires">
-                <p><%= link_to questionnaire.title, questionnaire_interviews_path(questionnaire, Interview.new), method: :post %></p>
+                <p><%= link_to questionnaire.title, questionnaire_interviews_path(questionnaire, Interview.new), method: :post, class:"home-sub-title" %></p>
                 <i class="fa fa-play-circle"></i>
               </div>
             <% else %>
               <div class="questionnaires">
-                <p><%= link_to questionnaire.title, interview_path(@interviews.find_by(questionnaire: questionnaire).id)%></p>
+                <p><%= link_to questionnaire.title, interview_path(@interviews.find_by(questionnaire: questionnaire).id), class:"home-sub-title"%></p>
                 <% if @interviews.find_by(questionnaire: questionnaire).status.status == "done" %>
                   <i class="fa fa-check-circle"></i>
                 <% else %>
@@ -75,9 +75,9 @@
   </div>
 
   <div class="encart-prog-complet">
-    <div class="prog-tab-title">
-      <h2>Le programme</h2>
+    <div class="tab-title blue-gray">
+      <p>Mon programme</p>
     </div>
-    <%= link_to "Mon programme", interviews_path %>
+    <%= link_to "Mon programme complet", interviews_path, class:"home-sub-title" %>
   </div>
 </div>
