@@ -10,30 +10,28 @@
   <div class="cat-title">
     <h1><%= deputy.title %></h1>
   </div>
-  <div class="encart-final">
-    <div class="sub-encart-final">
+  <div class="deputy_details-full">
+    <div class="dep-details-photo">
       <div class="dep-details">
-        <div class="dep-sub-details">
-          <h2><%= deputy.first_name %> <%= deputy.last_name %></h2>
-          <p><strong>Profession: </strong><%= deputy.profession %></p>
-          <p><strong>Situation familliale: </strong><%= deputy.family %></p>
-          <p><strong>Adresse: </strong><%= deputy.address %></p>
-        </div>
-        <div class="dep-description">
-          <p><strong>Descriptif:</strong></p>
-          <%= deputy.description %>
-        </div>
-        <% if deputy[:photo].nil? %>
-        <%= image_tag "empty_photo.jpg", class: "deputy-photo" %>
-        <% else %>
-        <%= cl_image_tag deputy.photo, class: "deputy-photo" %>
-        <% end %>
+        <h2><%= deputy.first_name %> <%= deputy.last_name %></h2>
+        <p><strong>Profession: </strong><%= deputy.profession %></p>
+        <p><strong>Situation familliale: </strong><%= deputy.family %></p>
+        <p><strong>Adresse: </strong><%= deputy.address %></p>
       </div>
-      <br>
-      <%= link_to "", edit_deputy_path(deputy), class: "fa fa-edit" %>
-      <button type="button" class="delete-deputy-button fa fa-remove" onClick="deleteDep(this.id)"></button>
-      <%= link_to "", deputy_path(deputy), method: :delete, class:"hidden delete-deputy"%>
+      <% if deputy[:photo].nil? %>
+      <%= image_tag "empty_photo.jpg", class: "deputy-photo" %>
+      <% else %>
+      <%= cl_image_tag deputy.photo, class: "deputy-photo" %>
+      <% end %>
     </div>
+    <div class="dep-description">
+      <p><strong>Descriptif:</strong></p>
+      <%= deputy.description %>
+    </div>
+    <br>
+    <%= link_to "", edit_deputy_path(deputy), class: "fa fa-edit" %>
+    <a type="button" class="delete-deputy-button fa fa-remove" onClick="deleteDep(this.id)"></a>
+    <%= link_to "", deputy_path(deputy), method: :delete, class:"hidden delete-deputy"%>
   </div>
   <% end %>
  <%# content_for :after_js do %>
