@@ -18,8 +18,7 @@ const deleteDeputy = ((clicked_id) => {
   })
   .then((result) => {
     if (result.value) {
-      var deps = document.querySelector(`.delete-button${j}`);
-      console.log(deps[j])
+      document.getElementById(`delete-${clicked_id}`).click();
     }
   });
 });
@@ -31,3 +30,4 @@ for (var i = 0; i < deputies.length; i++) {
   deputies2[i].id = `delete-button${i}`;
 };
 
+window.deleteDeputy = deleteDeputy
