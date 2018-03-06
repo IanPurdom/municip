@@ -22,7 +22,7 @@ const deleteCity = (() => {
   });
 });
 
-const deleteCityPhoto = (() => {
+const deleteCityPhoto = ((clicked_id) => {
   swal({
     title: 'Etes-vous sûr de vouloir supprimer cette photo ?',
     type: 'warning',
@@ -35,7 +35,7 @@ const deleteCityPhoto = (() => {
   })
   .then((result) => {
     if (result.value) {
-      document.getElementById("delete-city-photo").click();
+      document.getElementById(`delete-${clicked_id}`).click();
     }
   });
 });
@@ -43,7 +43,12 @@ const deleteCityPhoto = (() => {
 var retry = document.getElementById("delete-city-button");
 retry.addEventListener("click", (deleteCity));
 
-var photos = document.querySelectorAll("delete-city-photo-button");
+var photos = document.getElementsByClassName("delete-city-photo-button");
+var photos2 = document.getElementsByClassName("delete-city-photo");
 for (var i = 0; i < photos.length; i++) {
-  photos[i].addEventListener("click", (deleteCityPhoto));
+  photos[i].id = `button${i}`;
+  photos2[i].id = `delete-button${i}`;
 }
+
+
+window.deleteCityPhoto = deleteCityPhoto;

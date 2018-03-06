@@ -47,7 +47,7 @@
       <% @photos.each do |picture| %>
         <div class="card "
           style="background-image: url('<%= cl_image_path picture.photo, height: 300, width: 400, crop: :fill %>')">
-        <a type="button" class="delete-city-photo-button fa fa-trash del-pos-card"></a>
+        <a type="button" onClick="deletePhoto(this.id)" class="delete-city-photo-button fa fa-trash del-pos-card"></a>
         <%= link_to "", city_photo_path(@city.id, picture.id), method: :delete, class: "delete-city-photo hidden"  %>
       </div>
       <% end %>
@@ -70,3 +70,8 @@
   <br>
 </div>
  <%= javascript_pack_tag 'swal_city' %>
+   <script>
+  const deletePhoto = ((clicked_id) => {
+    deleteCityPhoto(clicked_id);
+  });
+  </script>
