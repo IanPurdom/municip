@@ -23,11 +23,11 @@ const deleteDeputy = ((clicked_id) => {
   });
 });
 
-var deputies = document.getElementsByClassName("delete-deputy-button")
-var deputies2 = document.getElementsByClassName("delete-deputy")
+var deputies = document.getElementsByClassName("delete-deputy-button");
+var deputies2 = document.getElementsByClassName("delete-deputy");
 for (var i = 0; i < deputies.length; i++) {
   deputies[i].id = `button${i}`;
   deputies2[i].id = `delete-button${i}`;
 };
 
-window.deleteDeputy = deleteDeputy
+window.deleteDeputy = deleteDeputy;
