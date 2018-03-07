@@ -38,12 +38,13 @@ before_action :set_interview, only: [:show, :edit, :update, :destroy, :get_progr
   end
 
   def get_program
-    p2a = ProgramToAnswer.find_by(answers_to_question_id: params[:answers_to_question])
+    p2a = ProgramToAnswer.find_by(answer_id: params[:answer])
       if p2a != nil
-        prog_id = p2a.program_id
-        @program = Program.find(prog_id)
-        @a2q_id = @program.program_to_answers[0].answers_to_question_id
+        # prog_id = p2a.program_id
+        @program = Program.find(p2a.program_id)
+        @answer_id = @program.program_to_answers[0].answer_id
       end
+    @program
     authorize @interview
     respond_to do |format|
       format.html
@@ -54,24 +55,22 @@ before_action :set_interview, only: [:show, :edit, :update, :destroy, :get_progr
   def next_question
     #check on next_questio_id.nil already done in UserProgram Class,  method create
     p2a = ProgramToAnswer.find_by(program_id: params[:program_id])
-    @a2q = AnswersToQuestion.find(p2a.answers_to_question_id)
+    @a2q = Answer.find(p2a.answer_id)
     @next_question = Question.find(@a2q.next_question_id)
     #send the next_question id to interview.last_question in order to go back to the last question when we reopen the interview
     @interview.last_question_id = @next_question.id
     @interview.save
-    # get the a2q id to send to ajax for href update
-    # because we dont'necessarly have the same answers for each question: yes, no, don't know etc..
-    a2q_next = AnswersToQuestion.where(question_id: @next_question.id)
+    @answers_instance = Answer.where(question_id: @next_question.id)
+    @answer_ids =[]
     @answers = []
-    @a2q_ids = []
-    a2q_next.each do |a2q|
-      answer_id = a2q.answer_id
-      @answers << Answer.find(answer_id).answer
-      @a2q_ids << a2q.id
+    # JS crash if calling > array.length ex: '<%= raw @answers[2].answer %>' thereofre need to do doo 2 array with ids and contents see next_question.js
+    @answers_instance.each do |answer|
+      @answer_ids << answer.id
+      @answers << answer.answer
     end
-    authorize @interview
+    @answer_ids
     @answers
-    @a2q_ids
+    authorize @interview
     respond_to do |format|
       format.html
       format.js

@@ -1,13 +1,13 @@
 Rails.application.routes.draw do
-  get 'answers_to_questions/new'
+  get 'answers/new'
 
-  get 'answers_to_questions/create'
+  get 'answers/create'
 
-  get 'answers_to_questions/edit'
+  get 'answers/edit'
 
-  get 'answers_to_questions/update'
+  get 'answers/update'
 
-  get 'answers_to_questions/destroy'
+  get 'answers/destroy'
 
   get 'questions/show'
 
@@ -51,10 +51,10 @@ Rails.application.routes.draw do
     end
   end
   resources :questions, only: [:index, :show, :edit, :update, :destroy ] do
-    resources :answers_to_questions, only: [:new, :create]
+    resources :answers, only: [:new, :create]
   end
   resources :user_programs, only: [:show, :index, :edit, :update, :destroy]
-  resources :answers_to_questions, only: [:show, :index, :edit, :update, :destroy]
+  resources :answers, only: [:show, :index, :edit, :update, :destroy]
   root to: 'pages#home'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

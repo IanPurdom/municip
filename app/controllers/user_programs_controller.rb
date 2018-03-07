@@ -10,7 +10,7 @@ before_action :set_user_program, only: [:edit, :update, :destroy]
       user_program.user_id = current_user.id
       user_program.interview_id = params[:interview_id]
       if user_program.save
-        if AnswersToQuestion.find(user_program_params[:a2q_id]).next_question_id.nil?
+        if Answer.find(user_program_params[:a2q_id]).next_question_id.nil?
           authorize user_program
           redirect_to end_interview_interview_path(params[:interview_id])
         else
@@ -22,7 +22,7 @@ before_action :set_user_program, only: [:edit, :update, :destroy]
         redirect_to interview_path(params[:interview_id])
       end
     else
-      if AnswersToQuestion.find(user_program_params[:a2q_id]).next_question_id.nil?
+      if Answer.find(user_program_params[:a2q_id]).next_question_id.nil?
         authorize user_program
         redirect_to end_interview_interview_path(params[:interview_id])
       else
