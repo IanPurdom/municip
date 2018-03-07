@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180305170749) do
+ActiveRecord::Schema.define(version: 20180307103311) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 20180305170749) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "next_question_id"
+    t.string "answer"
     t.index ["answer_id"], name: "index_answers_to_questions_on_answer_id"
     t.index ["question_id"], name: "index_answers_to_questions_on_question_id"
   end

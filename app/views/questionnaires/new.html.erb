@@ -1,0 +1,23 @@
+<div class="home-header">
+<h1 id="title" class="program-title">Ajouter un questionnaire</h1>
+</div>
+<div>
+  <%= link_to 'Annuler', programs_path, class:"btn-add" %>
+</div>
+<div class="container">
+   <div class="grid">
+    <div class="f-new">
+      <ul class="new-form">
+        <%= simple_form_for(@questionnaire) do |f| %>
+          <!-- [...] -->
+          <%= f.input :title, :label => "Titre"%>
+          <%= f.input :category_id, :label => "Catégorie",collection: @categories.collect{|category| [category.name, category.id]} %>
+          <%= f.submit 'Créer'%>
+          <!-- [...] -->
+        <% end %>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
