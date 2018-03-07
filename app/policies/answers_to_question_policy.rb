@@ -1,7 +1,7 @@
-class QuestionnairePolicy < ApplicationPolicy
+class AnswersToQuestionPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope.all
+      scope
     end
   end
 

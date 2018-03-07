@@ -10,26 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180305170749) do
+ActiveRecord::Schema.define(version: 20180307134222) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "answers", force: :cascade do |t|
-    t.text "answer"
-    t.integer "next_question_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "answers_to_questions", force: :cascade do |t|
     t.bigint "question_id"
-    t.bigint "answer_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "next_question_id"
-    t.index ["answer_id"], name: "index_answers_to_questions_on_answer_id"
-    t.index ["question_id"], name: "index_answers_to_questions_on_question_id"
+    t.string "answer"
+    t.index ["question_id"], name: "index_answers_on_question_id"
   end
 
   create_table "categories", force: :cascade do |t|
@@ -109,10 +101,10 @@ ActiveRecord::Schema.define(version: 20180305170749) do
 
   create_table "program_to_answers", force: :cascade do |t|
     t.bigint "program_id"
-    t.bigint "answers_to_question_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["answers_to_question_id"], name: "index_program_to_answers_on_answers_to_question_id"
+    t.bigint "answer_id"
+    t.index ["answer_id"], name: "index_program_to_answers_on_answer_id"
     t.index ["program_id"], name: "index_program_to_answers_on_program_id"
   end
 
@@ -183,8 +175,7 @@ ActiveRecord::Schema.define(version: 20180305170749) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "answers_to_questions", "answers"
-  add_foreign_key "answers_to_questions", "questions"
+  add_foreign_key "answers", "questions"
   add_foreign_key "cities", "users"
   add_foreign_key "deputies", "categories"
   add_foreign_key "deputies", "users"
@@ -195,7 +186,7 @@ ActiveRecord::Schema.define(version: 20180305170749) do
   add_foreign_key "photos", "categories"
   add_foreign_key "photos", "cities"
   add_foreign_key "photos", "users"
-  add_foreign_key "program_to_answers", "answers_to_questions"
+  add_foreign_key "program_to_answers", "answers"
   add_foreign_key "program_to_answers", "programs"
   add_foreign_key "programs", "categories"
   add_foreign_key "questionnaires", "categories"

@@ -1,0 +1,16 @@
+<div class="home-header">
+  <h1 id="title" class="program-title">Ajouter une question</h1>
+</div>
+<div class="container">
+   <div class="grid">
+    <div class="f-new">
+      <ul class="new-form">
+        <%= simple_form_for [@questionnaire, @question] do |f| %>
+          <%= f.input :question, :label => "Rentrez votre question: "%>
+          <%= f.hidden_field :questionnaire_id, :value => @questionnaire.id %>
+          <%= f.submit 'Ajouter', class:"btn-restart btn-red"%>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>

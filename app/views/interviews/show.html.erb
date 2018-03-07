@@ -5,7 +5,7 @@
   <ul id="question"><%= @question.question%>
     <% @answers.each do |answer| %>
     <li>
-      <%= link_to answer.answer, get_program_interview_path(answers_to_question: @question.answers_to_questions.find_by(answer_id: answer), question: @question), method: :patch, class: 'answer', remote: true%>
+      <%= link_to answer.answer, get_program_interview_path(answer: answer, question: @question), remote: true, method: :patch, class: 'answer'%>
     </li>
     <% end %>
   </ul>

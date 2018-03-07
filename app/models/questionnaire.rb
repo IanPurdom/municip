@@ -3,5 +3,5 @@ class Questionnaire < ApplicationRecord
   has_many :interviews
   has_many :questions, dependent: :destroy
   validates :category, presence: true
-  validates :order, presence: true
+  # validates :order, presence: true
 end

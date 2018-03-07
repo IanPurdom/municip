@@ -1,0 +1,26 @@
+<div class="home-header">
+  <h1 class="program-title">Création questionnaire</h1>
+</div>
+<div class="container">
+  <div>
+    <%= link_to "Ajouter une question", new_questionnaire_question_path(@questionnaire),class: "btn-restart btn-red" %>
+  </div>
+  <div class="show-program">
+    <div class="cat-title">
+      <h1><%= @questionnaire.title %></h1>
+    </div>
+  </div>
+  <div>
+    <h2><strong>Categorie: </strong> <%= @questionnaire.category.name %></h2>
+  </div>
+    <% @questionnaire.questions.each do |question|%>
+  <div>
+      <h3><%= question.question %></h3>
+        <% question.answers_to_questions.each do |atq| %>
+          <p><strong>Réponse: </strong> <%= atq.answer.answer %></p>
+          <p><strong>Programme associé: </strong><%= atq.program_to_answers.first.program.content %></p>
+        <% end %>
+    <% end %>
+  </div>
+</div>
+
