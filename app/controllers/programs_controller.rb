@@ -11,17 +11,25 @@ before_action :set_program, only: [:show, :edit, :update, :destroy]
 
   def new
     @program = Program.new
-    @categories = Category.all
+    @answer = Answer.find(params[:answer_id])
     authorize @program
   end
 
   def create
-    @program = Program.new(program_params)
+    @answer = Answer.find(program_params[:answer_id])
+
+
+    category = @answer.question.questionnaire.category
+    @program = Program.new(content: program_params[:content], category: category )
     authorize @program
     if @program.save
-      redirect_to programs_path
+      @program_to_answer = ProgramToAnswer.new(answer_id: @answer.id, program_id: @program.id)
+      if @program_to_answer.save
+      redirect_to questionnaire_path(@answer.question.questionnaire_id)
+      else r
+        ender :new
+      end
     else
-      @categories = Category.all
       render :new
     end
   end
@@ -48,7 +56,7 @@ private
   end
 
   def program_params
-    params.require(:program).permit(:id, :title, :category_id, :content)
+    params.require(:program).permit(:title, :category_id, :content, :answer_id)
   end
 
 end

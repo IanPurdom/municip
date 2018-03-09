@@ -1,0 +1,48 @@
+console.log("<%= @question.question %>")
+
+function remove_form() {
+  const form = document.getElementById("new_question")
+  console.log(form)
+  form.parentNode.removeChild(form);
+};
+
+function show_question(){
+  var container = document.querySelector(".container")
+  var grid = document.querySelector(".grid")
+  var div = document.createElement("div")
+  var h2 = document.createElement("h2")
+  h2.appendChild(document.createTextNode("<%= @question.question %>"))
+  div.appendChild(h2)
+  container.insertBefore(div, grid)
+}
+
+function add_form() {
+  const list = document.querySelector(".new-form")
+  var form = document.createElement("form")
+  setAttributes(form, {"novalidate": "novalidate", "class": "simple_form new_answer", "id": "new_answer", "accept-charset": "UTF-8", "data-remote": "true",  "method": "post"})
+  var input = document.createElement("input")
+  setAttributes(input, {"name": "utf8", "type": "hidden", "value": "✓"})
+  var div = document.createElement("div")
+  setAttributes(div, {"class": "form-group text optional question_add_answer"})
+  var label = document.createElement("label")
+  setAttributes(label, {"class": "control-label text optional", "for": "question_add_answer"})
+  label.appendChild(document.createTextNode("Saisissez une réponse"))
+  var textArea = document.createElement("textarea")
+  setAttributes(textArea, {"class":"form-control text optional", "name":"question[add_question]",  "id": "question_add_answer"})
+  div.appendChild(label)
+  div.appendChild(textArea)
+  form.appendChild(div)
+  form.appendChild(input)
+  list.appendChild(form)
+};
+
+
+function setAttributes(el, attrs) {
+  for(var key in attrs) {
+    el.setAttribute(key, attrs[key]);
+  }
+};
+
+remove_form();
+show_question();
+add_form();

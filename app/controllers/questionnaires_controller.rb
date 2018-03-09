@@ -16,7 +16,7 @@ before_action :set_questionnaire, only: [:show, :edit, :new_question]
     @questionnaire = Questionnaire.new(questionnaire_params)
     @questionnaire.save
     authorize @questionnaire
-    redirect_to new_question_questionnaire_path(@questionnaire)
+    redirect_to new_questionnaire_question_path(@questionnaire)
   end
 
   def show

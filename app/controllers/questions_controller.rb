@@ -1,4 +1,5 @@
 class QuestionsController < ApplicationController
+before_action :set_question, only: [:show, :edit, :update, :destroy, :add_answer, :add_program ]
 
   def show
   end
@@ -13,8 +14,13 @@ class QuestionsController < ApplicationController
     @question = Question.new(question_params)
     @question.questionnaire = Questionnaire.find(params[:questionnaire_id])
     @question.save
+    @answer = Answer.new
+    @question
     authorize @question
-    redirect_to new_question_answers_to_question_path(@question)
+    respond_to do |format|
+      format.html {redirect_to answers_new_path(:question_id => @question.id)}
+      format.js
+    end
   end
 
   def edit
@@ -31,6 +37,10 @@ class QuestionsController < ApplicationController
   end
 
   private
+
+  def set_question
+    @question = Question.find(params(:id))
+  end
 
   def question_params
     params.require(:question).permit(:question)

@@ -63,7 +63,7 @@ before_action :set_interview, only: [:show, :edit, :update, :destroy, :get_progr
     @answers_instance = Answer.where(question_id: @next_question.id)
     @answer_ids =[]
     @answers = []
-    # JS crash if calling > array.length ex: '<%= raw @answers[2].answer %>' thereofre need to do doo 2 array with ids and contents see next_question.js
+    # JS crash if calling field with number > array.length ex: '<%= raw @answers[2].answer %>' thereofre need to do doo 2 array with ids and contents see next_question.js
     @answers_instance.each do |answer|
       @answer_ids << answer.id
       @answers << answer.answer
