@@ -1,12 +1,15 @@
 <div class="home-header">
-  <h1 id="title" class="program-title">Ajouter une question</h1>
+  <h1 id="title" class="program-title">Ajouter une réponse</h1>
 </div>
 <div class="container">
    <div class="grid">
     <div class="f-new">
       <ul class="new-form">
-        <%= simple_form_for [@question, @answers_to_question] do |f| %>
-          <%= f.input :answer, :label => "Rentrez la réponse à la question: ", collection: @answers.collect{|answer| [answer.answer, answer.id]}%>
+        <h1>Nom du questionnaire: <%= @question.questionnaire.title %></h1>
+        <h2>Question: <%= @question.question %></h2>
+        <%= simple_form_for @answer do |f| %>
+          <%= f.input :answer, :label => "Rentrez une réponse à la question: "%>
+          <%= f.hidden_field :question_id, :value => @question.id %>
           <%= f.submit 'Ajouter', class:"btn-restart btn-red"%>
         <% end %>
       </ul>

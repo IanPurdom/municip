@@ -36,7 +36,7 @@ Rails.application.routes.draw do
     end
   end
   resources :programs
-  resources :questionnaires do []
+  resources :questionnaires do
     resources :questions, only: [:new, :create]
     resources :interviews, only: [:create]
   end
@@ -50,11 +50,9 @@ Rails.application.routes.draw do
     get 'show_program', to: "interviews#show_program"
     end
   end
-  resources :questions, only: [:index, :show, :edit, :update, :destroy ] do
-    resources :answers, only: [:new, :create]
-  end
+  resources :questions, only: [:index, :show, :edit, :update, :destroy ]
   resources :user_programs, only: [:show, :index, :edit, :update, :destroy]
-  resources :answers, only: [:show, :index, :edit, :update, :destroy]
+  resources :answers
   root to: 'pages#home'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

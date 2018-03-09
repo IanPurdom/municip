@@ -1,13 +1,15 @@
 <div class="home-header">
-  <h1 id="title" class="program-title">Ajouter une question</h1>
+  <h1 id="title" class="program-title"><%= @questionnaire.title %></h1>
 </div>
 <div class="container">
+  <h1>Nom du questionnaire: <%= @questionnaire.title %></h1>
+  <h2>Question: <%= @question.question %></h2>
    <div class="grid">
     <div class="f-new">
       <ul class="new-form">
         <%= simple_form_for [@questionnaire, @question] do |f| %>
           <%= f.input :question, :label => "Rentrez votre question: "%>
-          <%= f.hidden_field :questionnaire_id, :value => @questionnaire.id %>
+          <%= f.hidden_field :questionnaire_id, :value => @question.questionnaire_id %>
           <%= f.submit 'Ajouter', class:"btn-restart btn-red"%>
         <% end %>
       </ul>
