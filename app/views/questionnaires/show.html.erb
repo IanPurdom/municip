@@ -2,9 +2,6 @@
   <h1 class="program-title">Création questionnaire</h1>
 </div>
 <div class="container">
-  <div>
-    <%= link_to "Ajouter une question", new_questionnaire_question_path(@questionnaire),class: "btn-restart btn-red" %>
-  </div>
   <div class="show-program">
     <div class="cat-title">
       <h1><%= @questionnaire.title %></h1>
@@ -13,13 +10,53 @@
   <div>
     <h2><strong>Categorie: </strong> <%= @questionnaire.category.name %></h2>
   </div>
-    <% @questionnaire.questions.each do |question|%>
+  <br>
   <div>
-      <h3><%= question.question %></h3>
+    <%= link_to "Ajouter une question", new_questionnaire_question_path(@questionnaire),class: "btn-restart btn-red" %>
+  </div>
+  <br>
+  <br>
+  <div>
+    <% @questionnaire.questions.each_with_index do |question, indexq|%>
+      <div class="<%="upd-q-#{indexq} upd-b-#{indexq}"%> qq">
+        <h3 id="<%= "h3#{question.id}" %>"> <%= question.question %></h3>
+        <a type="button" id=<%= "q-#{indexq}"%> class="fa fa-edit", onClick="toggleQ(this.id)"></a>
+      </div>
+      <div class="<%="form-q-#{indexq} form-b-#{indexq}"%> hidden">
+      <%= simple_form_for question, remote: true do |f| %>
+      <%= f.input :question, :label => "Question: ", :input_html => {id:"b-#{indexq}", :onblur => "toggleBlur(this.id)"}  %>
+      <%= f.submit class: "hidden", id:"btn-b-#{indexq}" %>
+      <% end %>
+      </div>
+
+
         <% question.answers.each do |answer| %>
-          <p><strong>Réponse: </strong> <%= answer.answer %></p>
+        <div class="<%="upd-a-#{answer.id} upd-bl-#{answer.id}"%>">
+          <p id="<%= "p#{answer.id}" %>"><strong>Réponse: </strong> <%= answer.answer %></p>
+          <a type="button" id="<%= "a-#{answer.id}"%>" class="fa fa-edit", onClick="toggleQAns(this.id)"></a>
+        </div>
+        <div class="<%= "form-a-#{answer.id} form-bl-#{answer.id}" %> hidden">
+          <%= simple_form_for answer, remote: true do |f| %>
+          <%= f.input :answer, :label => "Réponse: ", :input_html => {id: "bl-#{answer.id}", :onblur => "toggleBlurAns(this.id)"}  %>
+          <%= f.submit class: "hidden", id:"btn-bl-#{answer.id}" %>
+          <%end  %>
+        </div>
+
+          <% if answer.program_to_answers != [] %>
           <p><strong>Programme associé: </strong><%= answer.program_to_answers.first.program.content%></p>
+          <% end %>
+        <%= simple_form_for answer, remote: true do |f| %>
+          <%= f.input :next_question_id, :label => "Question suivante", collection: @questionnaire.questions.collect{|question| [question.question, question.id]}, :input_html => {:onclick => "addNextQuestion(this.id)", :id => "selector#{answer.id}"} %>
+          <%= f.submit  class: "hidden", id: "btn-selector#{answer.id}" %>
+          <% end %>
         <% end %>
+    <%= link_to "Ajouter une réponse", questions_new_path(:question_id=> question.id), class: "btn-add-answer btn-orange"  %>
     <% end %>
   </div>
+<br>
+<br>
+<br>
 </div>
+<%= javascript_pack_tag 'questionnaire' %>
+  <script>
+  </script>
