@@ -17,17 +17,16 @@ before_action :set_program, only: [:show, :edit, :update, :destroy]
 
   def create
     @answer = Answer.find(program_params[:answer_id])
-
-
     category = @answer.question.questionnaire.category
     @program = Program.new(content: program_params[:content], category: category )
     authorize @program
     if @program.save
+      @answer.status = Status.find_by(status: "done")
+      @answer.save
       @program_to_answer = ProgramToAnswer.new(answer_id: @answer.id, program_id: @program.id)
       if @program_to_answer.save
-      redirect_to questionnaire_path(@answer.question.questionnaire_id)
-      else r
-        ender :new
+      redirect_to questions_new_path(:question_id=> @answer.question.id, :answer_id=> @answer.id, :program_id=> @program.id)
+      else render :new
       end
     else
       render :new

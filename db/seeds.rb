@@ -5,6 +5,7 @@ UserProgram.destroy_all
 Program.destroy_all
 Answer.destroy_all
 Interview.destroy_all
+Status.destroy_all
 Question.destroy_all
 Questionnaire.destroy_all
 Deputy.destroy_all
@@ -210,13 +211,13 @@ end
 
 puts "creating answers for questionnaire 1..."
 
-aq_0 = Answer.create(question_id: question_ids[0], answer: "Oui", next_question_id: question_ids[1])
-aq_1 = Answer.create(question_id: question_ids[0], answer: "Non")
-aq_2 = Answer.create(question_id: question_ids[1], answer: "Oui", next_question_id: question_ids[2])
-aq_3 = Answer.create(question_id: question_ids[2], answer: "Oui")
+aq_0 = Answer.create(question_id: question_ids[0], answer: "Oui", next_question_id: question_ids[1], status: Status.find_by(status: "done"))
+aq_1 = Answer.create(question_id: question_ids[0], answer: "Non", status: Status.find_by(status: "done"))
+aq_2 = Answer.create(question_id: question_ids[1], answer: "Oui", next_question_id: question_ids[2], status: Status.find_by(status: "done"))
+aq_3 = Answer.create(question_id: question_ids[2], answer: "Oui", status: Status.find_by(status: "done"))
 
-aq_4 = Answer.create(question_id: question_ids[2], answer: "Non")
-aq_5 = Answer.create(question_id: question_ids[1], answer: "Non")
+aq_4 = Answer.create(question_id: question_ids[2], answer: "Non", status: Status.find_by(status: "done"))
+aq_5 = Answer.create(question_id: question_ids[1], answer: "Non", status: Status.find_by(status: "done"))
 
 atq = [aq_0.id, aq_1.id, aq_2.id, aq_3.id]
 atq_no_prog = [aq_4.id, aq_5.id]
@@ -241,14 +242,14 @@ end
 
 puts "creating answers for questionnaire 2..."
 
-aq_2_0 = Answer.create(question_id: question_2_ids[0], answer: "Oui", next_question_id: question_2_ids[1])
-aq_2_1 = Answer.create(question_id: question_2_ids[0], answer: "Non", next_question_id: question_2_ids[1])
-aq_2_2 = Answer.create(question_id: question_2_ids[1], answer: "Oui", next_question_id: question_2_ids[2])
-aq_2_3 = Answer.create(question_id: question_2_ids[2], answer: "Oui")
+aq_2_0 = Answer.create(question_id: question_2_ids[0], answer: "Oui", next_question_id: question_2_ids[1], status: Status.find_by(status: "done"))
+aq_2_1 = Answer.create(question_id: question_2_ids[0], answer: "Non", next_question_id: question_2_ids[1], status: Status.find_by(status: "done"))
+aq_2_2 = Answer.create(question_id: question_2_ids[1], answer: "Oui", next_question_id: question_2_ids[2], status: Status.find_by(status: "done"))
+aq_2_3 = Answer.create(question_id: question_2_ids[2], answer: "Oui", status: Status.find_by(status: "done"))
 
 
-aq_2_4 = Answer.create(question_id: question_2_ids[1], answer: "Non", next_question_id: question_2_ids[2])
-aq_2_5 = Answer.create(question_id: question_2_ids[2], answer: "Non")
+aq_2_4 = Answer.create(question_id: question_2_ids[1], answer: "Non", next_question_id: question_2_ids[2], status: Status.find_by(status: "done"))
+aq_2_5 = Answer.create(question_id: question_2_ids[2], answer: "Non", status: Status.find_by(status: "done"))
 
 atq_2 = [aq_2_0.id, aq_2_1.id, aq_2_2.id, aq_2_3.id]
 atq_2_no_prog = [aq_2_4.id, aq_2_5.id]
@@ -273,9 +274,9 @@ end
 
 puts "creating answers for questionnaire 3..."
 
-aq_3_0 = Answer.create(question_id: question_3_ids[0], answer: "Déliquance issue de la ville")
-aq_3_1 = Answer.create(question_id: question_3_ids[0], answer: "Délinquance de transit")
-aq_3_2 = Answer.create(question_id: question_3_ids[0], answer: "Les deux")
+aq_3_0 = Answer.create(question_id: question_3_ids[0], answer: "Déliquance issue de la ville", status: Status.find_by(status: "done"))
+aq_3_1 = Answer.create(question_id: question_3_ids[0], answer: "Délinquance de transit", status: Status.find_by(status: "done"))
+aq_3_2 = Answer.create(question_id: question_3_ids[0], answer: "Les deux", status: Status.find_by(status: "done"))
 
 atq_3 = [aq_3_0.id, aq_3_1.id, aq_3_2.id]
 
@@ -288,7 +289,6 @@ pta_3.save
 # p pta
 i+=1
 end
-
 
 
 puts "seeds done"

@@ -1,0 +1,5 @@
+console.log("p<%=@answer.id%>");
+console.log("<%= raw @answer.answer%>");
+
+var answer = document.getElementById("p<%=@answer.id%>").innerText = "<%= raw @answer.answer%>" ;
+console.log(answer);

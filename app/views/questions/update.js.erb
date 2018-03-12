@@ -1,0 +1,6 @@
+console.log("h3<%=@question.id%>");
+console.log("<%= raw @question.question%>");
+
+var question = document.getElementById("h3<%=@question.id%>").innerText = "<%= raw @question.question%>" ;
+console.log(question);
+
