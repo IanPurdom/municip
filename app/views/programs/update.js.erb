@@ -1,0 +1,6 @@
+console.log("id-pr-<%=@program.id%>");
+console.log("<%= raw @program.content%>");
+
+var program = document.getElementById("id-pr-<%=@program.id%>").innerText = "<%= raw @program.content%>" ;
+console.log(program);
+

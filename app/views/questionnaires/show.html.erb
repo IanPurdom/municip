@@ -17,35 +17,55 @@
   <br>
   <br>
   <div>
-    <% @questionnaire.questions.each_with_index do |question, indexq|%>
-      <div class="<%="upd-q-#{indexq} upd-b-#{indexq}"%> qq">
-        <h3 id="<%= "h3#{question.id}" %>"> <%= question.question %></h3>
-        <a type="button" id=<%= "q-#{indexq}"%> class="fa fa-edit", onClick="toggleQ(this.id)"></a>
+    <% @questionnaire.questions.each do |question|%>
+      <div class="<%="upd-q-#{question.id}"%> qq">
+        <h3 id="<%= "h3#{question.id}" %>" class= "<%="q-#{question.id}"%>" onClick="toggleQ(this.className)"> <%= question.question %></h3>
+      <a type="button" id="<%= "btn-dq-#{question.id}" %>" class="fa fa-remove" onClick="deleteQuestion(this.id)"></a>
+       <%= link_to "", question_path(question.id), method: :delete, id:"d-btn-dq-#{question.id}", class: "hidden" %>
       </div>
-      <div class="<%="form-q-#{indexq} form-b-#{indexq}"%> hidden">
+      <div class="<%="form-q-#{question.id}"%> hidden">
       <%= simple_form_for question, remote: true do |f| %>
-      <%= f.input :question, :label => "Question: ", :input_html => {id:"b-#{indexq}", :onblur => "toggleBlur(this.id)"}  %>
-      <%= f.submit class: "hidden", id:"btn-b-#{indexq}" %>
+      <!-- ne pas rajouter de class à f.input :question sinon questionnaire.js (function toggleBlur) pete!! -->
+      <%= f.input :question, :label => "Question: ", :input_html => {class: "q-#{question.id}", :onblur => "toggleBlur(this.className)"}  %>
+      <%= f.submit class: "hidden", id:"btn-q-#{question.id}" %>
       <% end %>
       </div>
 
 
         <% question.answers.each do |answer| %>
-        <div class="<%="upd-a-#{answer.id} upd-bl-#{answer.id}"%>">
-          <p id="<%= "p#{answer.id}" %>"><strong>Réponse: </strong> <%= answer.answer %></p>
-          <a type="button" id="<%= "a-#{answer.id}"%>" class="fa fa-edit", onClick="toggleQAns(this.id)"></a>
+        <div class="<%="upd-a-#{answer.id}"%>">
+          <p><strong>Réponse: </strong></p>
+          <p id="<%= "p#{answer.id}" %>" class="<%="a-#{answer.id}"%>" onClick="toggleQ(this.className)" ><%= answer.answer %></p>
         </div>
-        <div class="<%= "form-a-#{answer.id} form-bl-#{answer.id}" %> hidden">
+        <div class="<%= "form-a-#{answer.id}" %> hidden">
           <%= simple_form_for answer, remote: true do |f| %>
-          <%= f.input :answer, :label => "Réponse: ", :input_html => {id: "bl-#{answer.id}", :onblur => "toggleBlurAns(this.id)"}  %>
-          <%= f.submit class: "hidden", id:"btn-bl-#{answer.id}" %>
+          <!-- ne pas rajouter de class à f.input :answer sinon questionnaire.js (function toggleBlur) pete!! -->
+          <%= f.input :answer, :label => "Réponse: ", :input_html => {class: "a-#{answer.id}", :onblur => "toggleBlur(this.className)"}  %>
+          <%= f.submit class: "hidden", id:"btn-a-#{answer.id}" %>
           <%end  %>
         </div>
 
           <% if answer.program_to_answers != [] %>
-          <p><strong>Programme associé: </strong><%= answer.program_to_answers.first.program.content%></p>
+
+            <% @program = answer.program_to_answers.first.program %>
+            <div class="<%= "upd-pr-#{@program.id}" %>">
+              <p><strong>Programme associé: </strong></p>
+              <p id= "<%= "id-pr-#{@program.id}" %>", class="<%="pr-#{@program.id}"%>", onClick=toggleQ(this.className) ><%= @program.content%></p>
+            </div>
+            <div class="<%= "form-pr-#{@program.id}"%> hidden">
+
+            <%= simple_form_for @program, remote: true do |f| %>
+            <!-- ne pas rajouter de class à f.input :content sinon questionnaire.js (function toggleBlur) pete!! -->
+            <%= f.input :content, :label => "Programme associé: ", :input_html => {class: "pr-#{@program.id}", :onblur => "toggleBlur(this.className)"} %>
+            <%= f.submit class: "hidden", id: "btn-pr-#{@program.id}"%>
+            <%end  %>
+            </div>
           <% end %>
-        <%= simple_form_for answer, remote: true do |f| %>
+
+
+
+
+          <%= simple_form_for answer, remote: true do |f| %>
           <%= f.input :next_question_id, :label => "Question suivante", collection: @questionnaire.questions.collect{|question| [question.question, question.id]}, :input_html => {:onclick => "addNextQuestion(this.id)", :id => "selector#{answer.id}"} %>
           <%= f.submit  class: "hidden", id: "btn-selector#{answer.id}" %>
           <% end %>
