@@ -38,8 +38,12 @@ before_action :set_program, only: [:show, :edit, :update, :destroy]
   end
 
   def update
+    authorize @program
     @program.update(program_params)
-    redirect_to programs_path
+    respond_to do |format|
+      format.html{redirect_to questionnaire_path(@program.answers.first.question.questionnaire)}
+      format.js
+    end
   end
 
   def destroy
