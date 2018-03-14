@@ -4,7 +4,6 @@
 <div class="container">
   <% if @question.id.nil? %>
 
-  <h1>Nom du questionnaire: <%= @questionnaire.title %></h1>
 
 
   <h2>Question: <%= @question.question %></h2>
@@ -13,7 +12,6 @@
       <ul class="new-form">
         <%= simple_form_for [@questionnaire, @question] do |f| %>
           <%= f.input :question, :label => "Rentrez votre question: "%>
-          <%= f.hidden_field :questionnaire_id, :value => @question.questionnaire_id %>
           <%= f.submit 'Ajouter', class:"btn-restart btn-red"%>
         <% end %>
       </ul>
@@ -73,14 +71,14 @@
     <% end  %>
 <br>
 <br>
-<br>
+<br><!--
 <div>Réponses à la question: </div>
 
-  <% @answers.each do |answer|  %>
-    <h3><%= answer.answer %></h3>
-    <p><%= answer.program_to_answers.first.program.content %></p>
-  <% end %>
-
+  <%# @answers.each do |answer|  %>
+    <h3><%#= answer.answer %></h3>
+    <p><%#= answer.program_to_answers.first.program.content %></p>
+  <#% end %>
+ -->
 <% end  %>
 
 </div>

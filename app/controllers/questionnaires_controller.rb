@@ -21,6 +21,7 @@ before_action :set_questionnaire, only: [:show, :edit, :new_question]
 
   def show
     authorize @questionnaire
+    @answer = Answer.new
     @question = Question.new
   end
 
