@@ -16,10 +16,10 @@
         <ul class="new-form">
           <%= simple_form_for [@interview, @user_program], remote: true do |f| %>
           <%= f.input :program, :label => "Votre réponse:", as: :text, input_html: {rows: 20} %>
-          <%= f.hidden_field :question_id, :value => @question.id %>
-          <%= f.hidden_field :category_id, :value => @interview.questionnaire.category_id %>
+          <%#= f.hidden_field :question_id, :value => @question.id %>
+          <%#= f.hidden_field :category_id, :value => @interview.questionnaire.category_id %>
           <%= f.hidden_field :program_id, :value => nil %>
-          <%= f.hidden_field :a2q_id, :value => nil %>
+          <%= f.hidden_field :answer_id, :value => nil %>
           <%= f.submit 'Valider'%>
           <% end %>
         </ul>

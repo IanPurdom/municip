@@ -29,8 +29,11 @@ const addNextQuestion = ((clicked_id) => {
 });
 
 const toggleQ = ((clicked_id) => {
-  document.querySelector(`.upd-${clicked_id}`).classList.add("hidden")
-  document.querySelector(`.form-${clicked_id}`).classList.remove("hidden")
+  console.log(clicked_id)
+  var class_array = clicked_id.split(" ")
+  var clicked = class_array[0]
+  document.querySelector(`.upd-${clicked}`).classList.add("hidden")
+  document.querySelector(`.form-${clicked}`).classList.remove("hidden")
 });
 
 const toggleBlur = ((clicked_id) => {

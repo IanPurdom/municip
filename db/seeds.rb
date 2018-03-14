@@ -87,53 +87,6 @@ picture.save
 end
 
 
-puts "creating programs & categories..."
-file = "db/programs.yml"
-programs = YAML.load(open(file).read)
-
-program_ids = []
-# n = 0
-programs["programs"].each do |program|
-  # Category.create!(categories[n])
-  u = Program.new(program)
-  u.category = Category.find_by(name: "Sécurité")
-  u.save
-  # n += 1
-  program_ids << u.id
-  # p program_ids
-end
-
-
-file = "db/programs_2.yml"
-programs_2 = YAML.load(open(file).read)
-
-program_2_ids = []
-# n = 0
-programs_2["programs"].each do |program|
-  # Category.create!(categories[n])
-  u = Program.new(program)
-  u.category = Category.find_by(name: "Sécurité")
-  u.save
-  # n += 1
-  program_2_ids << u.id
-  # p program_ids
-end
-
-
-file = "db/programs_3.yml"
-programs_3 = YAML.load(open(file).read)
-
-program_3_ids = []
-# n = 0
-programs_3["programs"].each do |program|
-  # Category.create!(categories[n])
-  u = Program.new(program)
-  u.category = Category.find_by(name: "Sécurité")
-  u.save
-  # n += 1
-  program_3_ids << u.id
-  # p program_ids
-end
 
 
 puts "creating status.."
@@ -219,26 +172,8 @@ aq_3 = Answer.create(question_id: question_ids[2], answer: "Oui", status: Status
 aq_4 = Answer.create(question_id: question_ids[2], answer: "Non", status: Status.find_by(status: "done"))
 aq_5 = Answer.create(question_id: question_ids[1], answer: "Non", status: Status.find_by(status: "done"))
 
-atq = [aq_0.id, aq_1.id, aq_2.id, aq_3.id]
-atq_no_prog = [aq_4.id, aq_5.id]
 
-puts "creating program_to_answers for questionnaire..."
-
-for i in 0..3
-p i
-pta = ProgramToAnswer.new(answer_id: atq[i], program_id: program_ids[i])
-p pta
-pta.save
-i+=1
-end
-
-#for the one using the no_program // program_id => program.yml the last one i.e program_ids[4] !
-for i in 0..1
-pta_no_prog = ProgramToAnswer.new(answer_id: atq_no_prog[i], program_id:program_ids[4] )
-pta_no_prog.save
-# p pta
-i+=1
-end
+qq_1 = [aq_0.id, aq_1.id, aq_2.id, aq_3.id]
 
 puts "creating answers for questionnaire 2..."
 
@@ -251,26 +186,8 @@ aq_2_3 = Answer.create(question_id: question_2_ids[2], answer: "Oui", status: St
 aq_2_4 = Answer.create(question_id: question_2_ids[1], answer: "Non", next_question_id: question_2_ids[2], status: Status.find_by(status: "done"))
 aq_2_5 = Answer.create(question_id: question_2_ids[2], answer: "Non", status: Status.find_by(status: "done"))
 
-atq_2 = [aq_2_0.id, aq_2_1.id, aq_2_2.id, aq_2_3.id]
-atq_2_no_prog = [aq_2_4.id, aq_2_5.id]
+qq_2 = [aq_2_0.id, aq_2_1.id, aq_2_2.id, aq_2_3.id]
 
-puts "creating program_to_answers for questionnaire_2..."
-
-for i in 0..3
-# p i
-pta_2 = ProgramToAnswer.new(answer_id: atq_2[i], program_id: program_2_ids[i])
-pta_2.save
-# p pta
-i+=1
-end
-
-#for the one using the no_program // program_id => program.yml the last one i.e program_ids[4] !
-for i in 0..1
-pta_2_no_prog = ProgramToAnswer.new(answer_id: atq_2_no_prog[i], program_id:program_2_ids[4] )
-pta_2_no_prog.save
-# p pta
-i+=1
-end
 
 puts "creating answers for questionnaire 3..."
 
@@ -278,17 +195,58 @@ aq_3_0 = Answer.create(question_id: question_3_ids[0], answer: "Déliquance issu
 aq_3_1 = Answer.create(question_id: question_3_ids[0], answer: "Délinquance de transit", status: Status.find_by(status: "done"))
 aq_3_2 = Answer.create(question_id: question_3_ids[0], answer: "Les deux", status: Status.find_by(status: "done"))
 
-atq_3 = [aq_3_0.id, aq_3_1.id, aq_3_2.id]
 
-puts "creating program_to_answers for questionnaire_3..."
+qq_3 = [aq_3_0.id, aq_3_1.id, aq_3_2.id ]
 
-for i in 0..3
-# p i
-pta_3 = ProgramToAnswer.new(answer_id: atq_3[i], program_id: program_3_ids[i])
-pta_3.save
-# p pta
-i+=1
+puts "creating programs..."
+file = "db/programs.yml"
+programs = YAML.load(open(file).read)
+
+program_ids = []
+# n = 0
+programs["programs"].each_with_index do |program, index|
+  # Category.create!(categories[n])
+  u = Program.new(program)
+  u.category = Category.find_by(name: "Sécurité")
+  u.answer = Answer.find(qq_1[index])
+  p u
+  u.save
+  p u
+  # n += 1
+  end
+
+
+file = "db/programs_2.yml"
+programs_2 = YAML.load(open(file).read)
+
+program_2_ids = []
+# n = 0
+programs_2["programs"].each_with_index do |program, index|
+  # Category.create!(categories[n])
+  u = Program.new(program)
+  u.category = Category.find_by(name: "Sécurité")
+  u.answer = Answer.find(qq_2[index])
+  p u
+  u.save
+  p u
+  # n += 1
 end
 
+
+file = "db/programs_3.yml"
+programs_3 = YAML.load(open(file).read)
+
+program_3_ids = []
+# n = 0
+programs_3["programs"].each_with_index do |program, index|
+  # Category.create!(categories[n])
+  u = Program.new(program)
+  u.category = Category.find_by(name: "Sécurité")
+  u.answer = Answer.find(qq_3[index])
+  p u
+  u.save
+  p u
+  # n += 1
+end
 
 puts "seeds done"

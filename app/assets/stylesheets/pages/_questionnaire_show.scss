@@ -1,5 +1,39 @@
-.qq {
-  display: flex;
-  justify-content: "space-between";
-  align-items: center;
+// .qq {
+//   display: flex;
+//   justify-content: space-between;
+//   // align-items: center;
+// }
+
+.tab-question {
+  border: 1px solid black;
+  margin-bottom: 20px;
+  padding: 25px;
+}
+
+.tab-answer {
+  margin-left: 10px;
+  margin-top: 22px;
+}
+
+.tab-program {
+  margin-left: 10px;
+  margin-top: 22px;
+}
+
+.tab-next-question {
+  margin-left: 10px;
+  margin-top: 22px;
+}
+
+.delete-q {
+float: right;
+}
+
+.first-q {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.tab-add-answer{
+  margin-top:47px;
 }

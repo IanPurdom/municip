@@ -12,16 +12,17 @@
   </div>
   <br>
   <div>
-    <%= link_to "Ajouter une question", new_questionnaire_question_path(@questionnaire),class: "btn-restart btn-red" %>
+    <%= link_to "Ajouter une question", new_questionnaire_question_path(@questionnaire),class: "btn-restart btn-red centerize" %>
   </div>
   <br>
   <br>
-  <div>
     <% @questionnaire.questions.each do |question|%>
-      <div class="<%="upd-q-#{question.id}"%> qq">
-        <h3 id="<%= "h3#{question.id}" %>" class= "<%="q-#{question.id}"%>" onClick="toggleQ(this.className)"> <%= question.question %></h3>
-      <a type="button" id="<%= "btn-dq-#{question.id}" %>" class="fa fa-remove" onClick="deleteQuestion(this.id)"></a>
-       <%= link_to "", question_path(question.id), method: :delete, id:"d-btn-dq-#{question.id}", class: "hidden" %>
+  <div class="tab-question">
+    <div>
+      <a type="button" id="<%= "btn-dq-#{question.id}" %>" class="fa fa-remove delete-q" onClick="deleteQuestion(this.id)"></a>
+      <%= link_to "", question_path(question.id), method: :delete, id:"d-btn-dq-#{question.id}", class: "hidden" %>
+      <div class="<%="upd-q-#{question.id}"%>">
+        <div id="<%= "h3#{question.id}" %>" class= "<%="q-#{question.id}"%> first-q" onClick="toggleQ(this.className)"> <%= question.question %></div>
       </div>
       <div class="<%="form-q-#{question.id}"%> hidden">
       <%= simple_form_for question, remote: true do |f| %>
@@ -30,53 +31,63 @@
       <%= f.submit class: "hidden", id:"btn-q-#{question.id}" %>
       <% end %>
       </div>
+    </div>
 
 
         <% question.answers.each do |answer| %>
-        <div class="<%="upd-a-#{answer.id}"%>">
-          <p><strong>Réponse: </strong></p>
-          <p id="<%= "p#{answer.id}" %>" class="<%="a-#{answer.id}"%>" onClick="toggleQ(this.className)" ><%= answer.answer %></p>
-        </div>
-        <div class="<%= "form-a-#{answer.id}" %> hidden">
-          <%= simple_form_for answer, remote: true do |f| %>
-          <!-- ne pas rajouter de class à f.input :answer sinon questionnaire.js (function toggleBlur) pete!! -->
-          <%= f.input :answer, :label => "Réponse: ", :input_html => {class: "a-#{answer.id}", :onblur => "toggleBlur(this.className)"}  %>
-          <%= f.submit class: "hidden", id:"btn-a-#{answer.id}" %>
+    <div class= "tab-answer">
+      <div class="<%="upd-a-#{answer.id}"%>">
+        <p><strong>Réponse: </strong></p>
+        <p id="<%= "p#{answer.id}" %>" class="<%="a-#{answer.id}"%>" onClick="toggleQ(this.className)" ><%= answer.answer %></p>
+      </div>
+      <div class="<%= "form-a-#{answer.id}" %> hidden">
+        <%= simple_form_for answer, remote: true do |f| %>
+        <!-- ne pas rajouter de class à f.input :answer sinon questionnaire.js (function toggleBlur) pete!! -->
+        <%= f.input :answer, :label => "Réponse: ", :input_html => {class: "a-#{answer.id}", :onblur => "toggleBlur(this.className)"}  %>
+        <%= f.submit class: "hidden", id:"btn-a-#{answer.id}" %>
+        <%end  %>
+      </div>
+    </div>
+
+        <% if answer.program != nil %>
+
+    <div class= "tab-program">
+          <% @program = answer.program %>
+          <div class="<%= "upd-pr-#{@program.id}" %>">
+            <p><strong>Programme associé: </strong></p>
+            <p id= "<%= "id-pr-#{@program.id}" %>", class="<%="pr-#{@program.id}"%>", onClick=toggleQ(this.className) ><%= @program.content%></p>
+          </div>
+          <div class="<%= "form-pr-#{@program.id}"%> hidden">
+
+          <%= simple_form_for @program, remote: true do |f| %>
+          <!-- ne pas rajouter de class à f.input :content sinon questionnaire.js (function toggleBlur) pete!! -->
+          <%= f.input :content, :label => "Programme associé: ", :input_html => {class: "pr-#{@program.id}", :onblur => "toggleBlur(this.className)"} %>
+          <%= f.submit class: "hidden", id: "btn-pr-#{@program.id}"%>
           <%end  %>
-        </div>
-
-          <% if answer.program_to_answers != [] %>
-
-            <% @program = answer.program_to_answers.first.program %>
-            <div class="<%= "upd-pr-#{@program.id}" %>">
-              <p><strong>Programme associé: </strong></p>
-              <p id= "<%= "id-pr-#{@program.id}" %>", class="<%="pr-#{@program.id}"%>", onClick=toggleQ(this.className) ><%= @program.content%></p>
-            </div>
-            <div class="<%= "form-pr-#{@program.id}"%> hidden">
-
-            <%= simple_form_for @program, remote: true do |f| %>
-            <!-- ne pas rajouter de class à f.input :content sinon questionnaire.js (function toggleBlur) pete!! -->
-            <%= f.input :content, :label => "Programme associé: ", :input_html => {class: "pr-#{@program.id}", :onblur => "toggleBlur(this.className)"} %>
-            <%= f.submit class: "hidden", id: "btn-pr-#{@program.id}"%>
-            <%end  %>
-            </div>
-          <% end %>
-
-
-
-
-          <%= simple_form_for answer, remote: true do |f| %>
-          <%= f.input :next_question_id, :label => "Question suivante", collection: @questionnaire.questions.collect{|question| [question.question, question.id]}, :input_html => {:onclick => "addNextQuestion(this.id)", :id => "selector#{answer.id}"} %>
-          <%= f.submit  class: "hidden", id: "btn-selector#{answer.id}" %>
-          <% end %>
+          </div>
         <% end %>
-    <%= link_to "Ajouter une réponse", questions_new_path(:question_id=> question.id), class: "btn-add-answer btn-orange"  %>
-    <% end %>
+    </div>
+
+
+    <div class= "tab-next-question">
+        <%= simple_form_for answer, remote: true do |f| %>
+        <%= f.input :next_question_id, :label => "Question suivante", collection: @questionnaire.questions.collect{|question| [question.question, question.id]}, :input_html => {:onclick => "addNextQuestion(this.id)", :id => "selector#{answer.id}"} %>
+        <%= f.submit  class: "hidden", id: "btn-selector#{answer.id}" %>
+        <% end %>
+      <% end %>
+    </div>
+
+    <div class= "tab-add-answer centerize">
+  <%= link_to "Ajouter une réponse", questions_new_path(:question_id=> question.id), class: "btn-add-answer btn-orange"  %>
+    </div>
+
   </div>
-<br>
-<br>
-<br>
+    <% end %>
+
 </div>
+<br>
+<br>
+<br>
 <%= javascript_pack_tag 'questionnaire' %>
   <script>
   </script>

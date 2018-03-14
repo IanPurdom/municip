@@ -38,13 +38,8 @@ before_action :set_interview, only: [:show, :edit, :update, :destroy, :get_progr
   end
 
   def get_program
-    p2a = ProgramToAnswer.find_by(answer_id: params[:answer])
-      if p2a != nil
-        # prog_id = p2a.program_id
-        @program = Program.find(p2a.program_id)
-        @answer_id = @program.program_to_answers[0].answer_id
-      end
-    @program
+    @program = Program.find_by(answer: params[:answer])
+    @answer = Answer.find(params[:answer])
     authorize @interview
     respond_to do |format|
       format.html
@@ -54,9 +49,8 @@ before_action :set_interview, only: [:show, :edit, :update, :destroy, :get_progr
 
   def next_question
     #check on next_questio_id.nil already done in UserProgram Class,  method create
-    p2a = ProgramToAnswer.find_by(program_id: params[:program_id])
-    @a2q = Answer.find(p2a.answer_id)
-    @next_question = Question.find(@a2q.next_question_id)
+    @answer = Answer.find(params[:answer_id])
+    @next_question = Question.find(@answer.next_question_id)
     #send the next_question id to interview.last_question in order to go back to the last question when we reopen the interview
     @interview.last_question_id = @next_question.id
     @interview.save
