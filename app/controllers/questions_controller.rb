@@ -53,12 +53,6 @@ before_action :set_question, only: [:show, :edit, :update, :destroy, :add_answer
   end
 
   def destroy
-    #first delete belongin program (can't do it using dependent destroy in model)
-    answers = @question.answers
-    answers.each do |answer|
-      @program = answer.program_to_answers.first.program
-      @program.destroy if @program != nil && @program.title != "no_program"
-    end
     authorize @question
     @question.destroy
   end

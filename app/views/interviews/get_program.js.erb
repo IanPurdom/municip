@@ -3,7 +3,7 @@ console.log("<%= @program %>")
 function getProgram(answer) {
 document.getElementById("user_program_program").value = "<%= j @program.content %>";
 document.getElementById("user_program_program_id").value = "<%= @program.id %>";
-document.getElementById("user_program_a2q_id").value = "<%= @answer_id %>";
+document.getElementById("user_program_answer_id").value = "<%= @answer.id %>";
 };
 
 var answer = document.querySelector(".answer");

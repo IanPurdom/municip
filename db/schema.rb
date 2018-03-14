@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180309100353) do
+ActiveRecord::Schema.define(version: 20180313142341) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -101,21 +101,14 @@ ActiveRecord::Schema.define(version: 20180309100353) do
     t.index ["user_id"], name: "index_photos_on_user_id"
   end
 
-  create_table "program_to_answers", force: :cascade do |t|
-    t.bigint "program_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "answer_id"
-    t.index ["answer_id"], name: "index_program_to_answers_on_answer_id"
-    t.index ["program_id"], name: "index_program_to_answers_on_program_id"
-  end
-
   create_table "programs", force: :cascade do |t|
     t.string "title"
     t.text "content"
     t.bigint "category_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "answer_id"
+    t.index ["answer_id"], name: "index_programs_on_answer_id"
     t.index ["category_id"], name: "index_programs_on_category_id"
   end
 
@@ -189,8 +182,7 @@ ActiveRecord::Schema.define(version: 20180309100353) do
   add_foreign_key "photos", "categories"
   add_foreign_key "photos", "cities"
   add_foreign_key "photos", "users"
-  add_foreign_key "program_to_answers", "answers"
-  add_foreign_key "program_to_answers", "programs"
+  add_foreign_key "programs", "answers"
   add_foreign_key "programs", "categories"
   add_foreign_key "questionnaires", "categories"
   add_foreign_key "questions", "questionnaires"

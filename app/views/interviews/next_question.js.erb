@@ -1,6 +1,7 @@
 
 var interview_id = "<%= @interview.id %>";
 var next_question_id = "<%= @next_question.id %>";
+console.log(next_question_id)
 var n = '<%= @answers.length %>';
 
 var answer_0 = '<%= raw @answers[0] %>';
@@ -44,7 +45,6 @@ function nextAnswers(question) {
       let li = document.createElement("li");
       question.appendChild(li);
       li.appendChild(a)
-      document.getElementById("user_program_question_id").value = next_question_id
     }else{
       console.log("We have a problem!")
     };
