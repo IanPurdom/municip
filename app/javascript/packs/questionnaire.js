@@ -31,7 +31,7 @@ const addNextQuestion = ((clicked_id) => {
 const toggleQ = ((clicked_id) => {
   console.log(clicked_id)
   var class_array = clicked_id.split(" ")
-  var clicked = class_array[0]
+  var clicked = class_array.slice(-1)[0]
   document.querySelector(`.upd-${clicked}`).classList.add("hidden")
   document.querySelector(`.form-${clicked}`).classList.remove("hidden")
 });
@@ -39,14 +39,21 @@ const toggleQ = ((clicked_id) => {
 const toggleBlur = ((clicked_id) => {
   var class_array = clicked_id.split(" ")
   var clicked = class_array.slice(-1)[0]
+  console.log(clicked)
   document.getElementById(`btn-${clicked}`).click()
   document.querySelector(`.upd-${clicked}`).classList.remove("hidden")
   document.querySelector(`.form-${clicked}`).classList.add("hidden")
+});
+
+
+
+const addQuestionForm = (()=> {
+  document.querySelector(".hidden-tab-question").classList.remove("hidden")
 });
 
 window.deleteQuestion = deleteQuestion;
 window.addNextQuestion = addNextQuestion;
 window.toggleQ = toggleQ
 window.toggleBlur = toggleBlur
-
+window.addQuestionForm = addQuestionForm
 

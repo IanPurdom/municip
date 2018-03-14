@@ -27,14 +27,19 @@ before_action :set_question, only: [:show, :edit, :update, :destroy, :add_answer
 
   def create
     @question = Question.new(question_params)
-    @question.questionnaire = Questionnaire.find(params[:questionnaire_id])
-    @question.save
-    @answer = Answer.new
-    @question
-    authorize @question
-    respond_to do |format|
-      format.html {redirect_to questions_new_path(:question_id=> @question.id)}
-      format.js
+    @question.questionnaire = Questionnaire.find(question_params[:questionnaire_id])
+    if @question.save
+      @answer = Answer.new
+      @question
+      authorize @question
+      respond_to do |format|
+        format.html {redirect_to questions_new_path(:question_id=> @question.id)}
+        format.js
+      end
+    else
+      authorize @question
+      render :new
+      flash[:alert] = "La question est trop courte"
     end
   end
 
@@ -64,7 +69,7 @@ before_action :set_question, only: [:show, :edit, :update, :destroy, :add_answer
   end
 
   def question_params
-    params.require(:question).permit(:question)
+    params.require(:question).permit(:question, :questionnaire_id)
   end
 
 end

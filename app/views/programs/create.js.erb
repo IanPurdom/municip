@@ -1,0 +1,32 @@
+console.log("id-pr-<%=@program.id%>");
+console.log("id-pr-<%=@answer.id%>");
+
+console.log("<%= raw @program.content%>");
+
+var removeButton = (()=> {
+  var button = document.getElementById("id-pr-<%=@answer.id%>")
+  console.log(button)
+  button.parentNode.removeChild(button);
+});
+
+var addProgram = (() => {
+  var p = document.createElement("p");
+  p.appendChild(document.createTextNode("<%= raw @program.content%>"));
+  setAttributes(p, {"id": "id-pr-<%=@answer.id%>", "class": "pr-<%=@answer.id%>", "onClick": "toggleQ(this.className)" })
+  div = document.querySelector(".upd-pr-<%=@answer.id%>")
+  div.appendChild(p)
+});
+
+
+function setAttributes(el, attrs) {
+  for(var key in attrs) {
+    el.setAttribute(key, attrs[key]);
+  }
+};
+
+
+
+
+
+removeButton();
+addProgram()

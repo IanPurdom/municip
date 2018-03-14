@@ -37,7 +37,6 @@ Rails.application.routes.draw do
   end
   resources :programs
   resources :questionnaires do
-    resources :questions, only: [:new, :create]
     resources :interviews, only: [:create]
   end
   resources :interviews, only: [:show, :index, :update, :get_program] do
@@ -50,7 +49,7 @@ Rails.application.routes.draw do
     get 'show_program', to: "interviews#show_program"
     end
   end
-  resources :questions, only: [:index, :show, :edit, :update, :destroy ]
+  resources :questions
   resources :user_programs, only: [:show, :index, :edit, :update, :destroy]
   resources :answers
   root to: 'pages#home'

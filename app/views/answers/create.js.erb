@@ -1,0 +1,94 @@
+console.log("<%= raw @answer.answer %>")
+console.log("<%= raw @answer.id %>")
+
+
+// update  the id and class with the answer.id to make look like it's loaded from SHOW QUESTIONNAIRE In HTML
+const upd = document.querySelector(".upd-a");
+upd.classList.remove("upd-a");
+upd.classList.add("upd-a-<%= raw @answer.id %>");
+
+const p = document.getElementById("p");
+p.removeAttribute("id")
+p.id = ("p<%= raw @answer.id %>");
+
+
+const form = document.querySelector(".form-a");
+form.classList.remove("form-a");
+form.classList.add("form-a-<%= raw @answer.id %>");
+
+const btn = document.getElementById("btn-a");
+btn.removeAttribute("id");
+btn.id = ("btn-a-<%= raw @answer.id %>");
+
+const a_array = document.getElementsByClassName("a");
+
+for (var i = 0; i < a_array.length; i++) {
+  a = a_array[i]
+  a.classList.remove("a")
+  a.classList.add("a-<%= raw @answer.id %>")
+};
+
+document.getElementById("p<%= raw @answer.id %>").innerText = "<%= raw @answer.answer %>"
+document.querySelector(".form-a-<%= raw @answer.id %>").classList.remove
+
+// remove the hidden from tab-program
+// update class and id to make look like it's loaded from HTML
+
+const updPr = document.querySelector(".hidden-upd-pr");
+updPr.classList.remove("hidden-upd-pr");
+updPr.classList.add("upd-pr-<%= raw @answer.id %>");
+
+const pr = document.getElementById("hidden-id-pr");
+pr.removeAttribute("hidden-id-pr");
+pr.id = ("id-pr-<%= raw @answer.id %>");
+pr.classList.remove("hidden-pr")
+pr.classList.add("pr-<%= raw @answer.id %>")
+console.log(pr)
+
+const formPr = document.querySelector(".hidden-form-pr");
+formPr.classList.remove("hidden-form-pr");
+formPr.classList.add("form-pr-<%= raw @answer.id %>");
+var answerIdField = formPr.querySelector('.answer-field');
+answerIdField.value = "<%= raw @answer.id %>"
+console.log("ici!!!")
+console.log(answerIdField)
+
+const btnPr = document.getElementById("hidden-btn-pr");
+btnPr.removeAttribute("hidden-btn-pr");
+btnPr.id = ("btn-pr-<%= raw @answer.id %>");
+
+
+const pPr = document.querySelector(".hidden-pr");
+pPr.classList.remove("hidden-pr");
+pPr.classList.add("pr-<%= raw @answer.id %>");
+console.log(pPr);
+
+
+
+// remove the hidden from tab-program
+// update class and id to make look like it's loaded from HTML
+const btnSelector = document.getElementById("hidden-btn-selector");
+btnSelector.removeAttribute("hidden-btn-selector");
+btnSelector.id = ("btn-selector<%= raw @answer.id %>");
+
+const selector = document.getElementById("hidden-selector")
+selector.removeAttribute("hidden-selector");
+selector.id = ("selector<%= raw @answer.id %>");
+
+
+// Show the prog and next_question tabs
+
+document.querySelector(".hidden-tab-program").classList.remove("hidden")
+document.querySelector(".hidden-tab-next-question").classList.remove("hidden")
+
+
+// This must be done at the end !!!
+
+const tabProg = document.querySelector(".hidden-tab-program");
+tabProg.classList.remove("hidden-tab-program")
+tabProg.classList.add("tab-program")
+
+const tabNextQ = document.querySelector(".hidden-tab-next-question");
+tabNextQ.classList.remove("hidden-tab-next-question")
+tabNextQ.classList.add("tab-next-question")
+
