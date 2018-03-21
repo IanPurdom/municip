@@ -9,12 +9,11 @@ before_action :set_answer, only: [:edit, :update, :destroy]
   end
 
   def create
-    @answer = Answer.new(answer: answer_params[:answer], question_id: answer_params[:question_id], status: Status.find_by(status: "in_progress") )
+    @answer = Answer.new(answer: answer_params[:answer], question_id: params[:question_id] )
     @answer.save
     authorize @answer
-    @question = Question.find(answer_params[:question_id])
     respond_to do |format|
-      format.html{redirect_to questions_new_path(:question_id=> @question.id, :answer_id => @answer.id)}
+      format.html{redirect_to questionnaire_path(@answer.question.questionnaire)}
       format.js
     end
   end
@@ -42,7 +41,7 @@ before_action :set_answer, only: [:edit, :update, :destroy]
   end
 
   def answer_params
-    params.require(:answer).permit(:answer, :question_id, :next_question_id, :status_id)
+    params.require(:answer).permit(:answer, :next_question_id)
   end
 
 end

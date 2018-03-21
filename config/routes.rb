@@ -1,25 +1,13 @@
 Rails.application.routes.draw do
-  get 'answers/new'
+  # get 'answers/new'
 
-  get 'answers/create'
+  # get 'answers/create'
 
-  get 'answers/edit'
+  # get 'answers/edit'
 
-  get 'answers/update'
+  # get 'answers/update'
 
-  get 'answers/destroy'
-
-  get 'questions/show'
-
-  get 'questions/new'
-
-  get 'questions/create'
-
-  get 'questions/edit'
-
-  get 'questions/update'
-
-  get 'questions/destroy'
+  # get 'answers/destroy'
 
   get 'user_programs/create'
 
@@ -35,8 +23,9 @@ Rails.application.routes.draw do
       post 'retrieve', to: "cities#retrieve"
     end
   end
-  resources :programs
+  resources :programs, only: [:destroy]
   resources :questionnaires do
+    resources :questions, only: [:create, :update]
     resources :interviews, only: [:create]
   end
   resources :interviews, only: [:show, :index, :update, :get_program] do
@@ -49,9 +38,13 @@ Rails.application.routes.draw do
     get 'show_program', to: "interviews#show_program"
     end
   end
-  resources :questions
+  resources :questions, only: [:destroy] do
+    resources :answers, only: [:create]
+  end
   resources :user_programs, only: [:show, :index, :edit, :update, :destroy]
-  resources :answers
+  resources :answers, only: [:update, :destroy] do
+    resources :programs, only: [:create, :update]
+  end
   root to: 'pages#home'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
