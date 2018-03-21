@@ -41,19 +41,107 @@ const toggleBlur = ((clicked_id) => {
   var clicked = class_array.slice(-1)[0]
   console.log(clicked)
   document.getElementById(`btn-${clicked}`).click()
-  document.querySelector(`.upd-${clicked}`).classList.remove("hidden")
   document.querySelector(`.form-${clicked}`).classList.add("hidden")
+  document.querySelector(`.upd-${clicked}`).classList.remove("hidden")
 });
 
+// only for question form created by JS
+const toggleBlurNewQ = ((clicked_id) => {
+  var class_array = clicked_id.split(" ")
+  var clicked = class_array.slice(-1)[0]
+  console.log(clicked)
+  document.getElementById(`btn-${clicked}`).click()
+});
 
 
 const addQuestionForm = (()=> {
-  document.querySelector(".hidden-tab-question").classList.remove("hidden")
+
+  var jsArea = document.getElementById("js-area");
+  var newQ = document.createElement("div");
+  setAttributes(newQ, {"class": "new-q tab-question"});
+  var form = document.createElement("form");
+  var questionnaire_id = document.getElementById("questionnaire").dataset.questionnaire_id
+  console.log(questionnaire_id)
+  setAttributes(form, {"novalidate": "novalidate","id":"new_question", "class": "simple_form new_question form-q", "action": `/questionnaires/${questionnaire_id}/questions`, "accept-charset":"UTF-8", "data-remote": "true", "method": "post"})
+  var input1 = document.createElement("input");
+  setAttributes(input1, {"name":"utf8", "type": "hidden", "value": "✓"});
+  // to be check later
+  // var input3 = document.createElement("input");
+  // setAttributes(input3, {"name":"authenticity_token", "type": "hidden", "value": "{$('meta[name=csrf-token]').attr('content')}/>"})
+  var div =  document.createElement("div");
+  setAttributes(div, {"class": "form-group text required question_question" });
+  var label = document.createElement("label");
+  setAttributes(label, {"class": "control-label text required", "for": "question_question"})
+  label.appendChild(document.createTextNode("Question:"))
+  var input0 = document.createElement("input");
+  setAttributes(input0, {"class":"form-control string optional q", "type":"text", "name": "question[question]", "id": "question_question", "onblur":"toggleBlurNewQ(this.className)"});
+  var submit = document.createElement("input");
+  setAttributes(submit, {"type": "submit", "id": "btn-q", "data-disable-with": "Create Question", "class": "hidden"});
+  div.appendChild(label);
+  div.appendChild(input0);
+  form.appendChild(input1);
+  // form.appendChild(input2);
+  // form.appendChild(input3);
+  form.appendChild(div);
+  form.appendChild(submit);
+  newQ.appendChild(form);
+  jsArea.appendChild(newQ);
+
 });
+
+
+
+var addAnswer = ((question_id)=>{
+  console.log("coucou!!")
+  var form = document.createElement("form");
+  setAttributes(form, {"novalidate": "novalidate","id":"new_answer", "class": "simple_form_new_answer form-a", "action": `/questions/${question_id}/answers`, "accept-charset":"UTF-8", "data-remote": "true", "method": "post"})
+  var input1 = document.createElement("input");
+  setAttributes(input1, {"name":"utf8", "type": "hidden", "value": "✓"});
+  var div =  document.createElement("div");
+  setAttributes(div, {"class": "form-group text required answer_answer" });
+  var label = document.createElement("label");
+  setAttributes(label, {"class": "control-label text required", "for": "answer_answer"})
+  label.appendChild(document.createTextNode("Réponse:"))
+  var input0 = document.createElement("input");
+  setAttributes(input0, {"class":"form-control string optional a", "type":"text", "name": "answer[answer]", "id": "answer_answer", "onblur":"toggleBlur(this.className)"});
+  var submit = document.createElement("input");
+  setAttributes(submit, {"type": "submit", "name": "commit", "value": "Create Answer", "id": "btn-a", "data-disable-with": "Create Answer", "class": "hidden"});
+  var tabAns = document.createElement("div");
+  setAttributes(tabAns,{"class": "tab-answer"});
+
+
+  div.appendChild(label);
+  div.appendChild(input0);
+  form.appendChild(input1);
+  // form.appendChild(input2);
+  // form.appendChild(input3);
+  form.appendChild(div);
+  form.appendChild(submit);
+  tabAns.appendChild(form);
+
+
+  var tnqs = document.getElementsByClassName(`tnq-${question_id}`);
+  console.log(tnqs)
+  var tnq = tnqs[tnqs.length - 1];
+
+  tnq.parentNode.insertBefore(tabAns, tnq.nextSibling);
+  // referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+
+
+});
+
+
+function setAttributes(el, attrs) {
+  for(var key in attrs) {
+    el.setAttribute(key, attrs[key]);
+  }
+};
+
 
 window.deleteQuestion = deleteQuestion;
 window.addNextQuestion = addNextQuestion;
 window.toggleQ = toggleQ
 window.toggleBlur = toggleBlur
 window.addQuestionForm = addQuestionForm
-
+window.toggleBlurNewQ = toggleBlurNewQ
+window.addAnswer = addAnswer

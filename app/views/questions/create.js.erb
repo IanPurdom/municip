@@ -1,40 +1,90 @@
 console.log("<%= @question.question %>")
 
-function remove_form() {
-  const form = document.getElementById("new_question")
-  console.log(form)
-  form.parentNode.removeChild(form);
-};
+ // build the rest of the question tab
 
-function show_question(){
-  var container = document.querySelector(".container")
-  var grid = document.querySelector(".grid")
-  var div = document.createElement("div")
-  var h2 = document.createElement("h2")
-  h2.appendChild(document.createTextNode("<%= @question.question %>"))
-  div.appendChild(h2)
-  container.insertBefore(div, grid)
-}
+var addQuestionDetails = (()=> {
+  // update the div newQ with the question.id in order to get it
+  var newQ = document.querySelector(".new-q");
+  newQ.classList.remove("new-q");
+  newQ.classList.add ("new-q-<%= @question.id %>");
+  newQ.classList.add ("tab-question");
+  var del = document.createElement("a");
+  setAttributes(del,{"type": "button", "id": "btn-dq-<%= @question.id %>", "class": "fa fa-remove delete-q", "onClick": "deleteQuestion(this.id)"})
+  var del2 = document.createElement("a");
+  setAttributes(del2,{"id": "d-btn-dq-<%= @question.id %>", "class": "hidden", "rel": "nofollow", "data-method":"delete", "href":"/questions/<%= @question.id %>"})
+  var updQ = document.createElement("div");
+  setAttributes(updQ, {"class": "upd-q-<%= @question.id %>"});
+  var h3 = document.createElement("div");
+  setAttributes(h3, {"id": "h3<%= @question.id %>", "class": "first-q q-<%= @question.id %>", "onClick":"toggleQ(this.className)"});
+  h3.appendChild(document.createTextNode("<%= @question.question %>"));
+  var div = document.createElement("div");
+  updQ.appendChild(h3);
+  div.appendChild(updQ);
+  div.appendChild(del);
+  div.appendChild(del2);
+  newQ.appendChild(div)
+});
 
-function add_form() {
-  const list = document.querySelector(".new-form")
-  var form = document.createElement("form")
-  setAttributes(form, {"novalidate": "novalidate", "class": "simple_form new_answer", "id": "new_answer", "accept-charset": "UTF-8", "data-remote": "true",  "method": "post"})
-  var input = document.createElement("input")
-  setAttributes(input, {"name": "utf8", "type": "hidden", "value": "✓"})
-  var div = document.createElement("div")
-  setAttributes(div, {"class": "form-group text optional question_add_answer"})
-  var label = document.createElement("label")
-  setAttributes(label, {"class": "control-label text optional", "for": "question_add_answer"})
-  label.appendChild(document.createTextNode("Saisissez une réponse"))
-  var textArea = document.createElement("textarea")
-  setAttributes(textArea, {"class":"form-control text optional", "name":"question[add_question]",  "id": "question_add_answer"})
-  div.appendChild(label)
-  div.appendChild(textArea)
-  form.appendChild(div)
-  form.appendChild(input)
-  list.appendChild(form)
-};
+
+// update  the id and class of the question form with the question.id to make look like it's loaded from SHOW QUESTIONNAIRE In HTML
+
+var updateQuestionForm = (()=> {
+  const form = document.querySelector(".form-q");
+  form.classList.remove("form-q");
+  form.classList.add("form-q-<%= @question.id %>");
+  // form.removeAttribute("method");
+  form.removeAttribute("action");
+  setAttributes(form, { "action": "/questionnaires/<%= @question.questionnaire_id %>/questions/<%= @question.id %>"})
+  form.classList.remove("new_question");
+  form.classList.add("edit_question");
+  form.removeAttribute("id");
+  form.id = "edit_question_<%= @question.id %>";
+  // to be able to update => patch method to form
+  var input = document.createElement("input");
+  setAttributes(input, {"type": "hidden", "name":"_method", "value": "patch"})
+  form.appendChild(input);
+
+  const btnQ = document.getElementById("btn-q");
+  btnQ.removeAttribute("id");
+  btnQ.id = "btn-q-<%= @question.id %>";
+
+  const q = document.querySelector(".q");
+  q.classList.remove("q");
+  q.classList.add("q-<%= @question.id %>");
+  setAttributes(q,{"onBlur" : "toggleBlur(this.className)"});
+  form.classList.add("hidden");
+});
+
+var addAnswerForm = (() => {
+  var form = document.createElement("form");
+  setAttributes(form, {"novalidate": "novalidate","id":"new_answer", "class": "simple_form_new_answer form-a", "action": "/questions/<%= @question.id %>/answers", "accept-charset":"UTF-8", "data-remote": "true", "method": "post"})
+  var input1 = document.createElement("input");
+  setAttributes(input1, {"name":"utf8", "type": "hidden", "value": "✓"});
+
+  var div =  document.createElement("div");
+  setAttributes(div, {"class": "form-group text required answer_answer" });
+  var label = document.createElement("label");
+  setAttributes(label, {"class": "control-label text required", "for": "answer_answer"})
+  label.appendChild(document.createTextNode("Réponse:"))
+  var input0 = document.createElement("input");
+  setAttributes(input0, {"class":"form-control string optional a", "type":"text", "name": "answer[answer]", "id": "answer_answer", "onblur":"toggleBlur(this.className)"});
+  var submit = document.createElement("input");
+  setAttributes(submit, {"type": "submit", "name": "commit", "value": "Create Answer", "id": "btn-a", "data-disable-with": "Create Answer", "class": "hidden"});
+  var tabAns = document.createElement("div");
+  setAttributes(tabAns,{"class": "tab-answer"});
+  newQ = document.querySelector(".new-q-<%= @question.id %>");
+
+  div.appendChild(label);
+  div.appendChild(input0);
+  form.appendChild(input1);
+  // form.appendChild(input2);
+  // form.appendChild(input3);
+  form.appendChild(div);
+  form.appendChild(submit);
+  tabAns.appendChild(form);
+  newQ.appendChild(tabAns);
+
+});
 
 
 function setAttributes(el, attrs) {
@@ -43,6 +93,7 @@ function setAttributes(el, attrs) {
   }
 };
 
-remove_form();
-show_question();
-add_form();
+
+addQuestionDetails();
+updateQuestionForm();
+addAnswerForm();

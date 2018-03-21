@@ -1,4 +1,4 @@
 class Status < ApplicationRecord
   has_many :interviews
-  has_many :answers
+  # has_many :answers
 end
