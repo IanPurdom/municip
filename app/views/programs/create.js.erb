@@ -7,15 +7,17 @@ console.log("<%= raw @program.content%>");
 var updateFormDetails = (()=>{
   var form = document.querySelector(".form-pr");
   form.classList.remove("form-pr");
-  form.classList.add("form-pr-<%=@program.id%>");
+  form.classList.add("form-pr-<%=@answer.id%>");
+  form.removeAttribute("action")
+  setAttributes(form, {"action": "/answers/<%= @answer.id %>/programs/<%= @program.id %>"})
 
   var pr = document.querySelector(".pr");
-  form.classList.remove("pr");
-  form.classList.add("pr-<%=@program.id%>");
+  pr.classList.remove("pr");
+  pr.classList.add("pr-<%=@answer.id%>");
 
   var btn = document.getElementById("btn-pr");
   btn.removeAttribute("id");
-  btn.id = ("btn-pr-<%= raw @program.id %>");
+  btn.id = ("btn-pr-<%= raw @answer.id %>");
 
   // var btn2 = document.getElementById("id-pr");
   // btn2.removeAttribute("id");
@@ -23,15 +25,13 @@ var updateFormDetails = (()=>{
 
   var upd = document.querySelector(".upd-pr");
   upd.classList.remove("upd-pr");
-  upd.classList.add("upd-pr-<%=@program.id%>");
+  upd.classList.add("upd-pr-<%=@answer.id%>");
 
   var input = document.createElement("input");
   setAttributes(input, {"type": "hidden", "name":"_method", "value": "patch"})
   form.appendChild(input);
 
 });
-
-
 
 var removeButton = (()=> {
   var button = document.getElementById("id-pr-<%=@answer.id%>")
@@ -40,12 +40,11 @@ var removeButton = (()=> {
 });
 
 
-
 var addProgram = (() => {
   var p = document.createElement("p");
   p.appendChild(document.createTextNode("<%= raw @program.content%>"));
-  setAttributes(p, {"id": "id-pr-<%=@program.id%>", "class": "pr-<%=@program.id%>", "onClick": "toggleQ(this.className)" })
-  var upd = document.querySelector(".upd-pr-<%=@program.id%>")
+  setAttributes(p, {"id": "id-pr-<%=@answer.id%>", "class": "pr-<%=@answer.id%>", "onClick": "toggleQ(this.className)" })
+  var upd = document.querySelector(".upd-pr-<%=@answer.id%>")
   upd.appendChild(p)
 });
 

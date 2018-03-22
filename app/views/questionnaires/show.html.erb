@@ -11,13 +11,7 @@
     <h2><strong>Categorie: </strong> <%= @questionnaire.category.name %></h2>
   </div>
   <br>
-  <div>
-    <button id="create-q" class= "btn-restart btn-red centerize" onClick="addQuestionForm()")>Ajouter une question</button>
-    <%#= link_to "Ajouter une question", new_questionnaire_question_path(@questionnaire),class: "btn-restart btn-red centerize" %>
-  </div>
   <br>
-  <br>
-
 <!-- HIDDEN QUESTION TAB FOR JS-->
 
 <!--     <div class= "hidden-tab-question hidden">
@@ -42,7 +36,6 @@
 
 
 
-  <div id="js-area"></div>
 
 
 <!-- <div>
@@ -76,18 +69,15 @@
       <% if question.answers == [] %>
 
 
-    <div class= "tab-answer">
+    <div id = "answer">
       <div class="upd-a hidden">
         <p><strong>Réponse: </strong></p>
         <p id= "p" class="a" ></p>
       </div>
-      <div class="form-a">
-        <%= simple_form_for [question, @answer], remote: true do |f| %>
-        <!-- ne pas rajouter de class à f.input :answer sinon questionnaire.js (function toggleBlur) pete!! -->
-        <%= f.input :answer, :label => "Réponse: ", :input_html => {class: "a", :onblur => "toggleBlur(this.className)"}  %>
-        <%= f.submit class: "hidden", id:"btn-a" %>
-        <% end %>
-      </div>
+    </div>
+
+    <div class= "<%= "tab-add-answer#{question.id} centerize" %>">
+      <button  id="<%= "#{question.id}" %>" class="btn-add-answer btn-orange" onClick="addAnswer(this.id)">Ajouter une réponse</button>
     </div>
 
 
@@ -127,7 +117,9 @@
         <% question.answers.each do |answer| %>
 
 
-    <div class= "tab-answer">
+    <div  class= "tab-answer <%= "answer#{answer.id}"%>">
+      <a type="button" id="<%= "btn-da-#{answer.id}" %>" class="fa fa-remove delete-q" onClick="deleteAnswer(this.id)"></a>
+      <%= link_to "", answer_path(answer.id), method: :delete, remote: true, id:"d-btn-da-#{answer.id}", class: "hidden" %>
       <div class="<%="upd-a-#{answer.id}"%>">
         <p><strong>Réponse: </strong></p>
         <p id="<%= "p#{answer.id}" %>" class="<%="a-#{answer.id}"%>" onClick="toggleQ(this.className)" ><%= answer.answer %></p>
@@ -139,7 +131,6 @@
         <%= f.submit class: "hidden", id:"btn-a-#{answer.id}" %>
         <%end  %>
       </div>
-    </div>
 
 
           <% if answer.program != nil %>
@@ -191,12 +182,13 @@
       <% end %>
     </div>
 
+    </div> <!-- div tab-answer -->
 
         <% end %><!-- end of each.answers -->
+    <br>
 
-
-    <div class= "tab-add-answer centerize">
-      <button  id="<%= "#{question.id}" %>" class="btn-add-answer btn-orange" onClick="addAnswer(this.id)">Ajouter une question</button>
+    <div class= "<%= "tab-add-answer#{question.id} centerize" %>">
+      <button  id="<%= "#{question.id}" %>" class="btn-add-answer btn-orange" onClick="addAnswer(this.id)">Ajouter une réponse</button>
     </div>
 
 
@@ -206,6 +198,15 @@
 
     <% end %><!-- end of each.questions -->
 
+<div id="js-area"></div>
+
+  <br>
+  <div>
+    <button id="create-q" class= "btn-restart btn-red centerize" onClick="addQuestionForm()")>Ajouter une question</button>
+    <%#= link_to "Ajouter une question", new_questionnaire_question_path(@questionnaire),class: "btn-restart btn-red centerize" %>
+  </div>
+  <br>
+  <br>
 
 
 </div>

@@ -7,7 +7,28 @@ const deleteQuestion = ((clicked_id) => {
   console.log(clicked_id)
   swal({
     title: 'Etes-vous sûr de vouloir supprimer cette question ?',
-    text: "Les réponses et le programme associé seront également supprimés",
+    text: "Les réponses et le programme associés seront également supprimés",
+    type: 'warning',
+    width: 500,
+    showCancelButton: true,
+    confirmButtonColor: swalConfirmButtonColor,
+    cancelButtonColor: swalCancelButtonColor,
+    confirmButtonText: 'Oui, je supprime!',
+    cancelButtonText: 'Annuler' ,
+  })
+  .then((result) => {
+    if (result.value) {
+      document.getElementById(`d-${clicked_id}`).click();
+    }
+  });
+});
+
+
+const deleteAnswer = ((clicked_id) => {
+  console.log(clicked_id)
+  swal({
+    title: 'Etes-vous sûr de vouloir supprimer cette réponse ?',
+    text: "Le programme associé sera également supprimés",
     type: 'warning',
     width: 500,
     showCancelButton: true,
@@ -58,7 +79,7 @@ const addQuestionForm = (()=> {
 
   var jsArea = document.getElementById("js-area");
   var newQ = document.createElement("div");
-  setAttributes(newQ, {"class": "new-q tab-question"});
+  setAttributes(newQ, {"id": "question", "class": "tab-question"});
   var form = document.createElement("form");
   var questionnaire_id = document.getElementById("questionnaire").dataset.questionnaire_id
   console.log(questionnaire_id)
@@ -77,6 +98,12 @@ const addQuestionForm = (()=> {
   setAttributes(input0, {"class":"form-control string optional q", "type":"text", "name": "question[question]", "id": "question_question", "onblur":"toggleBlurNewQ(this.className)"});
   var submit = document.createElement("input");
   setAttributes(submit, {"type": "submit", "id": "btn-q", "data-disable-with": "Create Question", "class": "hidden"});
+
+  var del = document.createElement("a");
+  setAttributes(del, {"id": "btn-dq", "class": "fa fa-remove delete-q", "onClick": "deleteQuestionJS()"})
+
+
+
   div.appendChild(label);
   div.appendChild(input0);
   form.appendChild(input1);
@@ -84,15 +111,18 @@ const addQuestionForm = (()=> {
   // form.appendChild(input3);
   form.appendChild(div);
   form.appendChild(submit);
+  newQ.appendChild(del);
   newQ.appendChild(form);
   jsArea.appendChild(newQ);
 
 });
 
-
+// <a type="button" id="<%= "btn-da-#{answer.id}" %>" class="fa fa-remove delete-q" onClick="deleteAnswer(this.id)"></a>
+//   <a id="d-btn-da-414" class="hidden" data-remote="true" rel="nofollow" data-method="delete" href="/answers/414"></a>
 
 var addAnswer = ((question_id)=>{
-  console.log("coucou!!")
+  var del = document.createElement("a");
+  setAttributes(del, {"id": "btn-da", "class": "fa fa-remove delete-q", "onClick": "deleteAnswerJS()"})
   var form = document.createElement("form");
   setAttributes(form, {"novalidate": "novalidate","id":"new_answer", "class": "simple_form_new_answer form-a", "action": `/questions/${question_id}/answers`, "accept-charset":"UTF-8", "data-remote": "true", "method": "post"})
   var input1 = document.createElement("input");
@@ -107,7 +137,7 @@ var addAnswer = ((question_id)=>{
   var submit = document.createElement("input");
   setAttributes(submit, {"type": "submit", "name": "commit", "value": "Create Answer", "id": "btn-a", "data-disable-with": "Create Answer", "class": "hidden"});
   var tabAns = document.createElement("div");
-  setAttributes(tabAns,{"class": "tab-answer"});
+  setAttributes(tabAns,{"class": "tab-answer answer"});
 
 
   div.appendChild(label);
@@ -117,15 +147,13 @@ var addAnswer = ((question_id)=>{
   // form.appendChild(input3);
   form.appendChild(div);
   form.appendChild(submit);
+  tabAns.appendChild(del);
   tabAns.appendChild(form);
 
 
-  var tnqs = document.getElementsByClassName(`tnq-${question_id}`);
-  console.log(tnqs)
-  var tnq = tnqs[tnqs.length - 1];
-
-  tnq.parentNode.insertBefore(tabAns, tnq.nextSibling);
-  // referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+  var addAnsBtn = document.querySelector(`.tab-add-answer${question_id}`);
+  console.log(addAnsBtn);
+  addAnsBtn.parentNode.insertBefore(tabAns, addAnsBtn);
 
 
 });
@@ -138,7 +166,22 @@ function setAttributes(el, attrs) {
 };
 
 
+var deleteAnswerJS = (()=> {
+  var answer = document.querySelector(".answer");
+  answer.remove();
+});
+
+var deleteQuestionJS = (()=> {
+  var question = document.getElementById("question");
+  question.remove();
+});
+
+
 window.deleteQuestion = deleteQuestion;
+window.deleteAnswer = deleteAnswer;
+window.deleteAnswerJS = deleteAnswerJS;
+window.deleteQuestionJS = deleteQuestionJS;
+
 window.addNextQuestion = addNextQuestion;
 window.toggleQ = toggleQ
 window.toggleBlur = toggleBlur

@@ -32,6 +32,12 @@ before_action :set_answer, only: [:edit, :update, :destroy]
   end
 
   def destroy
+    authorize @answer
+    @answer.destroy
+    respond_to do |format|
+      format.html{redirect_to questionnaire_path(@answer.question.questionnaire_id)}
+      format.js
+    end
   end
 
   private

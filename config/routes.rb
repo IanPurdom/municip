@@ -39,10 +39,10 @@ Rails.application.routes.draw do
     end
   end
   resources :questions, only: [:destroy] do
-    resources :answers, only: [:create]
+    resources :answers, only: [:create, :update]
   end
   resources :user_programs, only: [:show, :index, :edit, :update, :destroy]
-  resources :answers, only: [:update, :destroy] do
+  resources :answers, only: [:destroy] do
     resources :programs, only: [:create, :update]
   end
   root to: 'pages#home'
