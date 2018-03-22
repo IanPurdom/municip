@@ -4,10 +4,15 @@ console.log("<%= @question.question %>")
 
 var addQuestionDetails = (()=> {
   // update the div newQ with the question.id in order to get it
-  var newQ = document.querySelector(".new-q");
-  newQ.classList.remove("new-q");
-  newQ.classList.add ("new-q-<%= @question.id %>");
+  var newQ = document.getElementById("question");
+
+  newQ.removeAttribute("id");
+  newQ.id = ("question<%= @question.id %>");
   newQ.classList.add ("tab-question");
+
+  del0 = document.getElementById("btn-dq");
+  del0.remove();
+
   var del = document.createElement("a");
   setAttributes(del,{"type": "button", "id": "btn-dq-<%= @question.id %>", "class": "fa fa-remove delete-q", "onClick": "deleteQuestion(this.id)"})
   var del2 = document.createElement("a");
@@ -20,13 +25,13 @@ var addQuestionDetails = (()=> {
   var div = document.createElement("div");
   updQ.appendChild(h3);
   div.appendChild(updQ);
-  div.appendChild(del);
-  div.appendChild(del2);
+  newQ.appendChild(del);
+  newQ.appendChild(del2);
   newQ.appendChild(div)
 });
 
 
-// update  the id and class of the question form with the question.id to make look like it's loaded from SHOW QUESTIONNAIRE In HTML
+// update  te id and class of the question form with the question.id to make look like it's loaded from SHOW QUESTIONNAIRE In HTML
 
 var updateQuestionForm = (()=> {
   const form = document.querySelector(".form-q");
@@ -56,33 +61,42 @@ var updateQuestionForm = (()=> {
 });
 
 var addAnswerForm = (() => {
-  var form = document.createElement("form");
-  setAttributes(form, {"novalidate": "novalidate","id":"new_answer", "class": "simple_form_new_answer form-a", "action": "/questions/<%= @question.id %>/answers", "accept-charset":"UTF-8", "data-remote": "true", "method": "post"})
-  var input1 = document.createElement("input");
-  setAttributes(input1, {"name":"utf8", "type": "hidden", "value": "✓"});
 
-  var div =  document.createElement("div");
-  setAttributes(div, {"class": "form-group text required answer_answer" });
-  var label = document.createElement("label");
-  setAttributes(label, {"class": "control-label text required", "for": "answer_answer"})
-  label.appendChild(document.createTextNode("Réponse:"))
-  var input0 = document.createElement("input");
-  setAttributes(input0, {"class":"form-control string optional a", "type":"text", "name": "answer[answer]", "id": "answer_answer", "onblur":"toggleBlur(this.className)"});
-  var submit = document.createElement("input");
-  setAttributes(submit, {"type": "submit", "name": "commit", "value": "Create Answer", "id": "btn-a", "data-disable-with": "Create Answer", "class": "hidden"});
-  var tabAns = document.createElement("div");
-  setAttributes(tabAns,{"class": "tab-answer"});
-  newQ = document.querySelector(".new-q-<%= @question.id %>");
+  var div = document.createElement("div");
+  setAttributes(div, {"class":"tab-add-answer centerize"});
 
-  div.appendChild(label);
-  div.appendChild(input0);
-  form.appendChild(input1);
-  // form.appendChild(input2);
-  // form.appendChild(input3);
-  form.appendChild(div);
-  form.appendChild(submit);
-  tabAns.appendChild(form);
-  newQ.appendChild(tabAns);
+  var btn = document.createElement("button");
+  setAttributes(btn, {"class":"btn-add-answer btn-orange", "onclick": "addAnswer(this.id)"});
+  btn.appendChild(document.createTextNode("Ajouter une réponse"))
+  div.appendChild(btn);
+
+  // var form = document.createElement("form");
+  // setAttributes(form, {"novalidate": "novalidate","id":"new_answer", "class": "simple_form_new_answer form-a", "action": "/questions/<%= @question.id %>/answers", "accept-charset":"UTF-8", "data-remote": "true", "method": "post"})
+  // var input1 = document.createElement("input");
+  // setAttributes(input1, {"name":"utf8", "type": "hidden", "value": "✓"});
+  // var div =  document.createElement("div");
+  // setAttributes(div, {"class": "form-group text required answer_answer" });
+  // var label = document.createElement("label");
+  // setAttributes(label, {"class": "control-label text required", "for": "answer_answer"})
+  // label.appendChild(document.createTextNode("Réponse:"))
+  // var input0 = document.createElement("input");
+  // setAttributes(input0, {"class":"form-control string optional a", "type":"text", "name": "answer[answer]", "id": "answer_answer", "onblur":"toggleBlur(this.className)"});
+  // var submit = document.createElement("input");
+  // setAttributes(submit, {"type": "submit", "name": "commit", "value": "Create Answer", "id": "btn-a", "data-disable-with": "Create Answer", "class": "hidden"});
+  // var tabAns = document.createElement("div");
+  // setAttributes(tabAns,{"class": "tab-answer answer"});
+
+  newQ = document.getElementById("question<%= @question.id %>");
+  newQ.appendChild(div)
+  // div.appendChild(label);
+  // div.appendChild(input0);
+  // form.appendChild(input1);
+  // // form.appendChild(input2);
+  // // form.appendChild(input3);
+  // form.appendChild(div);
+  // form.appendChild(submit);
+  // tabAns.appendChild(form);
+  // newQ.appendChild(tabAns);
 
 });
 
@@ -97,3 +111,4 @@ function setAttributes(el, attrs) {
 addQuestionDetails();
 updateQuestionForm();
 addAnswerForm();
+updateAddAnswerButton();

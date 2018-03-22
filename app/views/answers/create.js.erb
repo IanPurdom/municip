@@ -2,9 +2,14 @@ console.log("<%= raw @answer.answer %>")
 console.log("<%= raw @answer.id %>")
 
 var updateAnswerForm = (()=> {
+  var tabAns = document.querySelector(".answer");
+  tabAns.classList.remove("answer");
+  tabAns.classList.add("answer<%= raw @answer.id %>");
   var form = document.querySelector(".form-a");
   form.classList.remove("form-a");
   form.classList.add("form-a-<%= raw @answer.id %>");
+  form.removeAttribute("action")
+  setAttributes(form, {"action": "/questions/<%= @answer.question_id %>/answers/<%= @answer.id %>"})
   var btn = document.getElementById("btn-a");
   btn.removeAttribute("id");
   btn.id = ("btn-a-<%= raw @answer.id %>");
@@ -17,9 +22,16 @@ var updateAnswerForm = (()=> {
   form.appendChild(input);
 
   document.querySelector(".form-a-<%= raw @answer.id %>").classList.add("hidden");
+
 });
 
 var addAnswerDetails = (()=>{
+  var del = document.getElementById("btn-da");
+  del.remove();
+  var del2 = document.createElement("a");
+  setAttributes(del2, {"id": "btn-da-<%= raw @answer.id %>", "class": "fa fa-remove delete-q", "onClick": "deleteAnswer(this.id)"})
+  var del3 = document.createElement("a");
+  setAttributes(del3, {"id": "d-btn-da-<%= raw @answer.id %>", "class": "hidden", "data-remote": "true",  "rel": "nofollow",  "data-method": "delete",  "href":"/answers/<%= raw @answer.id %>"})
   var upd = document.createElement("div");
   setAttributes(upd, {"class": "upd-a-<%= raw @answer.id %>"});
   var p = document.createElement("p");
@@ -28,17 +40,21 @@ var addAnswerDetails = (()=>{
   strong.appendChild(document.createTextNode("Réponse:"));
   var p2 = document.createElement("p");
   setAttributes(p2, {"id": "p<%= raw @answer.id %>", "class": "a-<%= raw @answer.id %>", "OnClick": "toggleQ(this.className)"})
-  p.appendChild(document.createTextNode("<%= raw @answer.answer %>"));
-  var div = document.createElement("div");
-  div.classList.add("tab-answer")
+  p2.appendChild(document.createTextNode("<%= raw @answer.answer %>"));
+  // var div = document.createElement("div");
+  // div.classList.add("tab-answer")
+  tabAns = document.querySelector(".answer<%= raw @answer.id %>")
   var form = document.querySelector(".form-a-<%= raw @answer.id %>");
   console.log(form)
   upd.appendChild(p);
   upd.appendChild(p2);
-  div.appendChild(upd);
-  div.appendChild(form);
-  newQ = document.querySelector(".new-q-<%= raw @answer.question_id %>");
-  newQ.appendChild(div);
+  tabAns.appendChild(del2);
+  tabAns.appendChild(del3);
+  tabAns.appendChild(upd);
+  tabAns.appendChild(form);
+
+  var addAnsBtn = document.querySelector(".tab-add-answer<%= raw @answer.question_id %>");
+  addAnsBtn.parentNode.insertBefore(tabAns, addAnsBtn);
 });
 
 
@@ -73,12 +89,10 @@ var addProgramForm = (()=>{
   tabPr = document.createElement("div");
   setAttributes(tabPr, {"class":"tab-program"})
 
-  newQ = document.querySelector(".new-q-<%= @answer.question_id %>")
 
 
   updPr.appendChild(p);
   updPr.appendChild(btn);
-
   div.appendChild(label);
   div.appendChild(input0);
   form.appendChild(input1);
@@ -88,20 +102,54 @@ var addProgramForm = (()=>{
   form.appendChild(submit);
   tabPr.appendChild(form);
   tabPr.appendChild(updPr);
-  newQ.appendChild(tabPr);
+
+  //add the program form into the question tab
+
+  var formAns = document.querySelector(".form-a-<%= raw @answer.id %>");
+  formAns.parentNode.insertBefore(tabPr, formAns.nextSibling)
 });
 
 
-// var addAnswer = (()=>{
+// var addNextQuestionForm = (()=> {
 
-//   var tabAdd = document.createElement("div")
-//   setAttributes(tabAdd,{"class": "btn-add-answer btn-orange", "href"})
+//   var divNextQ = document.createElement("div");
+//   setAttributes(divNextQ,{"class": "tab-next-question tnq<%= raw @answer.question_id %>"})
+//   var form = document.createElement("form");
+//   setAttributes(form, {"novalidate": "novalidate", "class": "simple_form edit_answer" "id": "edit_answer_<%= raw @answer.id %>", "action": "/answers/<%= raw @answer.id %>",  "accept-charset": "UTF-8",  "data-remote": "true",  "method": "post"});
+//   var input = document.createElement("input");
+//   setAttributes(input, {"name": "utf8", "type": "hidden", "value": "✓"});
+//   var input1 = document.createElement("input");
+//   setAttributes(input1, {"name": "_method", "type": "hidden", "value": "patch"});
+//   var div = document.createElement("div");
+//   setAttributes(div, {"class": "form-group select optional answer_next_question_id"})
+//   var label = document.createElement("label");
+//   setAttributes(label, {"class": "control-label select optional for_selector457"});
+//   label.appendChild(document.createTextNode("Question suivante:");
+//   var select = document.createElement("select");
+//   setAttributes(select, {"class": "form-control select optional",  "onclick": "addNextQuestion(this.id)",  "id":"selector<%= raw @answer.id %>", "name":"answer[next_question_id]"});
+//   var option = document.createElement("option");
+//   setAttributes(option, {"value": ""});
+//   var input2 = document.createElement("input");
+//   setAttributes(input2, {"type":"submit", "name":"commit", "value": "Update Answer", "class": "hidden",  "id": "btn-selector<%= raw @answer.id %>", "data-disable-with": "Update Answer"});
 
-// // <div class="tab-add-answer centerize">
-// //       <a class="btn-add-answer btn-orange" href="/questionnaires/75/questions">Ajouter une réponse</a>
-// //     </div>
+//   div.appendChild(label);
+//   div.appendChild(select);
+//   div.appendChild(option);
+
+//   form.appendChild(input);
+//   form.appendChild(input1);
+//   form.appendChild(div);
+//   form.appendChild(input2);
+//   divNextQ.appendChild(form);
+
+//   //add the next_question form into the question tab after the program form
+//   var formProg = document.querySelector(".form-pr-<%= raw @answer.id %>");
+//   formProg.parentNode.insertBefore(divNextQ, formProg.nextSibling)
+
 
 // });
+
+
 
 function setAttributes(el, attrs) {
   for(var key in attrs) {
@@ -113,4 +161,5 @@ function setAttributes(el, attrs) {
 updateAnswerForm();
 addAnswerDetails();
 addProgramForm();
+addNextQuestionForm();
 
