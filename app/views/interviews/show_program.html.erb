@@ -13,8 +13,16 @@
     <div class="answer-program">
       <% @user_programs.each do |user_program|%>
       <h4><%= Question.find(user_program.question_id).question %></h4>
-      <p class="user-prog"><%= user_program.program %></p>
-      <%= link_to "", edit_user_program_path(user_program), class: "fa fa-edit" %>
+      <div class = "<%= "upd-u-#{user_program.id}" %>">
+        <p class="user-prog <%= "u-#{user_program.id}" %>" onClick="toggleQ(this.className)"><%= user_program.program %></p>
+      </div>
+      <div class="<%="form-u-#{user_program.id}"%> hidden">
+       <%= simple_form_for user_program, remote: true do |f| %>
+         <%= f.input :program, as: :text, :label => "Programme: ", input_html: {rows: 5}, :input_html => {class: "u-#{user_program.id}", :onblur => "toggleBlur(this.className)"} %>
+         <%= f.hidden_field :interview_id %>
+         <%= f.submit 'Modifier', id:"btn-u-#{user_program.id}", class: "hidden"%>
+       <% end %>
+      </div>
     <% end %>
     </div>
   </div>
@@ -26,3 +34,4 @@
   </div>
 </div>
  <%= javascript_pack_tag 'swal_user_prog' %>
+<%= javascript_pack_tag 'questionnaire' %>

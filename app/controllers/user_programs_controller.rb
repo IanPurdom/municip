@@ -49,7 +49,10 @@ before_action :set_user_program, only: [:edit, :update, :destroy]
 
   def update
     @user_program.update(user_program_params)
-    redirect_to show_program_interview_path(user_program_params[:interview_id])
+    respond_to do |format|
+      format.html {redirect_to show_program_interview_path(@user_program.interview_id)}
+      format.js
+    end
   end
 
   def destroy
@@ -65,7 +68,7 @@ before_action :set_user_program, only: [:edit, :update, :destroy]
   end
 
   def user_program_params
-    params.require(:user_program).permit(:program_id, :answer_id)
+    params.require(:user_program).permit(:program, :program_id, :answer_id)
   end
 
 end

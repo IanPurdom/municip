@@ -1,5 +1,5 @@
 class QuestionnairesController < ApplicationController
-before_action :set_questionnaire, only: [:show, :edit, :new_question]
+before_action :set_questionnaire, only: [:show, :edit, :new_question, :destroy]
 
   def index
     @questionnaires = policy_scope(Questionnaire)
@@ -16,13 +16,22 @@ before_action :set_questionnaire, only: [:show, :edit, :new_question]
     @questionnaire = Questionnaire.new(questionnaire_params)
     @questionnaire.save
     authorize @questionnaire
-    redirect_to new_questionnaire_question_path(@questionnaire)
+    redirect_to questionnaire_path(@questionnaire)
   end
 
   def show
     authorize @questionnaire
     @answer = Answer.new
     @question = Question.new
+  end
+
+  def destroy
+    authorize @questionnaire
+    @questionnaire.destroy
+    respond_to do |format|
+      format.html{redirect_to root_path}
+      format.js
+    end
   end
 
   private

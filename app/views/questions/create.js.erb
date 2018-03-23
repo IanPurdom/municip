@@ -101,6 +101,16 @@ var addAnswerForm = (() => {
 });
 
 
+var updateAddAnswerButton = (()=>{
+  var div = document.querySelector(".tab-add-answer");
+  div.classList.remove("tab-add-answer");
+  div.classList.add("tab-add-answer<%= @question.id %>");
+
+  var btn = div.querySelector(".btn-add-answer");
+  console.log(btn);
+  btn.id = ("<%= @question.id %>");
+});
+
 function setAttributes(el, attrs) {
   for(var key in attrs) {
     el.setAttribute(key, attrs[key]);
