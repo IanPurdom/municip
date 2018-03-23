@@ -11,6 +11,15 @@ before_action :set_answer, only: [:edit, :update, :destroy]
   def create
     @answer = Answer.new(answer: answer_params[:answer], question_id: params[:question_id] )
     @answer.save
+    @next_question_ids = []
+    @questionnaire = @answer.question.questionnaire
+    qs = @questionnaire.questions
+    @questions = []
+    qs.each do |q|
+      @questions << q.question
+    end
+    @questions
+    @question_ids = @questionnaire.questions.ids
     authorize @answer
     respond_to do |format|
       format.html{redirect_to questionnaire_path(@answer.question.questionnaire)}

@@ -55,8 +55,8 @@
         <h4><strong><%= category.name %> :</strong></h4>
           <% @questionnaires.where(category_id: category.id).each do |questionnaire|%>
             <% if questionnaire.interviews.find_by(user: current_user).nil? %>
-              <div class="questionnaires">
-                <p><%= link_to questionnaire.title, questionnaire_interviews_path(questionnaire, Interview.new), method: :post, class:"home-sub-title" %></p>
+              <div class="questionnaires <%= "questionnaire-int-#{questionnaire.id}" %>">
+                <p><%= link_to questionnaire.title, questionnaire_interviews_path(questionnaire, Interview.new), method: :post, class: "home-sub-title" %></p>
                 <i class="fa fa-play-circle"></i>
               </div>
             <% else %>
@@ -80,4 +80,25 @@
     </div>
     <%= link_to "Mon programme complet", interviews_path, class:"home-sub-title" %>
   </div>
+
+  <div class="encart-prog-complet">
+    <div class="tab-title orange">
+      <p>Création Questionnaire</p>
+    </div>
+    <% @categories.each do |category| %>
+      <% if @questionnaires.where(category_id: category.id) != [] %>
+      <h4><strong><%= category.name %> :</strong></h4>
+        <% @questionnaires.where(category_id: category.id).each do |questionnaire|%>
+      <div class="questionnaires <%="questionnaire-#{questionnaire.id}" %>">
+        <p><%= link_to questionnaire.title, questionnaire_path(questionnaire),  class: "home-sub-title" %></p>
+        <a type="button" id="<%= "btn-#{questionnaire.id}" %>" class="fa fa-remove delete-q" onClick="deleteQuestionnaire(this.id)"></a>
+        <%= link_to "", questionnaire_path(questionnaire), method: :delete, remote: true, id:"d-btn-#{questionnaire.id}", class: "hidden" %>
+      </div>
+        <% end  %>
+      <% end  %>
+    <% end  %>
+    <%= link_to 'Créer questionnaire', new_questionnaire_path, class: "fa fa-arrow-circle-right" %>
+  </div>
 </div>
+
+<%= javascript_pack_tag 'questionnaire' %>

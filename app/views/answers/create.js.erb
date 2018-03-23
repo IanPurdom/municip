@@ -60,7 +60,7 @@ var addAnswerDetails = (()=>{
 
 var addProgramForm = (()=>{
   var form = document.createElement("form");
-  setAttributes(form, {"novalidate": "novalidate","id":"new_program", "class": "simple_form_new_program form-pr hidden", "action": "/answers/<%= @answer.id %>/programs", "accept-charset":"UTF-8", "data-remote": "true", "method": "post"})
+  setAttributes(form, {"novalidate": "novalidate","id":"new_program", "class": "simple_form_new_program form-pr-<%= raw @answer.id %> hidden", "action": "/answers/<%= @answer.id %>/programs", "accept-charset":"UTF-8", "data-remote": "true", "method": "post"})
   var input1 = document.createElement("input");
   setAttributes(input1, {"name":"utf8", "type": "hidden", "value": "✓"});
 
@@ -70,26 +70,25 @@ var addProgramForm = (()=>{
   setAttributes(label, {"class": "control-label text required", "for": "program_program"})
   label.appendChild(document.createTextNode("Programme:"))
   var input0 = document.createElement("input");
-  setAttributes(input0, {"class":"form-control string optional pr", "type":"text", "name": "program[content]", "id": "program_program", "onblur":"toggleBlur(this.className)"});
+  setAttributes(input0, {"class":"form-control string optional pr-<%=@answer.id%>", "type":"text", "name": "program[content]", "id": "program_program", "onblur":"toggleBlur(this.className)"});
+
   var submit = document.createElement("input");
-  setAttributes(submit, {"type": "submit", "name": "commit", "value": "Create Program", "id": "btn-pr", "data-disable-with": "Create Program", "class": "hidden"});
+  setAttributes(submit, {"type": "submit", "name": "commit", "value": "Create Program", "id": "btn-pr-<%=@answer.id%>", "data-disable-with": "Create Program", "class": "hidden"});
 
 
   updPr = document.createElement("div");
-  setAttributes(updPr,{"class": "upd-pr"});
+  setAttributes(updPr,{"class": "upd-pr-<%= raw @answer.id %>"});
   var p = document.createElement("p");
   var strong = document.createElement("strong");
   p.appendChild(strong);
   strong.appendChild(document.createTextNode("Programme associé:"));
 
   var btn = document.createElement("button");
-  setAttributes(btn,{"id":"id-pr-<%= raw @answer.id %>", "class": "pr", "onClick": "toggleQ(this.className)"})
+  setAttributes(btn,{"id":"id-pr-<%= raw @answer.id %>", "class": "pr-<%= raw @answer.id %>", "onClick": "toggleQ(this.className)"})
   btn.appendChild(document.createTextNode("Ajouter"));
 
   tabPr = document.createElement("div");
   setAttributes(tabPr, {"class":"tab-program"})
-
-
 
   updPr.appendChild(p);
   updPr.appendChild(btn);
@@ -100,8 +99,8 @@ var addProgramForm = (()=>{
   // form.appendChild(input3);
   form.appendChild(div);
   form.appendChild(submit);
-  tabPr.appendChild(form);
   tabPr.appendChild(updPr);
+  tabPr.appendChild(form);
 
   //add the program form into the question tab
 
@@ -110,45 +109,57 @@ var addProgramForm = (()=>{
 });
 
 
-// var addNextQuestionForm = (()=> {
+var addNextQuestionForm = (()=> {
 
-//   var divNextQ = document.createElement("div");
-//   setAttributes(divNextQ,{"class": "tab-next-question tnq<%= raw @answer.question_id %>"})
-//   var form = document.createElement("form");
-//   setAttributes(form, {"novalidate": "novalidate", "class": "simple_form edit_answer" "id": "edit_answer_<%= raw @answer.id %>", "action": "/answers/<%= raw @answer.id %>",  "accept-charset": "UTF-8",  "data-remote": "true",  "method": "post"});
-//   var input = document.createElement("input");
-//   setAttributes(input, {"name": "utf8", "type": "hidden", "value": "✓"});
-//   var input1 = document.createElement("input");
-//   setAttributes(input1, {"name": "_method", "type": "hidden", "value": "patch"});
-//   var div = document.createElement("div");
-//   setAttributes(div, {"class": "form-group select optional answer_next_question_id"})
-//   var label = document.createElement("label");
-//   setAttributes(label, {"class": "control-label select optional for_selector457"});
-//   label.appendChild(document.createTextNode("Question suivante:");
-//   var select = document.createElement("select");
-//   setAttributes(select, {"class": "form-control select optional",  "onclick": "addNextQuestion(this.id)",  "id":"selector<%= raw @answer.id %>", "name":"answer[next_question_id]"});
-//   var option = document.createElement("option");
-//   setAttributes(option, {"value": ""});
-//   var input2 = document.createElement("input");
-//   setAttributes(input2, {"type":"submit", "name":"commit", "value": "Update Answer", "class": "hidden",  "id": "btn-selector<%= raw @answer.id %>", "data-disable-with": "Update Answer"});
+  var divNextQ = document.createElement("div");
+  setAttributes(divNextQ,{"class": "tab-next-question tnq<%= raw @answer.question_id %>"})
+  var form = document.createElement("form");
+  setAttributes(form, {"novalidate": "novalidate", "class": "simple_form edit_answer", "id": "edit_answer_<%= raw @answer.id %>", "action": "questions/<%= raw @answer.question_id %>/answers/<%= raw @answer.id %>",  "accept-charset": "UTF-8",  "data-remote": "true",  "method": "post"});
+  var input = document.createElement("input");
+  setAttributes(input, {"name": "utf8", "type": "hidden", "value": "✓"});
+  var input1 = document.createElement("input");
+  setAttributes(input1, {"name": "_method", "type": "hidden", "value": "patch"});
+  var div = document.createElement("div");
+  setAttributes(div, {"class": "form-group select optional answer_next_question_id"})
+  var label = document.createElement("label");
+  setAttributes(label, {"class": "control-label select optional for_selector457"});
+  label.appendChild(document.createTextNode("Question suivante:"));
+  var select = document.createElement("select");
+  setAttributes(select, {"class": "form-control select optional",  "onclick": "addNextQuestion(this.id)",  "id":"selector<%= raw @answer.id %>", "name":"answer[next_question_id]"});
+  var option = document.createElement("option");
+  setAttributes(option, {"value": ""});
+  var input2 = document.createElement("input");
+  setAttributes(input2, {"type":"submit", "name":"commit", "value": "Update Answer", "class": "hidden",  "id": "btn-selector<%= raw @answer.id %>", "data-disable-with": "Update Answer"});
 
-//   div.appendChild(label);
-//   div.appendChild(select);
-//   div.appendChild(option);
+  div.appendChild(label);
+  div.appendChild(select);
+  select.appendChild(option);
 
-//   form.appendChild(input);
-//   form.appendChild(input1);
-//   form.appendChild(div);
-//   form.appendChild(input2);
-//   divNextQ.appendChild(form);
+  const n = "<%= raw @questions.length %>"
+  var question_ids = <%= @question_ids %>
+  var questions = <%= raw @questions %>
+  console.log(question_ids)
+  console.log(questions)
 
-//   //add the next_question form into the question tab after the program form
-//   var formProg = document.querySelector(".form-pr-<%= raw @answer.id %>");
-//   formProg.parentNode.insertBefore(divNextQ, formProg.nextSibling)
+  for (let i = 0; i < n; i++) {
+    let option = document.createElement("option");
+    console.log(question_ids[i]);
+    console.log(questions[i]);
+    setAttributes(option, {"value": question_ids[i]});
+    option.appendChild(document.createTextNode(questions[i]));
+    select.appendChild(option);
+  };
 
+  form.appendChild(input);
+  form.appendChild(input1);
+  form.appendChild(div);
+  form.appendChild(input2);
+  divNextQ.appendChild(form);
 
-// });
-
+  //add the next_question form into the question tab after the program form
+  var formProg = document.querySelector(".form-pr-<%= raw @answer.id %>");
+  formProg.parentNode.insertBefore(divNextQ, formProg.nextSibling)
+});
 
 
 function setAttributes(el, attrs) {

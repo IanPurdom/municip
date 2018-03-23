@@ -12,39 +12,6 @@
   </div>
   <br>
   <br>
-<!-- HIDDEN QUESTION TAB FOR JS-->
-
-<!--     <div class= "hidden-tab-question hidden">
-      <div>
-         <a type="button" id="btn-dq" class="fa fa-remove delete-q" onClick="deleteQuestion(this.id)"></a>
-        <%#= link_to "", question_path(), method: :delete, id:"d-btn-dq", class: "hidden" %>
-        <div class="upd-q">
-          <! if class added, put it before  "<%#="q-#{question.id}"%> -->
-          <!-- <div id="h3" class= "first-q q" onClick="toggleQ(this.className)"></div>
-        </div>
-
-      <div class="form-q">
-        <%#= simple_form_for @question, remote: true do |f| %>
-        <! ne pas rajouter de class à f.input :answer sinon questionnaire.js (function toggleBlur) pete!! -->
-        <%#= f.input :question, :label => "Question: ", :input_html => {class: "q", :onblur => "toggleBlur(this.className)"}  %>
-        <%#= f.hidden_field :questionnaire_id, :value => @questionnaire.id %>
-        <%#= f.submit class: "hidden", id:"btn-q" %>
-        <%# end %>
-     <!--  </div>
-    </div>
-  </div>  -->
-
-
-
-
-
-<!-- <div>
-  <#%= simple_form_for [@questionnaire, @question], remote: true do |f| %>
-  <#%= f.input :question %>
-  <%#= f.submit "add" %>
-  <#% end  %>
-</div>
- -->
 
     <% @questionnaire.questions.each do |question|%>
 
@@ -79,37 +46,6 @@
     <div class= "<%= "tab-add-answer#{question.id} centerize" %>">
       <button  id="<%= "#{question.id}" %>" class="btn-add-answer btn-orange" onClick="addAnswer(this.id)">Ajouter une réponse</button>
     </div>
-
-
-    <!-- HIDDEN PROGRAM TAB for JS -->
-<!--
-    <div class= "hidden-tab-program hidden">
-      <%# @program = Program.new%>
-      <div class="<#%= "hidden-upd-pr" %>">
-        <p><strong>Programme associé: </strong></p>
-        <! if class added, put it before  "<%#="q-#{question.id}"%> -->
-<!--         <button id= "<%#= "hidden-id-pr" %>", class="add-answer hidden-pr", onClick=toggleQ(this.className)>Ajouter</button>
-      </div>
-      <div class="<%#= "hidden-form-pr"%> hidden">
-        <%#= simple_form_for @program, remote: true do |f| %>
-        ne pas rajouter de class à f.input :content sinon questionnaire.js (function toggleBlur) pete!!
-        <%#= f.input :content, :label => "Programme associé: ", :input_html => {class: "hidden-pr", :onblur => "toggleBlur(this.className)"} %>
-        <%#= f.hidden_field  :answer_id, class: "answer-field" %>
-        <%#= f.submit class: "hidden", id: "hidden-btn-pr"%>
-        <%#end  %>
-      </div>
-    </div>
- -->
- <!-- HIDDEN NEXT QUESTION TAB for JS -->
-<!--
-    <div class= "hidden-tab-next-question hidden">
-      <%#= simple_form_for @answer, remote: true do |f| %>
-      <%#= f.input :next_question_id, :label => "Question suivante: ", collection: @questionnaire.questions.collect{|question| [question.question, question.id]}, :input_html => {:onclick => "addNextQuestion(this.id)", :id => "hidden-selector"} %>
-      <%#= f.submit  class: "hidden", id: "hidden-btn-selector" %>
-      <%# end %>
-    </div> -->
-
-
 
       <% else  %><!-- else if question.answers != [] -->
 
@@ -176,7 +112,7 @@
 
 
     <div class= "tab-next-question <%= "tnq-#{question.id}" %>">
-      <%= simple_form_for answer, remote: true do |f| %>
+      <%= simple_form_for [question, answer], remote: true do |f| %>
       <%= f.input :next_question_id, :label => "Question suivante: ", collection: @questionnaire.questions.collect{|question| [question.question, question.id]}, :input_html => {:onclick => "addNextQuestion(this.id)", :id => "selector#{answer.id}"} %>
       <%= f.submit  class: "hidden", id: "btn-selector#{answer.id}" %>
       <% end %>
