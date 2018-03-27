@@ -1,10 +1,8 @@
-console.log("<%= @program %>")
-
-function getProgram(answer) {
-document.getElementById("user_program_program").value = "<%= j @program.content %>";
-document.getElementById("user_program_program_id").value = "<%= @program.id %>";
+function getProgram(program) {
 document.getElementById("user_program_answer_id").value = "<%= @answer.id %>";
+document.getElementById("user_program_program").value = "<%= j @content %>";
+document.querySelector(".button-answer").classList.add("btn-red");
 };
 
 var answer = document.querySelector(".answer");
-answer.addEventListener('click', getProgram(answer));
+answer.addEventListener('click', getProgram());

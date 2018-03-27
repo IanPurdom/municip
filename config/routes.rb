@@ -27,6 +27,9 @@ Rails.application.routes.draw do
   resources :questionnaires do
     resources :questions, only: [:create, :update]
     resources :interviews, only: [:create]
+    member do
+      patch 'root_question', to: "questionnaires#root_question"
+    end
   end
   resources :interviews, only: [:show, :index, :update, :get_program] do
     resources :user_programs, only: [:create]

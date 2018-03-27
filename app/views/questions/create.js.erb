@@ -20,14 +20,23 @@ var addQuestionDetails = (()=> {
   var updQ = document.createElement("div");
   setAttributes(updQ, {"class": "upd-q-<%= @question.id %>"});
   var h3 = document.createElement("div");
-  setAttributes(h3, {"id": "h3<%= @question.id %>", "class": "first-q q-<%= @question.id %>", "onClick":"toggleQ(this.className)"});
+  setAttributes(h3, {"id": "h2<%= @question.id %>", "class": "first-q q-<%= @question.id %>", "onClick":"toggleQ(this.className)"});
   h3.appendChild(document.createTextNode("<%= @question.question %>"));
   var div = document.createElement("div");
+
+  var div2 = document.createElement("div");
+  setAttributes(div2, {"class": "div-racine-<%= @question.id %>"});
+  var racine = document.createElement("a");
+  setAttributes(racine, {"class": "btn-add-answer btn-orange btn-racine-<%= @question.id %>", "data-remote": "true", "rel":"nofollow", "data-method": "patch", "href":"/questionnaires/<%= @question.questionnaire_id %>/root_question?question_id=<%= @question.id %>"})
+  racine.appendChild(document.createTextNode("Question racine ?"));
+  div2.appendChild(racine)
+
   updQ.appendChild(h3);
   div.appendChild(updQ);
   newQ.appendChild(del);
   newQ.appendChild(del2);
-  newQ.appendChild(div)
+  newQ.appendChild(div);
+  newQ.appendChild(div2);
 });
 
 

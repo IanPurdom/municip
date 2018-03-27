@@ -24,7 +24,8 @@ var answer_id_4 = '<%= raw @answer_ids[4] %>';
 
 function clearProgram() {
   document.getElementById("user_program_program").value = "";
-  document.getElementById("user_program_program_id").value = "";
+  // document.getElementById("user_program_program_id").value = "";
+  document.querySelector(".button-answer").classList.remove("btn-red");
 };
 
 function nextQuestion() {

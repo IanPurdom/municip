@@ -5,24 +5,23 @@
   <ul id="question"><%= @question.question%>
     <% @answers.each do |answer| %>
     <li>
-      <%= link_to answer.answer, get_program_interview_path(answer: answer, question: @question), remote: true, method: :patch, class: 'answer'%>
+      <%= link_to answer.answer, get_program_interview_path(answer: answer, question: @question), remote: true, method: :patch, class: "answer a-#{answer.id}"%>
     </li>
     <% end %>
   </ul>
   <br>
   <br>
-     <div class="grid">
-      <div class="f-new">
-        <ul class="new-form">
-          <%= simple_form_for [@interview, @user_program], remote: true do |f| %>
-          <%= f.input :program, :label => "Votre réponse:", as: :text, input_html: {rows: 20} %>
-          <%#= f.hidden_field :question_id, :value => @question.id %>
-          <%#= f.hidden_field :category_id, :value => @interview.questionnaire.category_id %>
-          <%= f.hidden_field :program_id, :value => nil %>
-          <%= f.hidden_field :answer_id, :value => nil %>
-          <%= f.submit 'Valider'%>
-          <% end %>
-        </ul>
-      </div>
+   <div class="grid">
+    <div class="f-new">
+      <ul class="new-form">
+        <%= simple_form_for [@interview, @user_program], remote: true do |f| %>
+        <%= f.input :program, :label => "Votre réponse:", as: :text, input_html: {rows: 7} %>
+        <%#= f.hidden_field :question_id, :value => @question.id %>
+        <%#= f.hidden_field :category_id, :value => @interview.questionnaire.category_id %>
+        <%= f.hidden_field :answer_id, :value => nil %>
+        <%= f.submit 'Valider votre réponse', class: "btn-restart centerize button-answer"%>
+        <% end %>
+      </ul>
     </div>
+  </div>
 </div>
