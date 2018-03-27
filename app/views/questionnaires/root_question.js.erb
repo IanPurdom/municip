@@ -1,0 +1,22 @@
+var btnRacine = document.querySelector(".btn-racine-<%= @questionnaire.root_question_id %>");
+btnRacine.remove();
+var p = document.createElement("p");
+setAttributes(p, {"class": "btn-add-answer btn-red racine-<%= @questionnaire.root_question_id %>"})
+p.appendChild(document.createTextNode("Question racine"));
+var divRacine2 = document.querySelector(".div-racine-<%= @questionnaire.root_question_id %>");
+divRacine2.appendChild(p);
+
+var racine = document.querySelector(".racine-<%= @previous_root_question_id %>");
+racine.remove();
+var a = document.createElement("a");
+setAttributes(a, {"class": "btn-add-answer btn-orange btn-racine-<%= @previous_root_question_id %>", "href": "/questionnaires/<%= @questionnaire.id %>/root_question?question_id=<%= @previous_root_question_id %>", "data-remote": "true", "rel": "nofollow", "data-method": "patch"})
+a.appendChild(document.createTextNode("Question racine ?"));
+var divRacine = document.querySelector(".div-racine-<%= @previous_root_question_id %>")
+divRacine.appendChild(a);
+
+
+function setAttributes(el, attrs) {
+  for(var key in attrs) {
+    el.setAttribute(key, attrs[key]);
+  }
+};

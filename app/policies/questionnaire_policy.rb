@@ -21,4 +21,9 @@ class QuestionnairePolicy < ApplicationPolicy
     update?
   end
 
+  def root_question?
+    update?
+  end
+
+
 end

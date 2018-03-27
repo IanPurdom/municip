@@ -13,7 +13,7 @@
   <br>
   <br>
 
-    <% @questionnaire.questions.each do |question|%>
+    <% @questionnaire.questions.order(:created_at).each do |question|%>
 
   <div id="<%= "question#{question.id}" %>"class="tab-question">
     <div>
@@ -30,6 +30,13 @@
       <%= f.submit class: "hidden", id:"btn-q-#{question.id}" %>
       <% end %>
       </div>
+    <div class="<%="div-racine-#{question.id}"%>">
+      <% if @questionnaire.root_question_id == question.id %>
+      <p class= "btn-add-answer btn-red <%="racine-#{question.id}"%>">Question racine</p>
+      <% else  %>
+      <%= link_to "Question racine ?", root_question_questionnaire_path(@questionnaire, question_id: question.id), method: :patch, remote: true, class: "btn-add-answer btn-orange btn-racine-#{question.id}"  %>
+    <% end %>
+    </div>
     </div>
 
 
@@ -50,7 +57,7 @@
       <% else  %><!-- else if question.answers != [] -->
 
 
-        <% question.answers.each do |answer| %>
+        <% question.answers.order(:created_at).each do |answer| %>
 
 
     <div  class= "tab-answer <%= "answer#{answer.id}"%>">
