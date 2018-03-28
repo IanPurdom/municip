@@ -1,4 +1,5 @@
 class PhotosController < ApplicationController
+before_action :set_photo, only: [:destroy]
 
   def create
     @photo = Photo.new(photo_params)
@@ -9,13 +10,17 @@ class PhotosController < ApplicationController
   end
 
   def destroy
-    @photo = Photo.find(params[:id])
     @photo.destroy
     authorize @photo
     redirect_to city_path(params[:city_id])
   end
 
   private
+
+  def set_photo
+   @photo = Photo.find(params[:id])
+   authorize @photo
+  end
 
   def photo_params
     params.require(:photo).permit(:photo)

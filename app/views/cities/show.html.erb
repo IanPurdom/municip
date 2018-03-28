@@ -1,45 +1,46 @@
-<div class="header-show-flex">
-  <div class="home-header">
-    <h1 class="program-title"><%= @city.name %></h1>
-  </div>
+<div class="home-header">
+    <h1 class="page_title blue-gray"><%= @city.name %></h1>
 </div>
 <div>
   <div class="container">
     <div class="cat-title">
-        <h1>Informations utiles</h1>
+        <h1>Cartographie</h1>
     </div>
-    <div class="city-board">
-      <div class="rubrique-show">
-        <div class="rub-title">Administratif</div>
-        <div class="rub-p">
-          <p><strong>Departement: </strong><%= @city.departement %></p>
-          <p><strong>Région: </strong><%= @city.region %></p>
-          <p><strong>Canton: </strong><%= @city.canton %></p>
-          <p><strong>Intercommunalité: </strong><%= @city.intercommunalite %></p>
-          <p><strong>Maire actuel: </strong><%= @city.current_maire %></p>
-          <p><strong>Code Postal: </strong><%= @city.zip_code %></p>
-          <p><strong>Code Commune: </strong><%= @city.code_commune %></p>
-          </div>
-        <div class="rub-title">Démographie</div>
-        <div class="rub-p">
-          <p><strong>Gentilé: </strong><%= @city.gentile %></p>
-          <p><strong>Population: </strong><%= @city.population %></p>
-          <p><strong>Densité: </strong><%= @city.density %></p>
-        </div>
-        <div class="rub-title">Géographie</div>
-        <div class="rub-p">
-          <p><strong>Latitude: </strong><%= @city.latitude %></p>
-          <p><strong>Longitude: </strong><%= @city.longitude %></p>
-          <p><strong>Altitude: </strong><%= @city.height %></p>
-          <p><strong>Superficie: </strong><%= @city.superficy %></p>
-        </div>
-      </div>
       <div
       id="map"
       data-markers="<%= @markers.to_json %>"
       data-coordinates="<%= @coordinates.to_json%>">
       </div>
+    <div class="cat-title">
+        <h1>Informations utiles</h1>
     </div>
+    <!-- <div class="city-board"> -->
+    <div class="rubrique-show">
+      <div class="rub-title beige">Administratif</div>
+      <div class="rub-p">
+        <p><strong>Departement: </strong><%= @city.departement %></p>
+        <p><strong>Région: </strong><%= @city.region %></p>
+        <p><strong>Canton: </strong><%= @city.canton %></p>
+        <p><strong>Intercommunalité: </strong><%= @city.intercommunalite %></p>
+        <p><strong>Maire actuel: </strong><%= @city.current_maire %></p>
+        <p><strong>Code Postal: </strong><%= @city.zip_code %></p>
+        <p><strong>Code Commune: </strong><%= @city.code_commune %></p>
+        </div>
+      <div class="rub-title red">Démographie</div>
+      <div class="rub-p">
+        <p><strong>Gentilé: </strong><%= @city.gentile %></p>
+        <p><strong>Population: </strong><%= @city.population %></p>
+        <p><strong>Densité: </strong><%= @city.density %></p>
+      </div>
+      <div class="rub-title dark-taupe">Géographie</div>
+      <div class="rub-p">
+        <p><strong>Latitude: </strong><%= @city.latitude %></p>
+        <p><strong>Longitude: </strong><%= @city.longitude %></p>
+        <p><strong>Altitude: </strong><%= @city.height %></p>
+        <p><strong>Superficie: </strong><%= @city.superficy %></p>
+      </div>
+    </div>
+    <!-- </div> -->
     <div class="cat-title">
       <h1>Diaporama</h1>
     </div>
