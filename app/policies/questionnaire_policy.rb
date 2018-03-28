@@ -5,24 +5,32 @@ class QuestionnairePolicy < ApplicationPolicy
     end
   end
 
+  def index?
+    user.role.role == "master"
+  end
+
+  def new?
+    user.role.role == "master"
+  end
+
   def show?
-    true
+    user.role.role == "master"
   end
 
   def create?
-    true
+    user.role.role == "master"
   end
 
   def update?
-    true
+    user.role.role == "master"
   end
 
   def destroy?
-    update?
+    user.role.role == "master"
   end
 
   def root_question?
-    update?
+    user.role.role == "master"
   end
 
 

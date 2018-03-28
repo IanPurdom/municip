@@ -81,6 +81,7 @@
     <%= link_to "Mon programme complet", interviews_path, class:"home-sub-title" %>
   </div>
 
+<% if policy(Questionnaire).show? %>
   <div class="encart-prog-complet">
     <div class="tab-title orange">
       <p>Création Questionnaire</p>
@@ -99,6 +100,7 @@
     <% end  %>
     <%= link_to 'Créer questionnaire', new_questionnaire_path, class: "fa fa-arrow-circle-right" %>
   </div>
+<% end %>
 </div>
 
 <%= javascript_pack_tag 'questionnaire' %>

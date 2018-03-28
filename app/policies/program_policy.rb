@@ -6,15 +6,15 @@ class ProgramPolicy < ApplicationPolicy
   end
 
   def create?
-    true
+    user.role.role == "master"
   end
 
   def update?
-    true
+    user.role.role == "master"
   end
 
   def destroy?
-    update?
+    user.role.role == "master"
   end
 
 end
