@@ -1,9 +1,10 @@
 <div class="home-header">
-  <h1 class="page_title">Mon équipe municipale</h1>
+  <h1 class="page_title blue-gray">Mon équipe municipale</h1>
 </div>
 <div>
-  <%= link_to ' Ajouter un adjoint', new_deputy_path, class: "btn-add" %>
+    <%= link_to 'Ajouter un adjoint', new_deputy_path, type: "button", class: "btn-restart btn-red" %>
 </div>
+<br>
 <br>
 <div class="container">
   <% @deputies.each do |deputy| %>
@@ -43,3 +44,6 @@
   });
   </script>
 </div>
+<br>
+<br>
+<br>

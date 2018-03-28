@@ -4,5 +4,5 @@ class UserProgram < ApplicationRecord
   belongs_to :question
   belongs_to :category
   validates :interview, uniqueness: {:scope => [:user, :question]}
-  validates :program, presence: true, length: {minimum: 20}
+  validates :program, presence: true, length: {minimum: 10}
 end

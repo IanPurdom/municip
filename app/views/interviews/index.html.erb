@@ -12,7 +12,7 @@
   </div>
   <% @interviews.where(category: category).order(:order).each do |interview| %>
     <h4><%= interview.questionnaire.title %></h4>
-    <% interview.user_programs.each do |user_program| %>
+    <% interview.user_programs.order(:created_at).each do |user_program| %>
     <p><%= user_program.program %></p>
     <%= link_to "", edit_user_program_path(user_program), class: "fa fa-edit" %>
     <%= link_to "", user_program_path(user_program), method: :delete, class: "fa fa-remove" %>
@@ -47,3 +47,7 @@
   <% end  %>
 <% end %>
 </div>
+<br>
+<br>
+<br>
+

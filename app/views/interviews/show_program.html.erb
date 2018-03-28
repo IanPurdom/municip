@@ -11,7 +11,7 @@
   </div>
   <div class="show-program border-answer">
     <div class="answer-program">
-      <% @user_programs.each do |user_program|%>
+      <% @user_programs.order(:created_at).each do |user_program|%>
       <h4><%= Question.find(user_program.question_id).question %></h4>
       <div class = "<%= "upd-u-#{user_program.id}" %>">
         <p class="user-prog <%= "u-#{user_program.id}" %>" onClick="toggleQ(this.className)"><%= user_program.program %></p>

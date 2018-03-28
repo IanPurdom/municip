@@ -1,13 +1,36 @@
 <div class="home-header">
-  <h1 class="page_title">Tableau de bord</h1>
+  <h1 class="page_title dark-gray">Tableau de bord</h1>
 </div>
 <div class="container">
+<% if policy(Questionnaire).show? %>
+      <%= link_to 'Créer nouveau questionnaire', new_questionnaire_path, class: "btn-add-answer btn-red centerize home-sub-title" %>
+  <div class="encart-prog-complet">
+    <div class="tab-title dark-blue">
+      <p>Modifier Questionnaires existants</p>
+    </div>
+    <% @categories.each do |category| %>
+      <% if @questionnaires.where(category_id: category.id) != [] %>
+      <h4 class="home-sub-title"><strong><%= category.name %> :</strong></h4>
+        <% @questionnaires.where(category_id: category.id).each do |questionnaire|%>
+      <div class="questionnaires <%="questionnaire-#{questionnaire.id}" %>">
+        <p><%= link_to questionnaire.title, questionnaire_path(questionnaire),  class: "home-sub-title" %></p>
+        <a type="button" id="<%= "btn-#{questionnaire.id}" %>" class="fa fa-remove remove-font-size delete-q" onClick="deleteQuestionnaire(this.id)"></a>
+        <%= link_to "", questionnaire_path(questionnaire), method: :delete, remote: true, id:"d-btn-#{questionnaire.id}", class: "hidden" %>
+      </div>
+        <% end  %>
+      <% end  %>
+    <% end  %>
+  </div>
+<% end %>
+
+<% if current_user.role.role == "user" %>
+
 <% if @city.nil? %>
   <div class="encart-ville">
     <div class="tab-title red">
       <h2>Ma ville</h2>
     </div>
-  <%= link_to 'Ajouter ma ville...', new_city_path, class: "fa fa-arrow-circle-right" %>
+  <%= link_to 'Ajouter ma ville...', new_city_path, class: "fa fa-arrow-circle-right link" %>
   </div>
 <% else %>
   <div class="encart-ville">
@@ -19,7 +42,7 @@
           <p class="home-sub-title"><strong>Code postal: </strong><%= @city.zip_code %></p>
           <p class="home-sub-title"><strong>Departement: </strong><%= @city.departement %></p>
           <p class="home-sub-title"><strong>Région: </strong> <%= @city.region %></p>
-          <%= link_to ' voir plus...', city_path(@city), class: "fa fa-arrow-circle-right" %>
+          <%= link_to ' voir plus...', city_path(@city), class: "fa fa-arrow-circle-right link" %>
         </div>
         <div class= "city-tab-photo">
         <% unless @city.photos == []  %>
@@ -35,7 +58,11 @@
     </div>
     <% @deputies.each do |deputy| %>
         <div class="dep-name-photo">
-          <p class="home-sub-title"><strong><%= deputy.title %>: </strong><%= deputy.first_name %> <%= deputy.last_name %></p>
+          <div>
+            <p class="home-sub-title"><strong><%= deputy.title %></strong></p>
+            <p class="home-sub-title"><%= deputy.first_name %> <%= deputy.last_name %></p>
+            <p><%= deputy.profession %></p>
+          </div>
           <% if deputy[:photo].nil? %>
              <%= image_tag "empty_photo.jpg", class: "deputy-photo-home" %>
           <% else %>
@@ -43,16 +70,18 @@
           <% end %>
         </div>
     <% end  %>
-    <%= link_to ' voir plus...', deputies_path, class: "fa fa-arrow-circle-right" %>
+    <%= link_to ' voir plus...', deputies_path, class: "fa fa-arrow-circle-right link" %>
   </div>
 
+<% end %>
+
   <div class="encart-prog-complet">
-    <div class="tab-title green">
+    <div class="tab-title beige">
       <h2>Questionnaires</h2>
     </div>
     <% @categories.each do |category| %>
       <% if @questionnaires.where(category_id: category.id) != [] %>
-        <h4><strong><%= category.name %> :</strong></h4>
+        <div class="home-sub-title"><strong><%= category.name %> :</strong></div>
           <% @questionnaires.where(category_id: category.id).each do |questionnaire|%>
             <% if questionnaire.interviews.find_by(user: current_user).nil? %>
               <div class="questionnaires <%= "questionnaire-int-#{questionnaire.id}" %>">
@@ -81,26 +110,9 @@
     <%= link_to "Mon programme complet", interviews_path, class:"home-sub-title" %>
   </div>
 
-<% if policy(Questionnaire).show? %>
-  <div class="encart-prog-complet">
-    <div class="tab-title orange">
-      <p>Création Questionnaire</p>
-    </div>
-    <% @categories.each do |category| %>
-      <% if @questionnaires.where(category_id: category.id) != [] %>
-      <h4><strong><%= category.name %> :</strong></h4>
-        <% @questionnaires.where(category_id: category.id).each do |questionnaire|%>
-      <div class="questionnaires <%="questionnaire-#{questionnaire.id}" %>">
-        <p><%= link_to questionnaire.title, questionnaire_path(questionnaire),  class: "home-sub-title" %></p>
-        <a type="button" id="<%= "btn-#{questionnaire.id}" %>" class="fa fa-remove delete-q" onClick="deleteQuestionnaire(this.id)"></a>
-        <%= link_to "", questionnaire_path(questionnaire), method: :delete, remote: true, id:"d-btn-#{questionnaire.id}", class: "hidden" %>
-      </div>
-        <% end  %>
-      <% end  %>
-    <% end  %>
-    <%= link_to 'Créer questionnaire', new_questionnaire_path, class: "fa fa-arrow-circle-right" %>
-  </div>
-<% end %>
 </div>
+<br>
+<br>
+<br>
 
 <%= javascript_pack_tag 'questionnaire' %>

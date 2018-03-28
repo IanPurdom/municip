@@ -2,7 +2,7 @@ class InterviewsController < ApplicationController
 before_action :set_interview, only: [:show, :edit, :update, :destroy, :get_program, :next_question, :end_interview, :retry, :show_program]
 
   def index
-    category_ids = Interview.distinct.pluck(:category_id)
+    category_ids = Interview.where(user: current_user).distinct.pluck(:category_id)
     @categories = []
     category_ids.each do |id|
       @categories << Category.find(id)
