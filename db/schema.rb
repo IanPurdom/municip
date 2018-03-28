@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180313142341) do
+ActiveRecord::Schema.define(version: 20180328093619) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -130,6 +130,12 @@ ActiveRecord::Schema.define(version: 20180313142341) do
     t.index ["questionnaire_id"], name: "index_questions_on_questionnaire_id"
   end
 
+  create_table "roles", force: :cascade do |t|
+    t.string "role"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "statuses", force: :cascade do |t|
     t.string "status"
     t.datetime "created_at", null: false
@@ -166,8 +172,10 @@ ActiveRecord::Schema.define(version: 20180313142341) do
     t.string "first_name", null: false
     t.string "last_name", null: false
     t.string "photo"
+    t.bigint "role_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["role_id"], name: "index_users_on_role_id"
   end
 
   add_foreign_key "answers", "questions"
@@ -190,4 +198,5 @@ ActiveRecord::Schema.define(version: 20180313142341) do
   add_foreign_key "user_programs", "interviews"
   add_foreign_key "user_programs", "questions"
   add_foreign_key "user_programs", "users"
+  add_foreign_key "users", "roles"
 end

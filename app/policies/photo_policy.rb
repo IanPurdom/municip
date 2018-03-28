@@ -6,11 +6,11 @@ class PhotoPolicy < ApplicationPolicy
   end
 
   def create?
-    return true
+    true
   end
 
   def destroy?
-    return true
+    record.user == user
   end
 
 end

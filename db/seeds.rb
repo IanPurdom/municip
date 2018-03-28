@@ -11,6 +11,7 @@ Questionnaire.destroy_all
 Deputy.destroy_all
 Category.destroy_all
 User.destroy_all
+Role.destroy_all
 
 puts "creating seeds..."
 
@@ -21,6 +22,11 @@ categories = ["Finance", "Urbanisme", "Sécurité"]
 categories.each do |category|
   Category.create!(name: category)
 end
+
+puts "creating roles"
+Role.create(role:"user")
+Role.create(role:"master")
+
 
 puts "creating users..."
 user = User.new(first_name: "Charles", last_name: "Bazin", email: "charles@mail.com", photo: "image/upload/v1515578859/q38jatr8rzd673e61tu4.jpg", password: '123456')

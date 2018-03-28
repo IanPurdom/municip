@@ -10,19 +10,19 @@ class QuestionPolicy < ApplicationPolicy
   end
 
   def new
-    true
+    user.role.role == "master"
   end
 
   def create?
-    true
+    user.role.role == "master"
   end
 
   def update?
-    true
+    user.role.role == "master"
   end
 
   def destroy?
-    update?
+    user.role.role == "master"
   end
 
 end
