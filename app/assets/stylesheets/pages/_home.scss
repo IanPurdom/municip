@@ -1,4 +1,9 @@
 // Specific CSS for your home-page
+
+.button-add-questionnaire{
+  color: white;
+}
+
 .container{
     margin-right: auto;
     margin-left: auto;
@@ -88,4 +93,17 @@
 
 .link{
   font-size: 30px;
+}
+
+.glyphicon-move {
+  cursor: move;
+  cursor: -webkit-grabbing;
+}
+
+.badge {
+  font-size: 30px;
+  background-color: #8DA7BE ;
+  color: white;
+  width: 95px;
+  height: 36px;
 }

@@ -10,13 +10,26 @@
       <h1><%= category.name %></h1>
     </div>
   </div>
+  <p class="notice">Vous pouvez modifier vos éléments de programme en cliquant dessus</p>
+  <br>
   <% @interviews.where(category: category).order(:order).each do |interview| %>
+  <div>
     <h4><%= interview.questionnaire.title %></h4>
     <% interview.user_programs.order(:created_at).each do |user_program| %>
-    <p><%= user_program.program %></p>
-    <%= link_to "", edit_user_program_path(user_program), class: "fa fa-edit" %>
-    <%= link_to "", user_program_path(user_program), method: :delete, class: "fa fa-remove" %>
+    <div class = "<%= "upd-u-#{user_program.id}" %>">
+      <p class="user-prog <%= "u-#{user_program.id}" %>" onClick="toggleQ(this.className)"><%= user_program.program %></p>
+    </div>
+    <div class="<%="form-u-#{user_program.id}"%> hidden">
+      <%= simple_form_for user_program, remote: true do |f| %>
+      <%= f.input :program, as: :text, :label => "Programme: ", :input_html => {rows: 5, class: "u-#{user_program.id}", :onblur => "toggleBlur(this.className)"} %>
+      <%= f.hidden_field :interview_id %>
+      <%= f.submit 'Modifier', id:"btn-u-#{user_program.id}", class: "hidden"%>
+      <% end %>
+    </div>
+    <%#= link_to "", edit_user_program_path(user_program), class: "fa fa-edit" %>
+    <%#= link_to "", user_program_path(user_program), method: :delete, class: "fa fa-remove" %>
     <% end %>
+  </div>
   <% end %>
   <% @deputies.where(category: category).each do |deputy|%>
   <div class="user-prog-dep">
@@ -50,4 +63,5 @@
 <br>
 <br>
 <br>
+<%= javascript_pack_tag 'questionnaire' %>
 

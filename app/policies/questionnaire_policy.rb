@@ -33,5 +33,8 @@ class QuestionnairePolicy < ApplicationPolicy
     user.role.role == "master"
   end
 
+  def order_questionnaires?
+    user.role.role == "master"
+  end
 
 end

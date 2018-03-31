@@ -9,6 +9,7 @@
       <h1><%= @interview.questionnaire.title %></h1>
     </div>
   </div>
+  <p class="notice">Vous pouvez modifier vos réponses en cliquant dessus</p>
   <div class="show-program border-answer">
     <div class="answer-program">
       <% @user_programs.order(:created_at).each do |user_program|%>
@@ -18,7 +19,7 @@
       </div>
       <div class="<%="form-u-#{user_program.id}"%> hidden">
        <%= simple_form_for user_program, remote: true do |f| %>
-         <%= f.input :program, as: :text, :label => "Programme: ", input_html: {rows: 5}, :input_html => {class: "u-#{user_program.id}", :onblur => "toggleBlur(this.className)"} %>
+         <%= f.input :program, as: :text, :label => "Programme: ", :input_html => {rows: 5, class: "u-#{user_program.id}", :onblur => "toggleBlur(this.className)"} %>
          <%= f.hidden_field :interview_id %>
          <%= f.submit 'Modifier', id:"btn-u-#{user_program.id}", class: "hidden"%>
        <% end %>

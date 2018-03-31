@@ -71,6 +71,12 @@ const addNextQuestion = ((clicked_id) => {
   btnSelector.click()
 });
 
+const modifyCategory = ((clicked_id) => {
+  console.log(clicked_id)
+  var btnSelector = document.getElementById(`btn-${clicked_id}`);
+  btnSelector.click()
+});
+
 const toggleQ = ((clicked_id) => {
   console.log(clicked_id)
   var class_array = clicked_id.split(" ")
@@ -123,7 +129,6 @@ const addQuestionForm = (()=> {
 
   var del = document.createElement("a");
   setAttributes(del, {"id": "btn-dq", "class": "fa fa-remove delete-q", "onClick": "deleteQuestionJS()"})
-
 
 
   div.appendChild(label);
@@ -203,8 +208,8 @@ window.deleteQuestion = deleteQuestion;
 window.deleteAnswer = deleteAnswer;
 window.deleteAnswerJS = deleteAnswerJS;
 window.deleteQuestionJS = deleteQuestionJS;
-
 window.addNextQuestion = addNextQuestion;
+window.modifyCategory = modifyCategory;
 window.toggleQ = toggleQ
 window.toggleBlur = toggleBlur
 window.addQuestionForm = addQuestionForm

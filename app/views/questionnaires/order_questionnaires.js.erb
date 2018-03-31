@@ -1,0 +1,11 @@
+console.log("from order_questionnaire.js.erb")
+console.log("<%= @questionnaire_ids[0] %>")
+console.log("<%= @questionnaire_order[0] %>")
+
+
+var ids = <%= @questionnaire_ids %>;
+var orders = <%= @questionnaire_order %>;
+
+for (var i = 0; i < ids.length; ++i) {
+  document.getElementById(`badge-${ids[i]}`).innerText = orders[i]
+}

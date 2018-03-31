@@ -2,13 +2,27 @@
   <h1 class="program-title">Création questionnaire</h1>
 </div>
 <div class="container">
+  <button type="button" id= "btn-questionnaire" class= "btn-restart btn-red centerize" onClick="deleteQuestionnaire(this.id)">Supprimer le questionnaire</button>
+  <%= link_to "", questionnaire_path(@questionnaire), method: :delete, remote: true, id:"d-btn-questionnaire", class: "hidden" %>
   <div class="show-program">
     <div class="cat-title">
-      <h1><%= @questionnaire.title %></h1>
+      <div class="upd-title">
+        <h1 class = "title" onClick="toggleQ(this.className)"><%= @questionnaire.title %></h1>
+      </div>
+      <div class = "form-title hidden">
+        <%= simple_form_for(@questionnaire) do |f| %>
+        <%= f.input :title, :label => "Titre",:input_html =>{class: "title", :onblur => "toggleBlur(this.className)"}%>
+        <%= f.submit class: "hidden", id: "btn-title"%>
+        <% end %>
+      </div>
     </div>
-  </div>
+    </div>
+    <p class="notice">Vous pouvez modifier le titre du questionnaire en cliquant dessus</p>
   <div>
-    <h2><strong>Categorie: </strong> <%= @questionnaire.category.name %></h2>
+    <%= simple_form_for(@questionnaire) do |f| %>
+    <%= f.input :category_id, :label => "Catégorie:",collection: @categories.collect{|category| [category.name, category.id]}, :input_html =>{onClick: "modifyCategory(this.id)", :id => "category"}%>
+    <%= f.submit class: "hidden", id: "btn-category"%>
+  <% end %>
   </div>
   <br>
   <br>
