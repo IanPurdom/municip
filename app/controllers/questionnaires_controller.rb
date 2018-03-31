@@ -1,5 +1,5 @@
 class QuestionnairesController < ApplicationController
-before_action :set_questionnaire, only: [:show, :edit, :new_question, :destroy, :root_question]
+before_action :set_questionnaire, only: [:show, :edit, :update, :new_question, :destroy, :root_question]
 
   def index
     @questionnaires = policy_scope(Questionnaire)
@@ -23,6 +23,17 @@ before_action :set_questionnaire, only: [:show, :edit, :new_question, :destroy, 
     authorize @questionnaire
     @answer = Answer.new
     @question = Question.new
+    @categories = Category.all
+  end
+
+  def update
+    authorize @questionnaire
+    @questionnaire.update(questionnaire_params)
+    @questionnaire.save
+    respond_to do |format|
+      format.html{redirect_to questionnaire_path(@questionnaire)}
+      format.js
+    end
   end
 
   def destroy
@@ -45,6 +56,26 @@ before_action :set_questionnaire, only: [:show, :edit, :new_question, :destroy, 
     end
   end
 
+  def order_questionnaires
+    @questionnaires = policy_scope(Questionnaire).where(category_id: questionnaire_params[:questionnaire_ids])
+    questionnaire_params[:questionnaire_ids]
+    quest_array = []
+    questionnaire_params[:questionnaire_ids].split(" ").each {|id| quest_array << id.to_i}
+    @questionnaire_ids = []
+    @questionnaire_order = []
+    quest_array.each_with_index do |id, index|
+      q = Questionnaire.find(id)
+      q.order = index + 1
+      q.save
+      @questionnaire_ids << id
+      @questionnaire_order << q.order
+    end
+    respond_to do |format|
+      format.html{redirect_to root_path}
+      format.js
+    end
+  end
+
   private
 
   def set_questionnaire
@@ -52,7 +83,7 @@ before_action :set_questionnaire, only: [:show, :edit, :new_question, :destroy, 
   end
 
   def questionnaire_params
-    params.require(:questionnaire).permit(:id, :title, :category_id)
+    params.require(:questionnaire).permit(:id, :title, :category_id, :questionnaire_ids)
   end
 
 end

@@ -3,25 +3,36 @@
 </div>
 <div class="container">
 <% if policy(Questionnaire).show? %>
-      <%= link_to 'Créer nouveau questionnaire', new_questionnaire_path, class: "btn-add-answer btn-red centerize home-sub-title" %>
+    <%= link_to 'Créer nouveau questionnaire', new_questionnaire_path, class: "btn-restart btn-red centerize" %>
   <div class="encart-prog-complet">
     <div class="tab-title dark-blue">
-      <p>Modifier Questionnaires existants</p>
+      <p>Modifier questionnaires</p>
     </div>
     <% @categories.each do |category| %>
-      <% if @questionnaires.where(category_id: category.id) != [] %>
-      <h4 class="home-sub-title"><strong><%= category.name %> :</strong></h4>
-        <% @questionnaires.where(category_id: category.id).each do |questionnaire|%>
-      <div class="questionnaires <%="questionnaire-#{questionnaire.id}" %>">
-        <p><%= link_to questionnaire.title, questionnaire_path(questionnaire),  class: "home-sub-title" %></p>
-        <a type="button" id="<%= "btn-#{questionnaire.id}" %>" class="fa fa-remove remove-font-size delete-q" onClick="deleteQuestionnaire(this.id)"></a>
-        <%= link_to "", questionnaire_path(questionnaire), method: :delete, remote: true, id:"d-btn-#{questionnaire.id}", class: "hidden" %>
+      <!-- for sortable order questionnaire we pass the category. name to sortable.js using dataset function -->
+      <div id = "category-array" class="hidden" data-categories="<%= @categories_names %>"></div>
+      <div id ="listWithHandle-<%= category.name%>" class="home-sub-title list-group"><strong><%= category.name %> :</strong>
+      <% @questionnaires.where(category_id: category.id).order(:order).each do |questionnaire|%>
+        <div class="list-group-item">
+          <span id="badge-<%= questionnaire.id%>" class="badge"><%= questionnaire.order %></span>
+          <span class= "glyphicon glyphicon-move <%=category.name%>" draggable="true" ondragend="orderQuest(this.className)"></span>
+          <%= link_to questionnaire.title, questionnaire_path(questionnaire),  class: "home-sub-title" %>
+          <div class="hidden q-id-<%= category.name %>"><%= questionnaire.id %></div>
+        </div>
+        <% end  %> <!-- each.questionnaire -->
       </div>
-        <% end  %>
-      <% end  %>
-    <% end  %>
+      <div class="hidden">
+        <%= simple_form_for Questionnaire.new, :url => order_questionnaires_questionnaires_path, method: :post, remote: true do |f| %>
+         <%= f.input :questionnaire_ids, :input_html => {id:"form-#{category.name}"} %>
+         <%= f.hidden_field :category_id %>
+        <%= f.submit id:"btn-#{category.name}" %>
+        <% end %>
+      </div>
+    <% end  %> <!-- each.categor -->
   </div>
-<% end %>
+
+
+<% end %> <!-- if policy -->
 
 <% if current_user.role.role == "user" %>
 
@@ -116,3 +127,4 @@
 <br>
 
 <%= javascript_pack_tag 'questionnaire' %>
+<%= javascript_pack_tag 'sortable' %>

@@ -30,6 +30,9 @@ Rails.application.routes.draw do
     member do
       patch 'root_question', to: "questionnaires#root_question"
     end
+    collection do
+      post 'order_questionnaires', to: "questionnaires#order_questionnaires"
+    end
   end
   resources :interviews, only: [:show, :index, :update, :get_program] do
     resources :user_programs, only: [:create]

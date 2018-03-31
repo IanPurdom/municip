@@ -4,4 +4,6 @@ class Questionnaire < ApplicationRecord
   has_many :questions, dependent: :destroy
   validates :category, presence: true
   # validates :order, presence: true
+
+  attr_accessor :questionnaire_ids
 end
