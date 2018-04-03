@@ -12,7 +12,7 @@ before_action :set_city, only: [:show, :edit, :update, :destroy]
 
   def show
     @photos = Photo.where(city_id: params[:id])
-    @photo = Photo.new
+
 
     unless @city.latitude.nil? || @city.longitude.nil?
          @markers = [{

@@ -10,7 +10,15 @@ before_action :set_interview, only: [:show, :edit, :update, :destroy, :get_progr
     @city = City.find_by(user: current_user)
     @deputies = Deputy.where(user: current_user)
     @interviews = policy_scope(Interview).where(user: current_user).order(:order)
+    @photos = Photo.where.not(category_id: nil)
+  end
 
+  def my_program
+    @category = Category.find(params[:category_id])
+    @interviews = policy_scope(Interview).where(user: current_user).where(category_id: @category).order(:order)
+    @photos = Photo.where.not(category_id: nil)
+    @city = City.find_by(user: current_user)
+    @deputies = Deputy.where(user: current_user)
   end
 
   def show
