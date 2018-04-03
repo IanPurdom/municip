@@ -22,23 +22,27 @@ const deleteCity = (() => {
   });
 });
 
-const deleteCityPhoto = ((clicked_id) => {
-  swal({
-    title: 'Etes-vous sûr de vouloir supprimer cette photo ?',
-    type: 'warning',
-    width: 500,
-    showCancelButton: true,
-    confirmButtonColor: swalConfirmButtonColor,
-    cancelButtonColor: swalCancelButtonColor,
-    confirmButtonText: 'Oui, je supprime!',
-    cancelButtonText: 'Annuler' ,
-  })
-  .then((result) => {
-    if (result.value) {
-      document.getElementById(`delete-${clicked_id}`).click();
-    }
-  });
-});
+
+// !!!!  move to questionnaire.js
+
+
+// const deleteCityPhoto = ((clicked_id) => {
+//   swal({
+//     title: 'Etes-vous sûr de vouloir supprimer cette photo ?',
+//     type: 'warning',
+//     width: 500,
+//     showCancelButton: true,
+//     confirmButtonColor: swalConfirmButtonColor,
+//     cancelButtonColor: swalCancelButtonColor,
+//     confirmButtonText: 'Oui, je supprime!',
+//     cancelButtonText: 'Annuler' ,
+//   })
+//   .then((result) => {
+//     if (result.value) {
+//       document.getElementById(`delete-${clicked_id}`).click();
+//     }
+//   });
+// });
 
 var retry = document.getElementById("delete-city-button");
 retry.addEventListener("click", (deleteCity));
@@ -51,4 +55,4 @@ for (var i = 0; i < photos.length; i++) {
 }
 
 
-window.deleteCityPhoto = deleteCityPhoto;
+// window.deleteCityPhoto = deleteCityPhoto;

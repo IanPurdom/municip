@@ -29,5 +29,4 @@ class InterviewPolicy < ApplicationPolicy
     record.user == user
   end
 
-
 end

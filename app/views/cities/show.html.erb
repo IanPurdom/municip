@@ -45,19 +45,21 @@
       <h1>Diaporama</h1>
     </div>
     <div class="photo-city">
-      <% @photos.each do |picture| %>
+      <% @photos.each do |photo| %>
         <div class="card "
-          style="background-image: url('<%= cl_image_path picture.photo, height: 300, width: 400, crop: :fill %>')">
-        <a type="button" onClick="deletePhoto(this.id)" class="delete-city-photo-button fa fa-trash del-pos-card"></a>
-        <%= link_to "", city_photo_path(@city.id, picture.id), method: :delete, class: "delete-city-photo hidden"  %>
+          style="background-image: url('<%= cl_image_path photo.photo, height: 300, width: 400, crop: :fill %>')">
+        <a type="button" onClick="deletePhoto(this.id)" id ="del-city-photo-<%= photo.id %>" class = "fa fa-trash del-pos-card"></a>
+        <%= link_to "", photo_path(photo.id, city_id: @city.id), method: :delete, id: "btn-del-city-photo-#{photo.id}", class: "hidden"  %>
       </div>
       <% end %>
     </div>
-    <br>
-    <div>
-      <%= simple_form_for [@city, @photo] do |f| %>
-      <%= f.file_field :photo %>
-      <%= f.submit "Ajouter"%>
+    <p class="notice centerize">Ajouter une photo</p>
+    <a id="city-photo" class= "fa fa-plus-circle centerize" onClick="addPhoto(this.id)"></a>
+    <div class = "hidden">
+      <%= simple_form_for Photo.new do |f| %>
+      <%= f.input :photo, :input_html => {id: "add-city-photo", onchange:"loadPhoto(this.id)"} %>
+      <%= f.hidden_field :city_id, :value => @city.id %>
+      <%= f.submit id: "btn-add-city-photo" %>
       <% end %>
     </div>
   <br>
@@ -70,9 +72,5 @@
   <br>
   <br>
 </div>
- <%= javascript_pack_tag 'swal_city' %>
-   <script>
-  const deletePhoto = ((clicked_id) => {
-    deleteCityPhoto(clicked_id);
-  });
-  </script>
+<%= javascript_pack_tag 'swal_city' %>
+<%= javascript_pack_tag 'questionnaire' %>

@@ -66,8 +66,8 @@
           <p class="home-sub-title"><strong>Région: </strong> <%= @city.region %></p>
         </div>
         <div class= "city-tab-photo">
-        <% unless @city.photos == []  %>
-          <%= cl_image_tag @city.photos.first.photo, class:'home-city-photo'%>
+        <% unless @photo.nil?  %>
+          <%= cl_image_tag @photo.photo, class:'home-city-photo'%>
         <% end %>
         </div>
       </div>
@@ -95,6 +95,33 @@
     <%= link_to ' voir plus...', deputies_path, class: "fa fa-arrow-circle-right link" %>
   </div>
 
+
+
+  <% if @interviews.where(status: Status.find_by(status:"done")) != [] %>
+
+  <div class="encart-prog-complet">
+    <div class="tab-title blue-gray">
+      <p>Mes programmes</p>
+    </div>
+    <% @categories.each do |category| %>
+      <% if @interviews.where(category_id: category.id) != [] %>
+       <div class ="list-group-item">
+        <%= link_to category.name, my_program_interviews_path(category_id: category), class: "home-sub-title" %>
+        <% if @photos.nil?%>
+        <p>ajouter une illustration</p>
+        <% else %>
+        <%= cl_image_tag @photos.where(category_id: category.id), class:'home-city-photo'%>
+        <% end  %> <!-- end unless no photo -->
+
+      </div>
+      <% end  %> <!-- end if no category -->
+    <% end  %> <!-- end each category -->
+    <div class ="list-group-item">
+    <%= link_to "Mon programme complet", interviews_path, class:"home-sub-title" %>
+    </div>
+  </div>
+
+  <% end  %>
 
   <div class="encart-prog-complet">
     <div class="tab-title beige">
@@ -124,12 +151,6 @@
     <% end %>
   </div>
 
-  <div class="encart-prog-complet">
-    <div class="tab-title blue-gray">
-      <p>Mon programme</p>
-    </div>
-    <%= link_to "Mon programme complet", interviews_path, class:"home-sub-title" %>
-  </div>
 
 <% end %>
 </div>

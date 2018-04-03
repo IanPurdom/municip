@@ -18,11 +18,11 @@ Rails.application.routes.draw do
   devise_for :users
   resources :deputies
   resources :cities do
-    resources :photos, only: [:create, :destroy]
     collection do
       post 'retrieve', to: "cities#retrieve"
     end
   end
+  resources :photos
   resources :programs, only: [:destroy]
   resources :questionnaires do
     resources :questions, only: [:create, :update]
@@ -42,6 +42,9 @@ Rails.application.routes.draw do
     get 'end_interview', to:"interviews#end_interview"
     get 'retry', to:"interviews#retry"
     get 'show_program', to: "interviews#show_program"
+    end
+    collection do
+    get 'my_program', to: "interviews#my_program"
     end
   end
   resources :questions, only: [:destroy] do

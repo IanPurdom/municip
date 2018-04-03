@@ -6,7 +6,7 @@ class User < ApplicationRecord
   belongs_to :role
   has_many :deputies, dependent: :destroy
   has_many :cities, dependent: :destroy
-  has_many :photos, through: :cities
+  has_many :photos
   has_many :interviews
   has_many :user_programs, dependent: :destroy
   devise :database_authenticatable, :registerable,

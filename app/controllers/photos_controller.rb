@@ -3,16 +3,24 @@ before_action :set_photo, only: [:destroy]
 
   def create
     @photo = Photo.new(photo_params)
-    @photo.city_id = params[:city_id]
+    @photo.user = current_user
     @photo.save
     authorize @photo
-    redirect_to city_path(params[:city_id])
+    if photo_params[:city_id].nil?
+      redirect_to interviews_path
+    else
+      redirect_to city_path(photo_params[:city_id])
+    end
   end
 
   def destroy
     @photo.destroy
     authorize @photo
-    redirect_to city_path(params[:city_id])
+    if params[:city_id].nil?
+      redirect_to interviews_path
+    else
+      redirect_to city_path(params[:city_id])
+    end
   end
 
   private
@@ -23,7 +31,7 @@ before_action :set_photo, only: [:destroy]
   end
 
   def photo_params
-    params.require(:photo).permit(:photo)
+    params.require(:photo).permit(:photo, :category_id, :city_id)
   end
 
 end

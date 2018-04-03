@@ -4,6 +4,7 @@ class PagesController < ApplicationController
 
   def home
     @city = City.where(user: current_user).first
+    @photo = Photo.where(user: current_user).where.not(city_id: nil).first
     @deputies = policy_scope(Deputy).where(user: current_user)
     @questionnaires = Questionnaire.all
     @interviews = policy_scope(Interview).where(user: current_user)

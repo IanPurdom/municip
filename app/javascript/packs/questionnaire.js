@@ -215,6 +215,40 @@ var deleteQuestionJS = (()=> {
   question.remove();
 });
 
+
+var addPhoto = ((clicked_id)=> {
+  document.getElementById(`add-${clicked_id}`).click();
+});
+
+var loadPhoto = ((clicked_id)=> {
+  document.getElementById(`btn-${clicked_id}`).click();
+});
+
+
+const deletePhoto = ((clicked_id) => {
+  swal({
+    title: 'Etes-vous sûr de vouloir supprimer cette photo ?',
+    type: 'warning',
+    width: 500,
+    showCancelButton: true,
+    confirmButtonColor: swalConfirmButtonColor,
+    cancelButtonColor: swalCancelButtonColor,
+    confirmButtonText: 'Oui, je supprime!',
+    cancelButtonText: 'Annuler' ,
+  })
+  .then((result) => {
+    if (result.value) {
+      console.log(clicked_id)
+      var btn = document.getElementById(`btn-${clicked_id}`)
+      console.log(btn);
+      btn.click();
+    }
+  });
+});
+
+window.deletePhoto = deletePhoto;
+window.loadPhoto = loadPhoto;
+window.addPhoto = addPhoto;
 window.deleteQuestionnaire = deleteQuestionnaire;
 window.deleteQuestion = deleteQuestion;
 window.deleteAnswer = deleteAnswer;
