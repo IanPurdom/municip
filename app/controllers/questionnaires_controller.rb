@@ -1,10 +1,10 @@
 class QuestionnairesController < ApplicationController
 before_action :set_questionnaire, only: [:show, :edit, :update, :new_question, :destroy, :root_question]
 
-  def index
-    @questionnaires = policy_scope(Questionnaire)
-    @categories = Category.all
-  end
+  # def index
+  #   @questionnaires = policy_scope(Questionnaire)
+  #   @categories = Category.all
+  # end
 
   def new
     @questionnaire = Questionnaire.new
@@ -14,6 +14,7 @@ before_action :set_questionnaire, only: [:show, :edit, :update, :new_question, :
 
   def create
     @questionnaire = Questionnaire.new(questionnaire_params)
+    @questionnaire.activated = false
     @questionnaire.save
     authorize @questionnaire
     redirect_to questionnaire_path(@questionnaire)
@@ -69,6 +70,12 @@ before_action :set_questionnaire, only: [:show, :edit, :update, :new_question, :
       q.save
       @questionnaire_ids << id
       @questionnaire_order << q.order
+      # must update the order for each interview belonging to the questionnaires
+      interviews = Interview.where(questionnaire_id: id)
+      interviews.each do |interview|
+        interview.order = q.order
+        interview.save
+      end
     end
     respond_to do |format|
       format.html{redirect_to root_path}
@@ -83,7 +90,7 @@ before_action :set_questionnaire, only: [:show, :edit, :update, :new_question, :
   end
 
   def questionnaire_params
-    params.require(:questionnaire).permit(:id, :title, :category_id, :questionnaire_ids)
+    params.require(:questionnaire).permit(:id, :title, :category_id, :questionnaire_ids, :activated)
   end
 
 end

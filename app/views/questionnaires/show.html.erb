@@ -1,9 +1,7 @@
 <div class="home-header">
-  <h1 class="program-title">Création questionnaire</h1>
+  <h1 class="program-title">Modification du questionnaire</h1>
 </div>
 <div class="container">
-  <button type="button" id= "btn-questionnaire" class= "btn-restart btn-red centerize" onClick="deleteQuestionnaire(this.id)">Supprimer le questionnaire</button>
-  <%= link_to "", questionnaire_path(@questionnaire), method: :delete, remote: true, id:"d-btn-questionnaire", class: "hidden" %>
   <div class="show-program">
     <div class="cat-title">
       <div class="upd-title">
@@ -23,6 +21,18 @@
     <%= f.input :category_id, :label => "Catégorie:",collection: @categories.collect{|category| [category.name, category.id]}, :input_html =>{onClick: "modifyCategory(this.id)", :id => "category"}%>
     <%= f.submit class: "hidden", id: "btn-category"%>
   <% end %>
+  </div>
+  <br>
+  <br>
+  <div class="header-button">
+    <a type="button" id="create-q" class= "btn-questionnaire green centerize" onClick="addQuestionForm()")>Ajouter une question</a>
+    <% if @questionnaire.interviews.find_by(user: current_user).nil? %>
+      <%= link_to "Tester", questionnaire_interviews_path(@questionnaire, Interview.new), method: :post, class: "btn-questionnaire blue" %>
+    <% else %>
+        <%= link_to "Tester", interview_path(Interview.find_by(questionnaire: @questionnaire.id)), class: "btn-questionnaire blue"%>
+    <% end %>
+    <a type="button" id= "btn-questionnaire" class= "btn-questionnaire btn-red centerize" onClick="deleteQuestionnaire(this.id)">Supprimer</a>
+    <%= link_to "", questionnaire_path(@questionnaire), method: :delete, remote: true, id:"d-btn-questionnaire", class: "hidden" %>
   </div>
   <br>
   <br>
@@ -159,7 +169,7 @@
 
   <br>
   <div>
-    <button id="create-q" class= "btn-restart btn-red centerize" onClick="addQuestionForm()")>Ajouter une question</button>
+    <button id="create-q" class= "btn-restart green centerize" onClick="addQuestionForm()")>Ajouter une question</button>
     <%#= link_to "Ajouter une question", new_questionnaire_question_path(@questionnaire),class: "btn-restart btn-red centerize" %>
   </div>
   <br>

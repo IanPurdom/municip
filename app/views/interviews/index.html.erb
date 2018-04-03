@@ -12,7 +12,7 @@
   </div>
   <p class="notice">Vous pouvez modifier vos éléments de programme en cliquant dessus</p>
   <br>
-  <% @interviews.where(category: category).order(:order).each do |interview| %>
+  <% @interviews.where(category: category).each do |interview| %>
   <div>
     <h4><%= interview.questionnaire.title %></h4>
     <% interview.user_programs.order(:created_at).each do |user_program| %>

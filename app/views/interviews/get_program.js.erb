@@ -1,8 +1,10 @@
 console.log("<%= @answer.id %>");
 
+var prograContent = "<%= @content %>"
+
 function getProgram(program) {
 document.getElementById("user_program_answer_id").value = "<%= @answer.id %>";
-document.getElementById("user_program_program").value = "<%= j @content %>";
+document.getElementById("user_program_program").value = "<%= raw @content %>";
 document.querySelector(".button-answer").classList.add("btn-red");
 };
 
