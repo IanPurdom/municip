@@ -142,7 +142,19 @@ const addQuestionForm = (()=> {
   newQ.appendChild(form);
   jsArea.appendChild(newQ);
 
+  toBottom();
+
 });
+
+
+window.onload=toBottom;
+
+var toBottom = (() => {
+window.scrollTo(0, document.body.scrollHeight);
+});
+
+
+
 
 // <a type="button" id="<%= "btn-da-#{answer.id}" %>" class="fa fa-remove delete-q" onClick="deleteAnswer(this.id)"></a>
 //   <a id="d-btn-da-414" class="hidden" data-remote="true" rel="nofollow" data-method="delete" href="/answers/414"></a>

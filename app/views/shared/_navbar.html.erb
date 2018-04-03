@@ -15,8 +15,9 @@
       <% unless current_user.deputies == [] || current_user.role.role == "master" %>
         <%= link_to "Mon équipe", deputies_path, class: "navbar-wagon-item navbar-wagon-link" %>
       <% end  %>
+      <% unless current_user.user_programs == [] || current_user.role.role == "master" %>
       <%= link_to "Mon Programme", interviews_path, class: "navbar-wagon-item navbar-wagon-link" %>
-
+      <% end  %>
       <!-- Avatar with dropdown menu -->
       <div class="navbar-wagon-item">
         <div class="dropdown">

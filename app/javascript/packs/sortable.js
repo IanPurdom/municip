@@ -13,7 +13,7 @@ var listWithHandle = [];
 for(var i = 0; i < categoryArray.length; ++i){
   listWithHandle[i] = document.getElementById(`listWithHandle-${categoryArray[i]}`);
   Sortable.create(listWithHandle[i], {
-    handle: '.glyphicon-move',
+    handle: '.list-group-item',
     animation: 150
   });
 };
@@ -54,5 +54,58 @@ var orderQuest = ((clicked_class) => {
   form.value = "";
 });
 
+
+document.addEventListener("DOMContentLoaded", (event) =>{
+  var checkboxes = document.getElementsByClassName("check");
+  console.log(checkboxes)
+  // console.log(checkboxes)
+  for (var i = 0; i < checkboxes.length; ++i) {
+    var activated = checkboxes[i].dataset.activated;
+    // console.log(activated);
+    // console.log(typeof activated)
+    if (activated === "true") {
+      checkboxes[i].checked = true;
+      // console.log(checkboxes[i].checked)
+      // console.log("if true")
+    } else {
+      checkboxes[i].checked = false;
+      // console.log(checkboxes[i].checked)
+      // console.log("if false")
+    };
+  };
+});
+
+var setCheck = ((clicked_id)=> {
+  var checkbox = document.getElementById(clicked_id);
+  console.log("checkbox is:")
+  console.log(checkbox.checked)
+  var check = document.querySelector(`.activated-${clicked_id}`);
+  if(checkbox.checked) {
+    // console.log("if true")
+    check.checked = true
+  } else {
+    // console.log("if false")
+    check.checked = false
+  };
+  document.querySelector(`.btn-activated-${clicked_id}`).click();
+});
+
+// document.addEventListener('DOMContentLoaded', function () {
+//   var checkbox = document.querySelector('input[type="checkbox"]');
+
+//   checkbox.addEventListener('change', function () {
+//     if (checkbox.checked) {
+//       // do this
+//       console.log('Checked');
+//     } else {
+//       // do that
+//       console.log('Not checked');
+//     }
+//   });
+// });
+
+
+
 // always put this at the end of the sheet otherwise function is not recognized!!
 window.orderQuest = orderQuest;
+window.setCheck = setCheck;

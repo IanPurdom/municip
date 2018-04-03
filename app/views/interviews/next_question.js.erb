@@ -3,24 +3,24 @@ var next_question_id = "<%= @next_question.id %>";
 console.log(next_question_id)
 var n = '<%= @answers.length %>';
 
-var answer_0 = '<%= raw @answers[0] %>';
-var answer_id_0 = '<%= raw @answer_ids[0] %>';
-console.log('<%= raw @answers[0] %>')
+var answer_0 = "<%= raw @answers[0] %>";
+var answer_id_0 = "<%= raw @answer_ids[0] %>";
+console.log("<%= raw @answers[0] %>")
 console.log('<%= raw @answer_ids[0] %>')
 
-var answer_1 = '<%= raw @answers[1] %>';
-var answer_id_1 = '<%= raw @answer_ids[1] %>';
-console.log('<%= raw @answers[1] %>')
-console.log('<%= raw @answer_ids[1] %>')
+var answer_1 = "<%= raw @answers[1] %>";
+var answer_id_1 = "<%= raw @answer_ids[1] %>";
+console.log("<%= raw @answers[1] %>")
+console.log("<%= raw @answer_ids[1] %>")
 
-var answer_2 = '<%= raw @answers[2] %>';
-var answer_id_2 = '<%= raw @answer_ids[2] %>';
+var answer_2 = "<%= raw @answers[2] %>";
+var answer_id_2 = "<%= raw @answer_ids[2] %>";
 
-var answer_3 = '<%= raw @answers[3] %>';
-var answer_id_3 = '<%= raw @answer_ids[3] %>';
+var answer_3 = "<%= raw @answers[3] %>";
+var answer_id_3 = "<%= raw @answer_ids[3] %>";
 
-var answer_4 = '<%= raw @answers[4] %>';
-var answer_id_4 = '<%= raw @answer_ids[4] %>';
+var answer_4 = "<%= raw @answers[4] %>";
+var answer_id_4 = "<%= raw @answer_ids[4] %>";
 
 function clearProgram() {
   document.getElementById("user_program_program").value = "";
@@ -30,7 +30,7 @@ function clearProgram() {
 
 function nextQuestion() {
   var question = document.getElementById('question');
-  question.innerText = "<%= j @next_question.question %>";
+  question.innerText = "<%= raw @next_question.question %>";
   nextAnswers(question)
 };
 

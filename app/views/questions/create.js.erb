@@ -21,7 +21,7 @@ var addQuestionDetails = (()=> {
   setAttributes(updQ, {"class": "upd-q-<%= @question.id %>"});
   var h3 = document.createElement("div");
   setAttributes(h3, {"id": "h2<%= @question.id %>", "class": "first-q q-<%= @question.id %>", "onClick":"toggleQ(this.className)"});
-  h3.appendChild(document.createTextNode("<%= @question.question %>"));
+  h3.appendChild(document.createTextNode("<%= raw @question.question %>"));
   var div = document.createElement("div");
 
   var div2 = document.createElement("div");

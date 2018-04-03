@@ -8,16 +8,16 @@ before_action :set_interview, only: [:show, :edit, :update, :destroy, :get_progr
       @categories << Category.find(id)
     end
     @city = City.find_by(user: current_user)
-    @interviews = policy_scope(Interview).where(user: current_user)
-    @categories
     @deputies = Deputy.where(user: current_user)
+    @interviews = policy_scope(Interview).where(user: current_user).order(:order)
+
   end
 
   def show
     if @interview.status.status == "in_progress"
       @question = Question.find(@interview.last_question_id)
       @user_program = UserProgram.new
-      @answers = @question.answers
+      @answers = @question.answers.order(:created_at)
     else
       redirect_to show_program_interview_path(@interview)
     end
