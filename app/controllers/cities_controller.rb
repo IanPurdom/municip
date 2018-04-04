@@ -69,6 +69,7 @@ before_action :set_city, only: [:show, :edit, :update, :destroy]
   end
 
   def destroy
+    Photo.where(city_id: @city.id).destroy_all if Photo.where(city_id: @city.id) != []
     @city.destroy
     redirect_to root_path
   end

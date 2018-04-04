@@ -58,11 +58,16 @@ before_action :set_question, only: [:show, :edit, :update, :destroy, :add_answer
   end
 
   def destroy
-    authorize @question
-    @question.destroy
-    respond_to do |format|
-      format.html{redirect_to questionnaire_path(@question.questionnaire_id)}
-      format.js
+    if Answer.where(next_question_id: @question.id) != []
+      flash[:alert] = 'vous devez deselectionner les questions suivantes avant de supprimer la question'
+      # redirect_to questionnaire_path(@question.questionnaire_id)
+    else
+      authorize @question
+      @question.destroy
+      respond_to do |format|
+        format.html{redirect_to questionnaire_path(@question.questionnaire_id)}
+        format.js
+      end
     end
   end
 
@@ -70,6 +75,7 @@ before_action :set_question, only: [:show, :edit, :update, :destroy, :add_answer
 
   def set_question
     @question = Question.find(params[:id])
+    authorize @question
   end
 
   def question_params

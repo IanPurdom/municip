@@ -1,0 +1,108 @@
+=> [[32m#<UserProgram:0x00007fd476449268[0m
+  id: [1;34m175[0m,
+  program:
+   [31m[1;31m"[0m[31mLa commune de XXX connait des problèmes de sécurité majeurs.  Beaucoup et notamment les femmes et les personnes âgées partagent un sentiment d’insécurité qui, au quotidien, leur gâche la vie. [1;31m"[0m[31m[0m,
+  user_id: [1;34m25[0m,
+  interview_id: [1;34m30[0m,
+  question_id: [1;34m448[0m,
+  category_id: [1;34m54[0m,
+  created_at: [1;34;4mWed[0m, [1;34m04[0m [1;34;4mApr[0m [1;34m2018[0m [1;34m12[0m:[1;34m31[0m:[1;34m02[0m [1;34;4mUTC[0m [1;34m+00[0m:[1;34m00[0m,
+  updated_at: [1;34;4mWed[0m, [1;34m04[0m [1;34;4mApr[0m [1;34m2018[0m [1;34m12[0m:[1;34m31[0m:[1;34m02[0m [1;34;4mUTC[0m [1;34m+00[0m:[1;34m00[0m[32m>[0m,
+ [32m#<UserProgram:0x00007fd476449100[0m
+  id: [1;34m176[0m,
+  program: [31m[1;31m"[0m[31m Tous les quartiers de la commune sont touchés. Les principaux actes de délinquance à déplorer sont  (actes de délinquance décrits par l’utilisateur)[1;31m"[0m[31m[0m,
+  user_id: [1;34m25[0m,
+  interview_id: [1;34m30[0m,
+  question_id: [1;34m453[0m,
+  category_id: [1;34m54[0m,
+  created_at: [1;34;4mWed[0m, [1;34m04[0m [1;34;4mApr[0m [1;34m2018[0m [1;34m12[0m:[1;34m31[0m:[1;34m07[0m [1;34;4mUTC[0m [1;34m+00[0m:[1;34m00[0m,
+  updated_at: [1;34;4mWed[0m, [1;34m04[0m [1;34;4mApr[0m [1;34m2018[0m [1;34m12[0m:[1;34m31[0m:[1;34m07[0m [1;34;4mUTC[0m [1;34m+00[0m:[1;34m00[0m[32m>[0m,
+ [32m#<UserProgram:0x00007fd476448f48[0m
+  id: [1;34m177[0m,
+  program: [31m[1;31m"[0m[31mTrafic  recel   agressions  incivilités de tous ordres  existence de bandes dégradation de biens  Cambriolages  Squat  Occupation illégale du domaine public  Escroquerie[1;31m"[0m[31m[0m,
+  user_id: [1;34m25[0m,
+  interview_id: [1;34m30[0m,
+  question_id: [1;34m454[0m,
+  category_id: [1;34m54[0m,
+  created_at: [1;34;4mWed[0m, [1;34m04[0m [1;34;4mApr[0m [1;34m2018[0m [1;34m12[0m:[1;34m31[0m:[1;34m15[0m [1;34;4mUTC[0m [1;34m+00[0m:[1;34m00[0m,
+  updated_at: [1;34;4mWed[0m, [1;34m04[0m [1;34;4mApr[0m [1;34m2018[0m [1;34m12[0m:[1;34m31[0m:[1;34m15[0m [1;34;4mUTC[0m [1;34m+00[0m:[1;34m00[0m[32m>[0m,
+ [32m#<UserProgram:0x00007fd476448e08[0m
+  id: [1;34m179[0m,
+  program:
+   [31m[1;31m"[0m[31mC’est l’essence même des projets menés par la municipalité. Cela se traduira en 2017 par la poursuite des travaux d’envergure comme la requalification du centre-ville, le chantier de la nouvelle Bibliothèque Humaniste ou encore le lancement de la phase opérationnelle de l’Opération Programmée d’Amélioration de l’Habitat sur le centre-ville avec des enjeux sociaux et patrimoniaux importants.[1;31m"[0m[31m[0m,
+  user_id: [1;34m24[0m,
+  interview_id: [1;34m34[0m,
+  question_id: [1;34m458[0m,
+  category_id: [1;34m52[0m,
+  created_at: [1;34;4mWed[0m, [1;34m04[0m [1;34;4mApr[0m [1;34m2018[0m [1;34m13[0m:[1;34m09[0m:[1;34m05[0m [1;34;4mUTC[0m [1;34m+00[0m:[1;34m00[0m,
+  updated_at: [1;34;4mWed[0m, [1;34m04[0m [1;34;4mApr[0m [1;34m2018[0m [1;34m13[0m:[1;34m09[0m:[1;34m05[0m [1;34;4mUTC[0m [1;34m+00[0m:[1;34m00[0m[32m>[0m,
+ [32m#<UserProgram:0x00007fd476448ca0[0m
+  id: [1;34m181[0m,
+  program:
+   [31m[1;31m"[0m[31mAfin de faire face, la Ville a entrepris, dès 2014, un travail de fond visant à réinterroger l’ensemble de ses pratiques de gestion. Ce travail permettra notamment la poursuite de la réalisation des grands chantiers qui portent l’ambition et le développement de Sélestat.[1;31m"[0m[31m[0m,
+  user_id: [1;34m24[0m,
+  interview_id: [1;34m36[0m,
+  question_id: [1;34m460[0m,
+  category_id: [1;34m52[0m,
+  created_at: [1;34;4mWed[0m, [1;34m04[0m [1;34;4mApr[0m [1;34m2018[0m [1;34m13[0m:[1;34m09[0m:[1;34m22[0m [1;34;4mUTC[0m [1;34m+00[0m:[1;34m00[0m,
+  updated_at: [1;34;4mWed[0m, [1;34m04[0m [1;34;4mApr[0m [1;34m2018[0m [1;34m13[0m:[1;34m09[0m:[1;34m22[0m [1;34;4mUTC[0m [1;34m+00[0m:[1;34m00[0m[32m>[0m,
+ [32m#<UserProgram:0x00007fd476448a98[0m
+  id: [1;34m182[0m,
+  program:
+   [31m[1;31m"[0m[31mC’est l’essence même des projets menés par la municipalité. Cela se traduira en 2017 par la poursuite des travaux d’envergure comme la requalification du centre-ville, le chantier de la nouvelle Bibliothèque Humaniste ou encore le lancement de la phase opérationnelle de l’Opération Programmée d’Amélioration de l’Habitat sur le centre-ville avec des enjeux sociaux et patrimoniaux importants.[1;31m"[0m[31m[0m,
+  user_id: [1;34m24[0m,
+  interview_id: [1;34m37[0m,
+  question_id: [1;34m462[0m,
+  category_id: [1;34m53[0m,
+  created_at: [1;34;4mWed[0m, [1;34m04[0m [1;34;4mApr[0m [1;34m2018[0m [1;34m13[0m:[1;34m19[0m:[1;34m15[0m [1;34;4mUTC[0m [1;34m+00[0m:[1;34m00[0m,
+  updated_at: [1;34;4mWed[0m, [1;34m04[0m [1;34;4mApr[0m [1;34m2018[0m [1;34m13[0m:[1;34m19[0m:[1;34m15[0m [1;34;4mUTC[0m [1;34m+00[0m:[1;34m00[0m[32m>[0m,
+ [32m#<UserProgram:0x00007fd476448958[0m
+  id: [1;34m186[0m,
+  program:
+   [31m[1;31m"[0m[31mPar incompétence ou par refus de voir la réalité, les municipalités sortant ne se sont jamais vraiment attaqué au problème de la délinquance dans la ville sinon par des mesures démagogiques totalement inefficaces.[1;31m"[0m[31m[0m,
+  user_id: [1;34m25[0m,
+  interview_id: [1;34m38[0m,
+  question_id: [1;34m463[0m,
+  category_id: [1;34m54[0m,
+  created_at: [1;34;4mWed[0m, [1;34m04[0m [1;34;4mApr[0m [1;34m2018[0m [1;34m16[0m:[1;34m55[0m:[1;34m53[0m [1;34;4mUTC[0m [1;34m+00[0m:[1;34m00[0m,
+  updated_at: [1;34;4mWed[0m, [1;34m04[0m [1;34;4mApr[0m [1;34m2018[0m [1;34m16[0m:[1;34m55[0m:[1;34m53[0m [1;34;4mUTC[0m [1;34m+00[0m:[1;34m00[0m[32m>[0m,
+ [32m#<UserProgram:0x00007fd4764487f0[0m
+  id: [1;34m187[0m,
+  program:
+   [31m[1;31m"[0m[31mC’est l’essence même des projets menés par la municipalité. Cela se traduira en 2017 par la poursuite des travaux d’envergure comme la requalification du centre-ville, le chantier de la nouvelle Bibliothèque Humaniste ou encore le lancement de la phase opérationnelle de l’Opération Programmée d’Amélioration de l’Habitat sur le centre-ville avec des enjeux sociaux et patrimoniaux importants.[1;31m"[0m[31m[0m,
+  user_id: [1;34m28[0m,
+  interview_id: [1;34m39[0m,
+  question_id: [1;34m462[0m,
+  category_id: [1;34m53[0m,
+  created_at: [1;34;4mWed[0m, [1;34m04[0m [1;34;4mApr[0m [1;34m2018[0m [1;34m20[0m:[1;34m10[0m:[1;34m11[0m [1;34;4mUTC[0m [1;34m+00[0m:[1;34m00[0m,
+  updated_at: [1;34;4mWed[0m, [1;34m04[0m [1;34;4mApr[0m [1;34m2018[0m [1;34m20[0m:[1;34m10[0m:[1;34m11[0m [1;34;4mUTC[0m [1;34m+00[0m:[1;34m00[0m[32m>[0m,
+ [32m#<UserProgram:0x00007fd476448688[0m
+  id: [1;34m188[0m,
+  program:
+   [31m[1;31m"[0m[31mAfin de faire face, la Ville a entrepris, dès 2014, un travail de fond visant à réinterroger l’ensemble de ses pratiques de gestion. Ce travail permettra notamment la poursuite de la réalisation des grands chantiers qui portent l’ambition et le développement de Sélestat.[1;31m"[0m[31m[0m,
+  user_id: [1;34m28[0m,
+  interview_id: [1;34m40[0m,
+  question_id: [1;34m460[0m,
+  category_id: [1;34m52[0m,
+  created_at: [1;34;4mWed[0m, [1;34m04[0m [1;34;4mApr[0m [1;34m2018[0m [1;34m20[0m:[1;34m10[0m:[1;34m25[0m [1;34;4mUTC[0m [1;34m+00[0m:[1;34m00[0m,
+  updated_at: [1;34;4mWed[0m, [1;34m04[0m [1;34;4mApr[0m [1;34m2018[0m [1;34m20[0m:[1;34m10[0m:[1;34m25[0m [1;34;4mUTC[0m [1;34m+00[0m:[1;34m00[0m[32m>[0m,
+ [32m#<UserProgram:0x00007fd476448520[0m
+  id: [1;34m189[0m,
+  program:
+   [31m[1;31m"[0m[31mC’est l’essence même des projets menés par la municipalité. Cela se traduira en 2017 par la poursuite des travaux d’envergure comme la requalification du centre-ville, le chantier de la nouvelle Bibliothèque Humaniste ou encore le lancement de la phase opérationnelle de l’Opération Programmée d’Amélioration de l’Habitat sur le centre-ville avec des enjeux sociaux et patrimoniaux importants.[1;31m"[0m[31m[0m,
+  user_id: [1;34m28[0m,
+  interview_id: [1;34m41[0m,
+  question_id: [1;34m458[0m,
+  category_id: [1;34m52[0m,
+  created_at: [1;34;4mWed[0m, [1;34m04[0m [1;34;4mApr[0m [1;34m2018[0m [1;34m20[0m:[1;34m10[0m:[1;34m34[0m [1;34;4mUTC[0m [1;34m+00[0m:[1;34m00[0m,
+  updated_at: [1;34;4mWed[0m, [1;34m04[0m [1;34;4mApr[0m [1;34m2018[0m [1;34m20[0m:[1;34m10[0m:[1;34m34[0m [1;34;4mUTC[0m [1;34m+00[0m:[1;34m00[0m[32m>[0m,
+ [32m#<UserProgram:0x00007fd4764483b8[0m
+  id: [1;34m190[0m,
+  program:
+   [31m[1;31m"[0m[31mEn 2017, la Ville continue à faire un choix responsable en agissant sur ses dépenses de fonctionnement. Si l’achèvement du transfert de la compétence jeunesse à la Communauté de Communes de Sélestat a un impact, des efforts sont réalisés sur l’ensemble des postes de gestion courante avec une baisse des dépenses correspondantes de 2 %. Cet effort permettra une baisse des taux d’imposition de - 1,5 % en 2017, mais également de maintenir une politique d’investissement ambitieuse pour le développement et l’attractivité de Sélestat.[1;31m"[0m[31m[0m,
+  user_id: [1;34m28[0m,
+  interview_id: [1;34m42[0m,
+  question_id: [1;34m461[0m,
+  category_id: [1;34m52[0m,
+  created_at: [1;34;4mWed[0m, [1;34m04[0m [1;34;4mApr[0m [1;34m2018[0m [1;34m20[0m:[1;34m10[0m:[1;34m50[0m [1;34;4mUTC[0m [1;34m+00[0m:[1;34m00[0m,
+  updated_at: [1;34;4mWed[0m, [1;34m04[0m [1;34;4mApr[0m [1;34m2018[0m [1;34m20[0m:[1;34m10[0m:[1;34m50[0m [1;34;4mUTC[0m [1;34m+00[0m:[1;34m00[0m[32m>[0m]

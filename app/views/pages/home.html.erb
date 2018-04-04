@@ -13,15 +13,15 @@
       <div id = "category-array" class="hidden" data-categories="<%= @categories_names %>"></div>
       <div id ="listWithHandle-<%= category.name%>" class="home-sub-title list-group"><strong><%= category.name %> :</strong>
       <% @questionnaires.where(category_id: category.id).order(:order).each do |questionnaire|%>
-        <div class="grabbable list-group-item <%=category.name%>" ondragend="orderQuest(this.className)">
-          <span id="badge-<%= questionnaire.id%>" class="badge"><%= questionnaire.order %></span>
-          <!-- span class= "glyphicon glyphicon-move <%=category.name%>" draggable="true" ondragend="orderQuest(this.className)"></span> -->
+        <div class="dep-name-photo grabbable list-group-item <%=category.name%>" ondragend="orderQuest(this.className)">
          <label class="switch">
            <input data-activated="<%= questionnaire.activated %>" type="checkbox" class="check" id="checkbox-<%=questionnaire.id%>" onchange="setCheck(this.id)">
            <span class="slider round"></span>
          </label>
+          <!-- span class= "glyphicon glyphicon-move <%=category.name%>" draggable="true" ondragend="orderQuest(this.className)"></span> -->
           <%= link_to questionnaire.title, questionnaire_path(questionnaire),  class: "home-sub-title" %>
           <span class="question-number">(<%= questionnaire.questions.count %> quest.)</span>
+          <span id="badge-<%= questionnaire.id%>" class="badge"><%= questionnaire.order %></span>
           <div class="hidden q-id-<%= category.name %>"><%= questionnaire.id %></div>
         </div>
          <div class="hidden">
@@ -59,7 +59,7 @@
     <div class="tab-title red">
       <h2><%= @city.name %></h2>
     </div>
-      <div class="city-details list-group-item">
+      <div class="city-details list-group-item dep-name-photo">
         <div class= "city-tab-admin">
           <p class="home-sub-title"><strong>Code postal: </strong><%= @city.zip_code %></p>
           <p class="home-sub-title"><strong>Departement: </strong><%= @city.departement %></p>
@@ -107,7 +107,7 @@
     </div>
     <% @categories.each do |category| %>
       <% if @interviews.where(category_id: category.id) != [] %>
-       <div class ="list-group-item city-details">
+       <div class="dep-name-photo list-group-item">
         <%= link_to category.name, my_program_interviews_path(category_id: category), class: "home-sub-title" %>
         <% if @photos.where(category_id: category.id) == []%>
         <p>ajouter une illustration</p>
@@ -132,12 +132,12 @@
         <div class="home-sub-title"><strong><%= category.name %> :</strong></div>
           <% @questionnaires.where(category_id: category.id).where(activated: true).each do |questionnaire|%>
             <% if questionnaire.interviews.find_by(user: current_user).nil? %>
-              <div class="questionnaires <%= "questionnaire-int-#{questionnaire.id}" %> list-group-item">
+              <div class="questionnaires <%= "questionnaire-int-#{questionnaire.id}" %> list-group-item dep-name-photo">
                 <p><%= link_to questionnaire.title, questionnaire_interviews_path(questionnaire, Interview.new), method: :post, class: "home-sub-title" %></p>
                 <i class="fa fa-play-circle"></i>
               </div>
             <% else %>
-              <div class="questionnaires list-group-item">
+              <div class="questionnaires list-group-item dep-name-photo">
                 <p><%= link_to questionnaire.title, interview_path(@interviews.find_by(questionnaire: questionnaire).id), class:"home-sub-title"%></p>
                 <% if @interviews.find_by(questionnaire: questionnaire).status.status == "done" %>
                   <i class="fa fa-check-circle"></i>
