@@ -32,7 +32,7 @@
         <%= link_to "Tester", interview_path(Interview.find_by(questionnaire: @questionnaire.id)), class: "btn-questionnaire blue"%>
     <% end %>
     <a type="button" id= "btn-questionnaire" class= "btn-questionnaire btn-red centerize" onClick="deleteQuestionnaire(this.id)">Supprimer</a>
-    <%= link_to "", questionnaire_path(@questionnaire), method: :delete, remote: true, id:"d-btn-questionnaire", class: "hidden" %>
+    <%= link_to "", questionnaire_path(@questionnaire), method: :delete, id:"d-btn-questionnaire", class: "hidden" %>
   </div>
   <br>
   <br>

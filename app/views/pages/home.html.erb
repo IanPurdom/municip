@@ -71,6 +71,7 @@
         <% end %>
         </div>
       </div>
+      <br>
           <%= link_to ' voir plus...', city_path(@city), class: "fa fa-arrow-circle-right link" %>
   </div>
 <% end %>
@@ -92,6 +93,7 @@
           <% end %>
         </div>
     <% end  %>
+    <br>
     <%= link_to ' voir plus...', deputies_path, class: "fa fa-arrow-circle-right link" %>
   </div>
 
@@ -101,24 +103,22 @@
 
   <div class="encart-prog-complet">
     <div class="tab-title blue-gray">
-      <p>Mes programmes</p>
+      <p>Mon programme</p>
     </div>
     <% @categories.each do |category| %>
       <% if @interviews.where(category_id: category.id) != [] %>
-       <div class ="list-group-item">
+       <div class ="list-group-item city-details">
         <%= link_to category.name, my_program_interviews_path(category_id: category), class: "home-sub-title" %>
-        <% if @photos.nil?%>
+        <% if @photos.where(category_id: category.id) == []%>
         <p>ajouter une illustration</p>
         <% else %>
-        <%= cl_image_tag @photos.where(category_id: category.id), class:'home-city-photo'%>
+        <%= cl_image_tag @photos.where(category_id: category.id)[0].photo, class:'home-myprog-photo'%>
         <% end  %> <!-- end unless no photo -->
-
       </div>
       <% end  %> <!-- end if no category -->
     <% end  %> <!-- end each category -->
-    <div class ="list-group-item">
-    <%= link_to "Mon programme complet", interviews_path, class:"home-sub-title" %>
-    </div>
+    <br>
+    <%= link_to " voir le programme complet", interviews_path, class: "fa fa-arrow-circle-right link"%>
   </div>
 
   <% end  %>
@@ -128,7 +128,7 @@
       <h2>Questionnaires</h2>
     </div>
     <% @categories.each do |category| %>
-      <% if @questionnaires.where(category_id: category.id) != [] %>
+      <% if @questionnaires.where(category_id: category.id).where(activated:true) != [] %>
         <div class="home-sub-title"><strong><%= category.name %> :</strong></div>
           <% @questionnaires.where(category_id: category.id).where(activated: true).each do |questionnaire|%>
             <% if questionnaire.interviews.find_by(user: current_user).nil? %>

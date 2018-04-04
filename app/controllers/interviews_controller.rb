@@ -32,16 +32,22 @@ before_action :set_interview, only: [:show, :edit, :update, :destroy, :get_progr
   end
 
   def create
-    interviews = policy_scope(Interview).where("user_id = ? AND questionnaire_id = ?",
-    current_user.id, Questionnaire.find(params[:questionnaire_id]).id)
     @questionnaire = Questionnaire.find(params[:questionnaire_id])
-    @interview = Interview.new(user: current_user, questionnaire: @questionnaire, status: Status.find_by(status: "in_progress"), category: @questionnaire.category, order: @questionnaire.order)
-    @interview.last_question_id = @questionnaire.root_question_id
-    authorize @interview
-    if @interview.save
-      redirect_to interview_path(@interview)
+    if @questionnaire.root_question_id.nil?
+      authorize @questionnaire
+      flash[:alert] = 'vous devez choisir une question racine'
+      redirect_to questionnaire_path(@questionnaire)
     else
-      redirect_to root_path
+      interviews = policy_scope(Interview).where("user_id = ? AND questionnaire_id = ?",
+      current_user.id, Questionnaire.find(params[:questionnaire_id]).id)
+      @interview = Interview.new(user: current_user, questionnaire: @questionnaire, status: Status.find_by(status: "in_progress"), category: @questionnaire.category, order: @questionnaire.order)
+      @interview.last_question_id = @questionnaire.root_question_id
+      authorize @interview
+      if @interview.save
+        redirect_to interview_path(@interview)
+      else
+        redirect_to root_path
+      end
     end
   end
 

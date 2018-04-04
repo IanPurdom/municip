@@ -1,6 +1,11 @@
 <div class="home-header">
 <h1 id="title" class="program-title"><%= @interview.questionnaire.title %></h1>
 </div>
+<div>
+  <% if current_user.role == Role.find_by(role: "master") %>
+  <%= link_to 'Retour', questionnaire_path(@interview.questionnaire_id), class:"btn-add" %>
+  <% end  %>
+</div>
 <div class="container">
   <ul id="question"><%= @question.question%>
     <% @answers.each do |answer| %>

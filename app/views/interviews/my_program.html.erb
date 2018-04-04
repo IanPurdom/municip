@@ -10,7 +10,7 @@
     </div>
     <br>
   </div>
-    <% if @photo.nil? %>
+    <% if @photos.where(category_id: @category.id) == [] %>
       <p class="notice centerize">Ajouter une illustration</p>
       <a id="photo-<%= @category.name %>" class= "fa fa-plus-circle centerize" onClick="addPhoto(this.id)"></a>
       <div class = "hidden">
@@ -23,7 +23,7 @@
     <% else %>
       <div class="card centerize" style="background-image: url('<%= cl_image_path @photos.where(category_id: @category.id)[0].photo, height: 300, width: 400, crop: :fill %>')">
         <a type="button" id= "del-photo-<%= @category.name %>" onClick="deletePhoto(this.id)" class= "fa fa-trash del-pos-card"></a>
-        <%= link_to "", photo_path(@photos.where(category_id: @category.id)[0].id), method: :delete, id: "btn-del-photo-#{@category.name}", class: "hidden"  %>
+        <%= link_to "", photo_path(@photos.where(category_id: @category.id)[0].id, category_id: @category.id), method: :delete, id: "btn-del-photo-#{@category.name}", class: "hidden"  %>
       </div>
     <% end %>
   <br>
