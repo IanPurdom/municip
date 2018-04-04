@@ -15,6 +15,8 @@ class User < ApplicationRecord
   private
 
   def set_role
-    self.role = Role.find_by(role:"user")
+    if self.role.nil?
+      self.role = Role.find_by(role:"user")
+    end
   end
 end
