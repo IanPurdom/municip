@@ -29,7 +29,7 @@
     <% if @questionnaire.interviews.find_by(user: current_user).nil? %>
       <%= link_to "Tester", questionnaire_interviews_path(@questionnaire, Interview.new), method: :post, class: "btn-questionnaire blue" %>
     <% else %>
-        <%= link_to "Tester", interview_path(Interview.find_by(questionnaire: @questionnaire.id)), class: "btn-questionnaire blue"%>
+        <%= link_to "Tester", interview_path(Interview.where(questionnaire: @questionnaire.id).where(user: current_user)[0].id), class: "btn-questionnaire blue"%>
     <% end %>
     <a type="button" id= "btn-questionnaire" class= "btn-questionnaire btn-red centerize" onClick="deleteQuestionnaire(this.id)">Supprimer</a>
     <%= link_to "", questionnaire_path(@questionnaire), method: :delete, id:"d-btn-questionnaire", class: "hidden" %>

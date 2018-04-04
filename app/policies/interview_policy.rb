@@ -9,6 +9,10 @@ class InterviewPolicy < ApplicationPolicy
     true
   end
 
+  def show?
+    record.user == user
+  end
+
   def get_program?
     record.user == user
   end
