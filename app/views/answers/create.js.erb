@@ -1,3 +1,4 @@
+console.log("<%= raw @answer_ids %>")
 console.log("<%= raw @answer.answer %>")
 console.log("<%= raw @answer.id %>")
 
@@ -110,7 +111,6 @@ var addProgramForm = (()=>{
 
 
 var addNextQuestionForm = (()=> {
-
   var divNextQ = document.createElement("div");
   setAttributes(divNextQ,{"class": "tab-next-question tnq<%= raw @answer.question_id %>"})
   var form = document.createElement("form");

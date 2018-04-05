@@ -61,7 +61,7 @@
       <%= link_to "Question racine ?", root_question_questionnaire_path(@questionnaire, question_id: question.id), method: :patch, remote: true, class: "btn-add-answer btn-orange btn-racine-#{question.id}"  %>
     <% end %>
     </div>
-    </div>
+  </div>
 
 
       <% if question.answers == [] %>
@@ -92,7 +92,7 @@
         <p id="<%= "p#{answer.id}" %>" class="<%="a-#{answer.id}"%>" onClick="toggleQ(this.className)" ><%= answer.answer %></p>
       </div>
       <div class="<%= "form-a-#{answer.id}" %> hidden">
-        <%= simple_form_for answer, remote: true do |f| %>
+        <%= simple_form_for [question, answer], remote: true do |f| %>
         <!-- ne pas rajouter de class à f.input :answer sinon questionnaire.js (function toggleBlur) pete!! -->
         <%= f.input :answer, :label => "Réponse: ", :input_html => {class: "a-#{answer.id}", :onblur => "toggleBlur(this.className)"}  %>
         <%= f.submit class: "hidden", id:"btn-a-#{answer.id}" %>
@@ -144,7 +144,7 @@
 
     <div class= "tab-next-question <%= "tnq-#{question.id}" %>">
       <%= simple_form_for [question, answer], remote: true do |f| %>
-      <%= f.input :next_question_id, :label => "Question suivante: ", collection: @questionnaire.questions.collect{|question| [question.question, question.id]}, :input_html => {:onclick => "addNextQuestion(this.id)", :id => "selector#{answer.id}"} %>
+      <%= f.input :next_question_id, :label => "Question suivante: ", collection: @questionnaire.questions.order(:created_at).collect{|question| [question.question, question.id]}, :input_html => {:onclick => "addNextQuestion(this.id)", :id => "selector#{answer.id}"} %>
       <%= f.submit  class: "hidden", id: "btn-selector#{answer.id}" %>
       <% end %>
     </div>
