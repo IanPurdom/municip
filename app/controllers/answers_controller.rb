@@ -17,9 +17,9 @@ before_action :set_answer, only: [:edit, :update, :destroy]
     @answer_ids = []
     qs.each do |q|
       @questions << q.question
-      @answer_ids << q.answers
+      @answer_ids << q.answers.ids
     end
-    @answer_ids = @answers_id.flatten
+    @answer_ids = @answer_ids.flatten.sort
     @question_ids = @questionnaire.questions.ids
     authorize @answer
     respond_to do |format|

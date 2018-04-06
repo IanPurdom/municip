@@ -89,6 +89,7 @@ before_action :set_interview, only: [:show, :edit, :update, :destroy, :get_progr
   def end_interview
     @interview.status = Status.find_by(status: "done")
     @interview.save
+    @role = current_user.role.role
     respond_to do |format|
       format.html
       format.js
@@ -107,6 +108,14 @@ before_action :set_interview, only: [:show, :edit, :update, :destroy, :get_progr
 
   def show_program
     @user_programs = @interview.user_programs
+  end
+
+  def destroy
+    @questionnaire = @interview.questionnaire
+    @interview.user_programs.destroy_all if @interview.user_programs != []
+    @interview.destroy
+    authorize @interview
+    redirect_to questionnaire_path(@questionnaire)
   end
 
   private

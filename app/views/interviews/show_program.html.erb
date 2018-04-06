@@ -1,6 +1,11 @@
 <div class="home-header">
   <h1 class="program-title"><%= @interview.questionnaire.category.name %></h1>
 </div>
+<div>
+  <% if current_user.role == Role.find_by(role: "master") %>
+  <%= link_to 'Retour', interview_path(@interview), method: :delete, class:"btn-add" %>
+  <% end  %>
+</div>
 <br>
 <br>
 <div class="container">

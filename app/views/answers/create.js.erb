@@ -1,5 +1,5 @@
-console.log("<%= raw @answer_ids %>")
-console.log("<%= raw @answer.answer %>")
+console.log(<%= @answer_ids %>);
+console.log("<%= raw @answer.answer %>");
 console.log("<%= raw @answer.id %>")
 
 var updateAnswerForm = (()=> {
@@ -46,7 +46,7 @@ var addAnswerDetails = (()=>{
   // div.classList.add("tab-answer")
   tabAns = document.querySelector(".answer<%= raw @answer.id %>")
   var form = document.querySelector(".form-a-<%= raw @answer.id %>");
-  console.log(form)
+  // console.log(form)
   upd.appendChild(p);
   upd.appendChild(p2);
   tabAns.appendChild(del2);
@@ -136,19 +136,37 @@ var addNextQuestionForm = (()=> {
   select.appendChild(option);
 
   const n = "<%= raw @questions.length %>"
-  var question_ids = <%= @question_ids %>
-  var questions = <%= raw @questions %>
-  console.log(question_ids)
-  console.log(questions)
+  var question_ids = <%= @question_ids %>;
+  var questions = <%= raw @questions %>;
+  // console.log(question_ids)
+  // console.log(questions)
+  var answer_ids = <%= @answer_ids %>;
+  console.log(answer_ids);
+  // console.log(answer_ids.length);
 
-  for (let i = 0; i < n; i++) {
-    let option = document.createElement("option");
-    console.log(question_ids[i]);
-    console.log(questions[i]);
-    setAttributes(option, {"value": question_ids[i]});
-    option.appendChild(document.createTextNode(questions[i]));
-    select.appendChild(option);
+  console.log(answer_ids.slice(-1)[0]);
+  var test = document.getElementById(`selector${answer_ids.slice(-1)[0]}`);
+  console.log(test)
+
+  for (let j = 0; j < answer_ids.length - 1; j++) {
+    var selection = document.getElementById(`selector${answer_ids[j]}`)
+    console.log(selection)
+    while (selection.firstChild) {
+    selection.removeChild(selection.firstChild);
+    };
+    var option_empty = document.createElement("option");
+    setAttributes(option_empty, {"value": ""});
+    selection.appendChild(option_empty);
+    for (let i = 0; i < n; i++) {
+      let option = document.createElement("option");
+      setAttributes(option, {"value": question_ids[i]});
+      // console.log(question_ids[i]);
+      // console.log(questions[i]);
+      option.appendChild(document.createTextNode(questions[i]));
+      selection.appendChild(option);
+    };
   };
+
 
   form.appendChild(input);
   form.appendChild(input1);

@@ -34,7 +34,7 @@ Rails.application.routes.draw do
       post 'order_questionnaires', to: "questionnaires#order_questionnaires"
     end
   end
-  resources :interviews, only: [:show, :index, :update, :get_program] do
+  resources :interviews, only: [:show, :index, :update, :destroy, :get_program] do
     resources :user_programs, only: [:create]
     member do
     patch 'get_program', to: "interviews#get_program"
