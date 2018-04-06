@@ -18,8 +18,11 @@ class UserProgramPolicy < ApplicationPolicy
   end
 
   def destroy?
-    record.user == user
+    if user.role.role == "user"
+      record.user == user
+    else
+      user.role.role == "master"
+    end
   end
-
 
 end

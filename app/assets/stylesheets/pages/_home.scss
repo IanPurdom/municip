@@ -1,5 +1,9 @@
 // Specific CSS for your home-page
 
+a {
+  text-decoration: none !important;
+};
+
 .button-add-questionnaire{
   color: white;
 }
@@ -80,6 +84,17 @@
   box-shadow: 9px 6px 7px grey;
 }
 
+.dep-name-photo:active {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+  margin-top: 11px;
+  background-color: #FAFAFA;
+  box-shadow: 3px 2px 2px grey;
+}
+
+
+
 .questionnaires {
   display: flex;
   justify-content: space-between;
@@ -88,6 +103,8 @@
 .home-sub-title {
   font-size:30px;
   margin-left: 20px;
+  color: black;
+  text-decoration: none;
 }
 
 .home-sub-sub-title {
@@ -174,7 +191,7 @@
 }
 
 input:checked + .slider {
-  background-color: #2196F3;
+  background-color: #006692;
 }
 
 input:focus + .slider {

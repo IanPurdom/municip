@@ -33,4 +33,8 @@ class InterviewPolicy < ApplicationPolicy
     record.user == user
   end
 
+  def destroy?
+    user.role.role == "master"
+  end
+
 end

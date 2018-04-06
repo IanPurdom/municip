@@ -11,14 +11,15 @@ before_action :set_answer, only: [:edit, :update, :destroy]
   def create
     @answer = Answer.new(answer: answer_params[:answer], question_id: params[:question_id] )
     @answer.save
-    @next_question_ids = []
     @questionnaire = @answer.question.questionnaire
     qs = @questionnaire.questions
     @questions = []
+    @answer_ids = []
     qs.each do |q|
       @questions << q.question
+      @answer_ids << q.answers.ids
     end
-    @questions
+    @answer_ids = @answer_ids.flatten.sort
     @question_ids = @questionnaire.questions.ids
     authorize @answer
     respond_to do |format|

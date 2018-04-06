@@ -1,11 +1,11 @@
 <div class="home-header">
-  <h1 class="page_title dark-gray">Tableau de bord</h1>
+  <h1 class="page_title bluefn3">Tableau de bord</h1>
 </div>
 <div class="container">
 <% if policy(Questionnaire).show? %>
     <%= link_to 'Créer nouveau questionnaire', new_questionnaire_path, class: "btn-restart btn-red centerize" %>
   <div class="encart-prog-complet">
-    <div class="tab-title dark-blue">
+    <div class="tab-title bluefn3">
       <p>Modifier questionnaires</p>
     </div>
     <% @categories.each do |category| %>
@@ -59,6 +59,7 @@
     <div class="tab-title red">
       <h2><%= @city.name %></h2>
     </div>
+  <%= link_to city_path(@city) do %>
       <div class="city-details list-group-item dep-name-photo">
         <div class= "city-tab-admin">
           <p class="home-sub-title"><strong>Code postal: </strong><%= @city.zip_code %></p>
@@ -71,9 +72,8 @@
         <% end %>
         </div>
       </div>
-      <br>
-          <%= link_to ' voir plus...', city_path(@city), class: "fa fa-arrow-circle-right link" %>
   </div>
+  <%end  %>
 <% end %>
   <div class="encart-deputy">
     <div class="tab-title dark-blue">
@@ -107,14 +107,16 @@
     </div>
     <% @categories.each do |category| %>
       <% if @interviews.where(category_id: category.id) != [] %>
+       <%= link_to my_program_interviews_path(category_id: category) do%>
        <div class="dep-name-photo list-group-item">
-        <%= link_to category.name, my_program_interviews_path(category_id: category), class: "home-sub-title" %>
+        <div class="home-sub-title"><%= category.name%></div>
         <% if @photos.where(category_id: category.id) == []%>
         <p>ajouter une illustration</p>
         <% else %>
         <%= cl_image_tag @photos.where(category_id: category.id)[0].photo, class:'home-myprog-photo'%>
         <% end  %> <!-- end unless no photo -->
       </div>
+      <%end  %>
       <% end  %> <!-- end if no category -->
     <% end  %> <!-- end each category -->
     <br>
@@ -132,23 +134,27 @@
         <div class="home-sub-title"><strong><%= category.name %> :</strong></div>
           <% @questionnaires.where(category_id: category.id).where(activated: true).each do |questionnaire|%>
             <% if questionnaire.interviews.find_by(user: current_user).nil? %>
+              <%= link_to questionnaire_interviews_path(questionnaire, Interview.new), method: :post do%>
               <div class="questionnaires <%= "questionnaire-int-#{questionnaire.id}" %> list-group-item dep-name-photo">
-                <p><%= link_to questionnaire.title, questionnaire_interviews_path(questionnaire, Interview.new), method: :post, class: "home-sub-title" %></p>
+                <p  class ="home-sub-title" ><%= questionnaire.title%></p>
                 <i class="fa fa-play-circle"></i>
               </div>
+              <% end  %>
             <% else %>
+              <%= link_to interview_path(@interviews.find_by(questionnaire: questionnaire).id) do%>
               <div class="questionnaires list-group-item dep-name-photo">
-                <p><%= link_to questionnaire.title, interview_path(@interviews.find_by(questionnaire: questionnaire).id), class:"home-sub-title"%></p>
+                <p class="home-sub-title"><%= questionnaire.title%></p>
                 <% if @interviews.find_by(questionnaire: questionnaire).status.status == "done" %>
                   <i class="fa fa-check-circle"></i>
                 <% else %>
                   <i class="fa fa-hourglass-start" ></i>
-                <% end  %>
+                <% end  %> <!-- end if interview == done -->
               </div>
-            <% end %>
-          <% end %>
-      <% end %>
-    <% end %>
+              <% end  %> <!-- end link_to -->
+            <% end %> <!-- end if interview.nil? -->
+          <% end %> <!-- end questionnaire.each -->
+      <% end %> <!-- end if category == [] -->
+    <% end %> <!-- end category.each -->
   </div>
 
 

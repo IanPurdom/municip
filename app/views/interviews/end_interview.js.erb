@@ -7,7 +7,7 @@ function clear() {
   question.parentNode.removeChild(question)
 };
 
-function add_text(container) {
+function addText(container) {
   var div = document.createElement("div");
   div.appendChild(document.createTextNode("Bravo! Vous avez fini le questionnaire"))
   div.setAttribute = ("class", "end_text")
@@ -35,6 +35,29 @@ function add_text(container) {
   div.appendChild(div4)
 };
 
+
+function addTextMaster(container) {
+  var div = document.createElement("div");
+  div.appendChild(document.createTextNode("Le questionnaire est terminé"))
+  div.setAttribute = ("class", "end_text")
+  container.appendChild(div)
+
+  var div3 = document.createElement("div");
+  var a1 = document.createElement("a")
+  a1.appendChild(document.createTextNode("Recommencer le questionnaire"))
+  setAttributes(a1, {"href": `/interviews/${interview_id}/retry`})
+  div3.appendChild(a1)
+  div.appendChild(div3)
+
+  var div4 = document.createElement("div");
+  var a2 = document.createElement("a")
+  a2.appendChild(document.createTextNode("Visualiser vos réponses"))
+  setAttributes(a2, {"href": `/interviews/${interview_id}/show_program`})
+  div4.appendChild(a2)
+  div.appendChild(div4)
+};
+
+
 function add_button(container) {
   var div = document.createElement("div");
 };
@@ -46,6 +69,13 @@ function setAttributes(el, attrs) {
 };
 
 var container = document.querySelector(".container")
+
+
 clear();
-add_text(container);
+
+if ("<%= @role %>" === "master") {
+  addTextMaster(container)
+} else {
+  addText(container);
+};
 
