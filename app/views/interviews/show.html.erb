@@ -19,7 +19,7 @@
    <div class="grid">
     <div class="f-new">
       <ul class="new-form">
-        <%= simple_form_for [@interview, @user_program], remote: true do |f| %>
+        <%= simple_form_for [@interview, UserProgram.new], remote: true do |f| %>
         <%= f.input :program, :label => "Votre réponse:", as: :text, input_html: {rows: 7} %>
         <%#= f.hidden_field :question_id, :value => @question.id %>
         <%#= f.hidden_field :category_id, :value => @interview.questionnaire.category_id %>
