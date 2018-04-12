@@ -24,7 +24,6 @@ before_action :set_interview, only: [:show, :edit, :update, :destroy, :get_progr
   def show
     if @interview.status.status == "in_progress"
       @question = Question.find(@interview.last_question_id)
-      @user_program = UserProgram.new
       @answers = @question.answers.order(:created_at)
     else
       redirect_to show_program_interview_path(@interview)
@@ -123,5 +122,9 @@ before_action :set_interview, only: [:show, :edit, :update, :destroy, :get_progr
   def set_interview
     @interview = Interview.find(params[:id])
     authorize @interview
+  end
+
+  def interview_params
+    params.require(:interview).permit(:question_id)
   end
 end

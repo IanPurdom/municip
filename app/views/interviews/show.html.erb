@@ -1,32 +1,48 @@
 <div class="home-header">
-<h1 id="title" class="program-title"><%= @interview.questionnaire.title %></h1>
+  <h1 id="title" class="program-title"><%= @interview.questionnaire.title %></h1>
 </div>
 <div>
   <% if current_user.role == Role.find_by(role: "master") %>
   <%= link_to 'Retour', interview_path(@interview), method: :delete, class:"btn-add" %>
   <% end  %>
 </div>
-<div class="container">
-  <ul id="question"><%= @question.question%>
-    <% @answers.each do |answer| %>
-    <li>
-      <%= link_to answer.answer, get_program_interview_path(answer: answer, question: @question), remote: true, method: :patch, class: "answer a-#{answer.id}"%>
-    </li>
-    <% end %>
-  </ul>
-  <br>
-  <br>
-   <div class="grid">
-    <div class="f-new">
-      <ul class="new-form">
-        <%= simple_form_for [@interview, UserProgram.new], remote: true do |f| %>
-        <%= f.input :program, :label => "Votre réponse:", as: :text, input_html: {rows: 7} %>
-        <%#= f.hidden_field :question_id, :value => @question.id %>
-        <%#= f.hidden_field :category_id, :value => @interview.questionnaire.category_id %>
-        <%= f.hidden_field :answer_id, :value => nil %>
-        <%= f.submit 'Valider votre réponse', class: "btn-restart centerize button-answer"%>
+<div class="fill">
+  <div>
+    <div class="container">
+      <ul id="question"><%= @question.question%>
+        <% @answers.each do |answer| %>
+        <li>
+          <%= link_to answer.answer, get_program_interview_path(answer: answer, question: @question), remote: true, method: :patch, class: "answer a-#{answer.id}"%>
+        </li>
         <% end %>
       </ul>
+      <br>
+      <br>
+       <div class="grid">
+        <div class="f-new">
+          <ul class="new-form">
+            <%= simple_form_for [@interview, UserProgram.new], remote: true do |f| %>
+            <%= f.input :program, :label => "Votre réponse:", as: :text, input_html: {rows: 7} %>
+            <%#= f.hidden_field :question_id, :value => @question.id %>
+            <%#= f.hidden_field :category_id, :value => @interview.questionnaire.category_id %>
+            <%= f.hidden_field :answer_id, :value => nil %>
+            <%= f.hidden_field :question_id, :value => @question.id, id: "hidden-question" %>
+            <%= f.submit 'Valider votre réponse', class: "btn-restart centerize button-answer"%>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="slide">
+    <div class= "fa fa-chevron-left"></div>
+    <div>
+      <br>
+      <h2 class="centerize">Le saviez-vous?</h2>
+      <br>
+      <br>
+      <p class="line-break"> <%= @question.indications.first.indication %></p>
     </div>
   </div>
 </div>
+<%= javascript_pack_tag "slide" %>

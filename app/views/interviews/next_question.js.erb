@@ -57,5 +57,12 @@ function setAttributes(el, attrs) {
   }
 };
 
+console.log("<%= @answer.next_question_id %>")
+var updatehiddenfield = (()=>{
+  document.getElementById("hidden-question").value = "<%= @answer.next_question_id %>"
+});
+
+
 clearProgram();
 nextQuestion();
+updatehiddenfield();

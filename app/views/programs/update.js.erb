@@ -1,8 +1,8 @@
 // console.log("id-pr-<%=@program.id%>");
 // console.log("id-pr-<%=@answer.id%>");
-// console.log("<%= raw @program.content%>");
+// console.log("<%= j raw @program.content%>");
 
 
-var program = document.getElementById("id-pr-<%=@answer.id%>").innerText = "<%= raw @program.content%>" ;
+var program = document.getElementById("id-pr-<%=@answer.id%>").innerText = "<%= j raw @program.content%>" ;
 console.log(program);
 

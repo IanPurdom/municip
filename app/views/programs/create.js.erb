@@ -1,7 +1,7 @@
 console.log("id-pr-<%=@program.id%>");
 console.log("id-pr-<%=@answer.id%>");
 
-console.log("<%= raw @program.content%>");
+console.log("<%= j raw @program.content%>");
 
 
 var updateFormDetails = (()=>{
@@ -26,8 +26,8 @@ var removeButton = (()=> {
 
 var addProgram = (() => {
   var p = document.createElement("p");
-  p.appendChild(document.createTextNode("<%= raw @program.content%>"));
   setAttributes(p, {"id": "id-pr-<%=@answer.id%>", "class": "pr-<%=@answer.id%>", "onClick": "toggleQ(this.className)" })
+  p.innerText = "<%= j raw @program.content%>" ;
   var upd = document.querySelector(".upd-pr-<%=@answer.id%>")
   upd.appendChild(p)
 });

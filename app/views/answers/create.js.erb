@@ -70,8 +70,8 @@ var addProgramForm = (()=>{
   var label = document.createElement("label");
   setAttributes(label, {"class": "control-label text required", "for": "program_program"})
   label.appendChild(document.createTextNode("Programme:"))
-  var input0 = document.createElement("input");
-  setAttributes(input0, {"class":"form-control string optional pr-<%=@answer.id%>", "type":"text", "name": "program[content]", "id": "program_program", "onblur":"toggleBlur(this.className)"});
+  var input0 = document.createElement("textarea");
+  setAttributes(input0, {"class":"line-break form-control string optional pr-<%=@answer.id%>", "rows":"10", "type":"text", "name": "program[content]", "id": "program_program", "onblur":"toggleBlur(this.className)"});
 
   var submit = document.createElement("input");
   setAttributes(submit, {"type": "submit", "name": "commit", "value": "Create Program", "id": "btn-pr-<%=@answer.id%>", "data-disable-with": "Create Program", "class": "hidden"});

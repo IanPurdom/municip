@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180407173834) do
+ActiveRecord::Schema.define(version: 20180409111914) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,6 +72,14 @@ ActiveRecord::Schema.define(version: 20180407173834) do
     t.text "description"
     t.index ["category_id"], name: "index_deputies_on_category_id"
     t.index ["user_id"], name: "index_deputies_on_user_id"
+  end
+
+  create_table "indications", force: :cascade do |t|
+    t.text "indication"
+    t.bigint "question_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_indications_on_question_id"
   end
 
   create_table "interviews", force: :cascade do |t|
@@ -184,6 +192,7 @@ ActiveRecord::Schema.define(version: 20180407173834) do
   add_foreign_key "cities", "users"
   add_foreign_key "deputies", "categories"
   add_foreign_key "deputies", "users"
+  add_foreign_key "indications", "questions"
   add_foreign_key "interviews", "categories"
   add_foreign_key "interviews", "questionnaires"
   add_foreign_key "interviews", "statuses"
