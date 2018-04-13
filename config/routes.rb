@@ -48,12 +48,14 @@ Rails.application.routes.draw do
     end
   end
   resources :questions, only: [:destroy] do
+    resources :indications, only: [:create, :update]
     resources :answers, only: [:create, :update]
   end
   resources :user_programs, only: [:show, :index, :edit, :update, :destroy]
   resources :answers, only: [:destroy] do
     resources :programs, only: [:create, :update]
   end
+  resources :indications, only: [:destroy]
   root to: 'pages#home'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

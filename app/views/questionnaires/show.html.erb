@@ -14,8 +14,8 @@
         <% end %>
       </div>
     </div>
-    </div>
-    <p class="notice">Vous pouvez modifier le titre du questionnaire en cliquant dessus</p>
+  </div>
+  <p class="notice">Vous pouvez modifier le titre du questionnaire en cliquant dessus</p>
   <div>
     <%= simple_form_for(@questionnaire) do |f| %>
     <%= f.input :category_id, :label => "Catégorie:",collection: @categories.collect{|category| [category.name, category.id]}, :input_html =>{onClick: "modifyCategory(this.id)", :id => "category"}%>
@@ -48,20 +48,51 @@
         <div id="<%= "h3#{question.id}" %>" class= "first-q <%="q-#{question.id}"%>" onClick="toggleQ(this.className)"> <%= question.question %></div>
       </div>
       <div class="<%="form-q-#{question.id}"%> hidden">
-      <%= simple_form_for [@questionnaire, question], remote: true do |f| %>
-      <!-- ne pas rajouter de class à f.input :question sinon questionnaire.js (function toggleBlur) pete!! -->
-      <%= f.input :question, :label => "Question: ", :input_html => {class: "q-#{question.id}", :onblur => "toggleBlur(this.className)"}  %>
-      <%= f.submit class: "hidden", id:"btn-q-#{question.id}" %>
-      <% end %>
+        <%= simple_form_for [@questionnaire, question], remote: true do |f| %>
+        <!-- ne pas rajouter de class à f.input :question sinon questionnaire.js (function toggleBlur) pete!! -->
+        <%= f.input :question, :label => "Question: ", :input_html => {class: "q-#{question.id}", :onblur => "toggleBlur(this.className)"}  %>
+        <%= f.submit class: "hidden", id:"btn-q-#{question.id}" %>
+        <% end %>
       </div>
-    <div class="<%="div-racine-#{question.id}"%>">
-      <% if @questionnaire.root_question_id == question.id %>
-      <p class= "btn-add-answer btn-red <%="racine-#{question.id}"%>">Question racine</p>
-      <% else  %>
-      <%= link_to "Question racine ?", root_question_questionnaire_path(@questionnaire, question_id: question.id), method: :patch, remote: true, class: "btn-add-answer btn-orange btn-racine-#{question.id}"  %>
-    <% end %>
+      <div class="<%="div-racine-#{question.id}"%>">
+        <% if @questionnaire.root_question_id == question.id %>
+          <p class= "btn-add-answer btn-red <%="racine-#{question.id}"%>">Question racine</p>
+        <% else  %>
+          <%= link_to "Question racine ?", root_question_questionnaire_path(@questionnaire, question_id: question.id), method: :patch, remote: true, class: "btn-add-answer btn-orange btn-racine-#{question.id}"  %>
+        <% end %>
+      </div>
+
+
+      <% if question.indications == [] %>
+
+      <div class= "<%= "tab-indication#{question.id}"%> <%="btn-indication-#{question.id}"%>">
+
+        <button id= "<%= question.id %>", class="btn-add-indication<%= question.id %> blue" onClick="addIndicationForm(this.id)">Ajouter une information?</button>
+      </div>
+
+      <%else  %>
+      <% indication = question.indications[0] %>
+
+      <div class= "<%= "tab-indication#{question.id}"%> <%="btn-indication-#{question.id}"%>">
+        <button id= "<%= question.id %>", class="btn-add-indication<%= question.id %> blue hidden" onClick="addIndicationForm(this.id)">Ajouter une information?</button>
+        <div class= "<%= "indication-text-#{question.id}" %>">
+          <a type="button" id="<%= "btn-i-#{question.id}" %>" class="fa fa-remove delete-q" onClick="deleteIndication(this.id)"></a>
+              <%= link_to "", indication_path(indication.id), method: :delete, remote: true, id:"d-btn-i-#{question.id}", class: "hidden" %>
+          <div class="<%= "upd-indication-#{question.id} tab-indication" %>">
+            <div><strong>Information: </strong></div>
+            <p id="<%= "indication#{question.id}" %>" class="<%="line-break indication-text indication-#{question.id}"%>" onClick="toggleQ(this.className)"><%= indication.indication %></p>
+          </div>
+        </div>
+        <div class="tab-indication <%= "form-indication-#{question.id}" %> hidden">
+          <%= simple_form_for [question, indication], class: "tab-indication", remote: true do |f| %>
+          <!-- ne pas rajouter de class à f.input :answer sinon questionnaire.js (function toggleBlur) pete!! -->
+          <%= f.input :indication, :label => "Information: ", :input_html => {class: "indication-#{question.id}", :onblur => "toggleBlur(this.className)", rows: "10"},  as: :text%>
+          <%= f.submit class: "hidden", id:"btn-indication-#{question.id}" %>
+          <%end  %>
+        </div>
+      </div>
+      <% end  %> <!-- end if indication == [] -->
     </div>
-  </div>
 
 
       <% if question.answers == [] %>
@@ -108,12 +139,12 @@
       <% @program = answer.program %>
       <div class="<%= "upd-pr-#{answer.id}" %>">
         <p><strong>Programme associé: </strong></p>
-        <p id= "<%= "id-pr-#{answer.id}" %>", class="<%="pr-#{answer.id}"%>", onClick=toggleQ(this.className) ><%= @program.content%></p>
+        <p id= "<%= "id-pr-#{answer.id}" %>", class="line-break <%="pr-#{answer.id}"%>", onClick=toggleQ(this.className) ><%= @program.content%></p>
       </div>
       <div class="<%= "form-pr-#{answer.id}"%> hidden">
         <%= simple_form_for [answer, @program], remote: true do |f| %>
-        <!-- ne pas rajouter de class à f.input :content sinon questionnaire.js (function toggleBlur) pete!! -->
-        <%= f.input :content, :label => "Programme associé: ", :input_html => {class: "pr-#{answer.id}", :onblur => "toggleBlur(this.className)"} %>
+        <!-- rajouter class à f.input :content au début et non pas apres pr-#{answer.id} sinon questionnaire.js (function toggleBlur) pete!! -->
+        <%= f.input :content, :label => "Programme associé: ", :input_html => {class: "line-break pr-#{answer.id}", :onblur => "toggleBlur(this.className)", rows:"10"},  as: :text %>
         <%= f.submit class: "hidden", id: "btn-pr-#{answer.id}"%>
         <%end  %>
       </div>
@@ -121,9 +152,8 @@
 
           <% else %> <!-- else if answer.program == nil -->
 
-
     <div class= "tab-program">
-      <% @program = Program.new%>
+      <% @program = Program.new %>
       <div class="<%= "upd-pr-#{answer.id}" %>">
         <p><strong>Programme associé: </strong></p>
         <!-- if class added, put it before  <%#="pr-#{answer.id}"%> -->
@@ -131,8 +161,8 @@
       </div>
       <div class="<%= "form-pr-#{answer.id}"%> hidden">
         <%= simple_form_for [answer, @program], remote: true do |f| %>
-        <!-- ne pas rajouter de class à f.input :content sinon questionnaire.js (function toggleBlur) pete!! -->
-        <%= f.input :content, :label => "Programme associé: ", :input_html => {class: "pr-#{answer.id}", :onblur => "toggleBlur(this.className)"} %>
+        <!-- rajouter class à f.input :content au début et non pas apres pr-#{answer.id} sinon questionnaire.js (function toggleBlur) pete!! -->
+        <%= f.input :content, :label => "Programme associé: ", :input_html => {class: "line-break pr-#{answer.id}", :onblur => "toggleBlur(this.className)", rows:"10"},  as: :text %>
         <%= f.submit class: "hidden", id: "btn-pr-#{answer.id}"%>
         <%end  %>
       </div>
@@ -157,7 +187,6 @@
     <div class= "<%= "tab-add-answer#{question.id} centerize" %>">
       <button  id="<%= "#{question.id}" %>" class="btn-add-answer btn-orange" onClick="addAnswer(this.id)">Ajouter une réponse</button>
     </div>
-
 
       <% end %><!-- end of if question.answers == [] -->
 

@@ -1,0 +1,58 @@
+console.log("<%= raw @question.id%>");
+console.log("<%= j raw @indication.indication%>");
+
+
+var addIndication = (()=> {
+
+  var div = document.createElement("div");
+  setAttributes(div, {"class": "line-break indication-text-<%= @question.id %>"});
+  var del = document.createElement("a");
+  setAttributes(del,{"type": "button", "id": "btn-i-<%= @question.id %>", "class": "fa fa-remove delete-q", "onClick": "deleteIndication(this.id)"})
+  var del2 = document.createElement("a");
+  setAttributes(del2,{"id": "d-btn-i-<%= @question.id %>", "class": "hidden", "rel": "nofollow", "data-method":"delete", "data-remote":"true", "href":"/indications/<%= @indication.id %>"})
+  var upd = document.createElement("div");
+  setAttributes(upd, {"class": "upd-indication-<%= @question.id %> tab-indication"});
+  var div1 = document.createElement("div");
+  var strong = document.createElement("strong");
+  strong.appendChild(document.createTextNode("Information:"));
+  var p = document.createElement("p");
+  setAttributes(p, {"id": "indication<%= @question.id %>", "class": "line-break indication-text indication-<%= @question.id %>", "onclick":"toggleQ(this.className)"});
+  p.appendChild(document.createTextNode("<%= j raw @indication.indication%>"));
+  var tabIndic = document.querySelector(".tab-indication<%= raw @question.id%>")
+  console.log(tabIndic)
+
+
+  div1.appendChild(strong);
+  upd.appendChild(div1);
+  upd.appendChild(p);
+  div.appendChild(del);
+  div.appendChild(del2);
+  div.appendChild(upd);
+  tabIndic.appendChild(div);
+
+});
+
+
+var updateHiddenForm = (()=> {
+
+  var form = document.querySelector(".form-indication-<%= raw @question.id%>");
+  form.removeAttribute("action")
+  setAttributes(form, {"action": "/questions/<%= @question.id %>/indications/<%= @indication.id %>"})
+
+  var input = document.createElement("input");
+  setAttributes(input, {"type": "hidden", "name":"_method", "value": "patch"})
+  form.appendChild(input);
+
+}
+);
+
+function setAttributes(el, attrs) {
+  for(var key in attrs) {
+    el.setAttribute(key, attrs[key]);
+  }
+};
+
+
+
+addIndication();
+updateHiddenForm();

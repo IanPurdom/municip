@@ -1,0 +1,31 @@
+#slide {
+    display:flex;
+    justify-content: space-between;
+    width: 50px;
+    border-left: 1px solid black;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    position: fixed;
+    right: 0;
+    height: 70%;
+    border-radius:5px 0px 0px 5px;
+    background-color: white;
+    transition:             width 500ms ease;
+        -moz-transition:    width 500ms ease;
+        -ms-transition:     width 500ms ease;
+        -o-transition:      width 500ms ease;
+        -webkit-transition: width 500ms ease;
+}
+
+html, body {
+    height: 100%;
+}
+
+
+.fill {
+    min-height: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+

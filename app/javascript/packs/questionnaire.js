@@ -153,9 +153,6 @@ var toBottom = (() => {
 window.scrollTo(0, document.body.scrollHeight);
 });
 
-
-
-
 // <a type="button" id="<%= "btn-da-#{answer.id}" %>" class="fa fa-remove delete-q" onClick="deleteAnswer(this.id)"></a>
 //   <a id="d-btn-da-414" class="hidden" data-remote="true" rel="nofollow" data-method="delete" href="/answers/414"></a>
 
@@ -246,6 +243,70 @@ const deletePhoto = ((clicked_id) => {
   });
 });
 
+const addIndicationForm = ((question_id)=> {
+
+  console.log(question_id)
+  // var del = document.createElement("a");
+  // setAttributes(del, {"id": "btn-di", "class": "fa fa-remove delete-q", "onClick": "deleteIndicationJS()"})
+  var form = document.createElement("form");
+  setAttributes(form, {"novalidate": "novalidate","id":"new_indication", "class": `simple_form new_indication tab-indication form-indication-${question_id}`, "action": `/questions/${question_id}/indications`, "accept-charset":"UTF-8", "data-remote":"true", "method": "post"});
+  var input1 = document.createElement("input");
+  setAttributes(input1, {"name":"utf8", "type": "hidden", "value": "✓"});
+  var div =  document.createElement("div");
+  setAttributes(div, {"class": "form-group text required indication_indication" });
+  var label = document.createElement("label");
+  setAttributes(label, {"class": "control-label text required", "for": "indication_indication"})
+  label.appendChild(document.createTextNode("Information:"))
+  var input0 = document.createElement("textarea");
+  setAttributes(input0, {"class":`form-control text required indication-${question_id}`, "name":"indication[indication]", "rows":"10", "onblur":"toggleBlur(this.className)"});
+  var submit = document.createElement("input");
+  setAttributes(submit, {"type": "submit", "name": "commit", "value": "Create Indication", "id": `btn-indication-${question_id}`, "data-disable-with": "Create Indication", "class": "hidden"});
+  var tabIndic = document.querySelector(`.tab-indication${question_id}`)
+  console.log(tabIndic)
+
+  div.appendChild(label);
+  div.appendChild(input0);
+  form.appendChild(input1);
+  // form.appendChild(input2);
+  // form.appendChild(input3);
+  form.appendChild(div);
+  form.appendChild(submit);
+  // tabIndic.appendChild(del);
+  tabIndic.appendChild(form);
+
+  document.querySelector(`.btn-add-indication${question_id}`).classList.add("hidden");
+
+});
+
+
+var deleteIndicationJS = (()=> {
+  var answer = document.querySelector(".indication");
+  answer.remove();
+});
+
+
+
+const deleteIndication = ((clicked_id) => {
+  console.log(clicked_id)
+  swal({
+    title: 'Etes-vous sûr de vouloir supprimer cette information ?',
+    text: "",
+    type: 'warning',
+    width: 500,
+    showCancelButton: true,
+    confirmButtonColor: swalConfirmButtonColor,
+    cancelButtonColor: swalCancelButtonColor,
+    confirmButtonText: 'Oui, je supprime!',
+    cancelButtonText: 'Annuler' ,
+  })
+  .then((result) => {
+    if (result.value) {
+      document.getElementById(`d-${clicked_id}`).click();
+    }
+  });
+});
+
+window.deleteIndication = deleteIndication
 window.deletePhoto = deletePhoto;
 window.loadPhoto = loadPhoto;
 window.addPhoto = addPhoto;
@@ -261,3 +322,4 @@ window.toggleBlur = toggleBlur
 window.addQuestionForm = addQuestionForm
 window.toggleBlurNewQ = toggleBlurNewQ
 window.addAnswer = addAnswer
+window.addIndicationForm = addIndicationForm
