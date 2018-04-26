@@ -37,83 +37,83 @@ user2 = User.new(first_name: "Philippe", last_name: "Olivier", email: "philippe@
 user2.save!
 
 
-# puts "creating deputies..."
+puts "creating deputies..."
 
-# deputies = [
-# { first_name: "Laurent",
-#   last_name: "Dugenoux",
-#   title: "Adjoint aux finances",
-#   profession: "Expert comptable",
-#   user: User.last,
-#   category: Category.find_by(name: "Finance"),
-#   family: "marié",
-#   address: "113 rue du Chateau, les Barils 27130",
-#   description: "Fonctions électives à la Ville :
-#     Elu conseiller le 18 mars 2001, réélu le 16 mars 2008 et le 30 mars 2014
-#     Elu conseiller métropolitain le 15 décembre 2015
-#     Elu adjoint à la Maire, le 6 octobre 2017, chargé de toutes les questions relatives aux Sociétés d'économie mixte et aux sociétés publiques locales
-#     Président du groupe Radical de Gauche, Centre et Indépendants
-#     Elu adjoint au Maire, le 21 mars 2008, chargé du tourisme et des nouveaux médias locaux (Mandature 2008-2014)
-#     Elu adjoint au Maire, le 18 mars 2001, chargé du tourisme (mandature 2001-2008)
-#     Fonctions électives dans son arrondissement :
-#     Représentations :
-#     Président du Conseil d'Administration de la Société anonyme d’économie mixte de la gare routière de Rungis (SOGARIS)
-#     Autres mandats :
-#     Président de la fédération de Paris du parti radical
-#     Trésorier du parti radical"
-# },
-# { first_name: "Patrick",
-#   last_name: "François",
-#   title: "Adjoint à la sécurité",
-#   profession: "Consultant",
-#   user: User.last,
-#   category: Category.find_by(name: "Sécurité"),
-#   family: "marié",
-#   address: "113 rue du Chateau, les Barils 27130",
-#   description: "Fonctions électives à la Ville :
-#     Elu conseiller le 18 mars 2001, réélu le 16 mars 2008 et le 30 mars 2014
-#     Elu conseiller métropolitain le 15 décembre 2015
-#     Elu adjoint à la Maire, le 6 octobre 2017, chargé de toutes les questions relatives aux Sociétés d'économie mixte et aux sociétés publiques locales
-#     Président du groupe Radical de Gauche, Centre et Indépendants
-#     Elu adjoint au Maire, le 21 mars 2008, chargé du tourisme et des nouveaux médias locaux (Mandature 2008-2014)
-#     Elu adjoint au Maire, le 18 mars 2001, chargé du tourisme (mandature 2001-2008)
-#     Fonctions électives dans son arrondissement :
-#     Représentations :
-#     Président du Conseil d'Administration de la Société anonyme d’économie mixte de la gare routière de Rungis (SOGARIS)
-#     Autres mandats :
-#     Président de la fédération de Paris du parti radical
-#     Trésorier du parti radical"
-# },
-# { first_name: "Franck",
-#   last_name: "Duchemin",
-#   title: "Adjoint à l'urbanisme",
-#   profession: "Architecte",
-#   user: User.last,
-#   category: Category.find_by(name: "Urbanisme"),
-#   family: "marié",
-#   address: "113 rue du Chateau, les Barils 27130",
-#   description: "Fonctions électives à la Ville :
-#     Elu conseiller le 18 mars 2001, réélu le 16 mars 2008 et le 30 mars 2014
-#     Elu conseiller métropolitain le 15 décembre 2015
-#     Elu adjoint à la Maire, le 6 octobre 2017, chargé de toutes les questions relatives aux Sociétés d'économie mixte et aux sociétés publiques locales
-#     Président du groupe Radical de Gauche, Centre et Indépendants
-#     Elu adjoint au Maire, le 21 mars 2008, chargé du tourisme et des nouveaux médias locaux (Mandature 2008-2014)
-#     Elu adjoint au Maire, le 18 mars 2001, chargé du tourisme (mandature 2001-2008)
-#     Fonctions électives dans son arrondissement :
-#     Représentations :
-#     Président du Conseil d'Administration de la Société anonyme d’économie mixte de la gare routière de Rungis (SOGARIS)
-#     Autres mandats :
-#     Président de la fédération de Paris du parti radical
-#     Trésorier du parti radical"
-#     }
-# ]
+deputies = [
+{ first_name: "Laurent",
+  last_name: "Dugenoux",
+  title: "Adjoint aux finances",
+  profession: "Expert comptable",
+  user: User.find_by(last_name: "Bazin"),
+  category: Category.find_by(name: "Finance"),
+  family: "marié",
+  address: "113 rue du Chateau, les Barils 27130",
+  description: "Fonctions électives à la Ville :
+    Elu conseiller le 18 mars 2001, réélu le 16 mars 2008 et le 30 mars 2014
+    Elu conseiller métropolitain le 15 décembre 2015
+    Elu adjoint à la Maire, le 6 octobre 2017, chargé de toutes les questions relatives aux Sociétés d'économie mixte et aux sociétés publiques locales
+    Président du groupe Radical de Gauche, Centre et Indépendants
+    Elu adjoint au Maire, le 21 mars 2008, chargé du tourisme et des nouveaux médias locaux (Mandature 2008-2014)
+    Elu adjoint au Maire, le 18 mars 2001, chargé du tourisme (mandature 2001-2008)
+    Fonctions électives dans son arrondissement :
+    Représentations :
+    Président du Conseil d'Administration de la Société anonyme d’économie mixte de la gare routière de Rungis (SOGARIS)
+    Autres mandats :
+    Président de la fédération de Paris du parti radical
+    Trésorier du parti radical"
+},
+{ first_name: "Patrick",
+  last_name: "François",
+  title: "Adjoint à la sécurité",
+  profession: "Consultant",
+  user: User.find_by(last_name: "Bazin"),
+  category: Category.find_by(name: "Sécurité"),
+  family: "marié",
+  address: "113 rue du Chateau, les Barils 27130",
+  description: "Fonctions électives à la Ville :
+    Elu conseiller le 18 mars 2001, réélu le 16 mars 2008 et le 30 mars 2014
+    Elu conseiller métropolitain le 15 décembre 2015
+    Elu adjoint à la Maire, le 6 octobre 2017, chargé de toutes les questions relatives aux Sociétés d'économie mixte et aux sociétés publiques locales
+    Président du groupe Radical de Gauche, Centre et Indépendants
+    Elu adjoint au Maire, le 21 mars 2008, chargé du tourisme et des nouveaux médias locaux (Mandature 2008-2014)
+    Elu adjoint au Maire, le 18 mars 2001, chargé du tourisme (mandature 2001-2008)
+    Fonctions électives dans son arrondissement :
+    Représentations :
+    Président du Conseil d'Administration de la Société anonyme d’économie mixte de la gare routière de Rungis (SOGARIS)
+    Autres mandats :
+    Président de la fédération de Paris du parti radical
+    Trésorier du parti radical"
+},
+{ first_name: "Franck",
+  last_name: "Duchemin",
+  title: "Adjoint à l'urbanisme",
+  profession: "Architecte",
+  user: User.find_by(last_name: "Bazin"),
+  category: Category.find_by(name: "Urbanisme"),
+  family: "marié",
+  address: "113 rue du Chateau, les Barils 27130",
+  description: "Fonctions électives à la Ville :
+    Elu conseiller le 18 mars 2001, réélu le 16 mars 2008 et le 30 mars 2014
+    Elu conseiller métropolitain le 15 décembre 2015
+    Elu adjoint à la Maire, le 6 octobre 2017, chargé de toutes les questions relatives aux Sociétés d'économie mixte et aux sociétés publiques locales
+    Président du groupe Radical de Gauche, Centre et Indépendants
+    Elu adjoint au Maire, le 21 mars 2008, chargé du tourisme et des nouveaux médias locaux (Mandature 2008-2014)
+    Elu adjoint au Maire, le 18 mars 2001, chargé du tourisme (mandature 2001-2008)
+    Fonctions électives dans son arrondissement :
+    Représentations :
+    Président du Conseil d'Administration de la Société anonyme d’économie mixte de la gare routière de Rungis (SOGARIS)
+    Autres mandats :
+    Président de la fédération de Paris du parti radical
+    Trésorier du parti radical"
+    }
+]
 
-# deputies.each do |deputy|
-#   new_deputy = Deputy.new(deputy)
-#   p new_deputy
-#   new_deputy.photo =  Rails.root.join("db/images/#{new_deputy.last_name}.jpeg").open
-#   new_deputy.save
-# end
+deputies.each do |deputy|
+  new_deputy = Deputy.new(deputy)
+  p new_deputy
+  new_deputy.photo =  Rails.root.join("db/images/#{new_deputy.last_name}.jpeg").open
+  new_deputy.save
+end
 
 # puts "creating city..."
 

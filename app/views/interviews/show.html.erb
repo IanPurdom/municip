@@ -26,7 +26,6 @@
             <%#= f.hidden_field :question_id, :value => @question.id %>
             <%#= f.hidden_field :category_id, :value => @interview.questionnaire.category_id %>
             <%= f.hidden_field :answer_id, :value => nil %>
-            <%= f.hidden_field :question_id, :value => @question.id, id: "hidden-question" %>
             <%= f.submit 'Valider votre réponse', class: "btn-restart centerize button-answer"%>
             <% end %>
           </ul>
@@ -34,15 +33,18 @@
       </div>
     </div>
   </div>
+  <% unless @question.indications.first.nil? %>
   <div id="slide">
-    <div class= "fa fa-chevron-left"></div>
+    <div class= "fa fa-chevron-left hidden"></div>
+    <div class= "fa fa-chevron-right"></div>
     <div>
       <br>
       <h2 class="centerize">Le saviez-vous?</h2>
       <br>
       <br>
-      <p class="line-break"> <%= @question.indications.first.indication %></p>
+      <p id= "indication" class="line-break"> <%= @question.indications.first.indication %></p>
     </div>
   </div>
+  <% end  %>
 </div>
 <%= javascript_pack_tag "slide" %>

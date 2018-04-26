@@ -62,7 +62,7 @@ before_action :set_interview, only: [:show, :edit, :update, :destroy, :get_progr
 
     # !!!!! for the rules check user_program_controller method: create!!!
   def next_question
-    #check on next_questio_id.nil already done in UserProgram Class,  method create
+    #check on next_question_id.nil already done in UserProgram Class,  method create
     @answer = Answer.find(params[:answer_id])
     @next_question = Question.find(@answer.next_question_id)
     #send the next_question id to interview.last_question in order to go back to the last question when we reopen the interview
@@ -78,6 +78,7 @@ before_action :set_interview, only: [:show, :edit, :update, :destroy, :get_progr
     end
     @answer_ids
     @answers
+    @indication = @next_question.indications.first.indication if @next_question.indications != []
     authorize @interview
     respond_to do |format|
       format.html
