@@ -20,4 +20,7 @@ pane.addEventListener( 'click', function() {
 
 }, false );
 
-
+// pane.addEventListener('click', (event) => {
+//   document.querySelector(".fa-chevron-left").classList.toggle("hidden");
+//   document.querySelector(".fa-chevron-right").classList.toggle("hidden");
+// });

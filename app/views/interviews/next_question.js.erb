@@ -46,10 +46,27 @@ function nextAnswers(question) {
       question.appendChild(li);
       li.appendChild(a)
     }else{
-      console.log("We have a problem!")
     };
   };
 };
+
+
+updateIndication = (()=> {
+  document.getElementById("indication").innerText = "<%= j raw @indication %>";
+  var pane = document.getElementById( 'slide' );
+  slidePane(pane);
+});
+
+
+function slidePane(pane) {
+  setTimeout(
+      function() {
+    ( pane.style.width == '50px' || pane.style.width == '' )
+        ? pane.style.width = '750px'
+        : pane.style.width = '50px';
+      }, 2000);
+};
+
 
 function setAttributes(el, attrs) {
   for(var key in attrs) {
@@ -57,12 +74,9 @@ function setAttributes(el, attrs) {
   }
 };
 
-console.log("<%= @answer.next_question_id %>")
-var updatehiddenfield = (()=>{
-  document.getElementById("hidden-question").value = "<%= @answer.next_question_id %>"
-});
+
 
 
 clearProgram();
 nextQuestion();
-updatehiddenfield();
+updateIndication();
