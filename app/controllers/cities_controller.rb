@@ -33,7 +33,7 @@ before_action :set_city, only: [:show, :edit, :update, :destroy]
     @city = City.new(city_params)
     @city.user = current_user
 
-    #get geocoding from geojson file
+    #get geocoding from json polugon file
 
     unless @city.code_commune.nil?
       filepath = "db/polygon.json"
@@ -66,30 +66,46 @@ before_action :set_city, only: [:show, :edit, :update, :destroy]
 
     interco.each do |p|
       if p["fields"]["codgeo"] == @city.code_commune
-        @city.epci = p["fields"]["epci"]
-        @city.intercommunalite = p["fields"]["libepci"]
+        @epci_number = p["fields"]["epci"]
+        @intercommunalite_name = p["fields"]["libepci"]
       end
     end
 
-    # get geojson interco
+    #if epci exist or not DB
+    unless @epci_number.nil?
 
-    filepath = "db/contours_epci_2017.json"
-    epci_serialized = open(filepath).read
-    epci = JSON.parse(epci_serialized)
+      if Intercommunalite.find_by(epci_number: @epci_number).nil?
 
-    coord = []
-    epci.each do |p|
-      coord = p["fields"]["geo_shape"]["coordinates"].flatten(1) if p["fields"]["siren_epci"] == "200066462"
-    end
+        # get geojson interco
 
-    unless coord == []
-     @interco_coordinates = []
-     coord.each do |c|
-        @interco_coordinates << {lat: c[1], lng: c[0]}
+        filepath = "db/contours_epci_2017.json"
+        epci_serialized = open(filepath).read
+        epci = JSON.parse(epci_serialized)
+
+        coord = []
+        epci.each do |p|
+          coord = p["fields"]["geo_shape"]["coordinates"].flatten(1) if p["fields"]["siren_epci"] == @epci_number
+        end
+
+        unless coord == []
+         @interco_coordinates = []
+         coord.each do |c|
+            @interco_coordinates << {lat: c[1], lng: c[0]}
+          end
+        end
+
+        @intercommunalite = Intercommunalite.create(epci_number: @epci_number, epci_coordinates: @interco_coordinates, name: @intercommunalite_name)
+
+
+      else
+
+        @intercommunalite = Intercommunalite.find_by(epci_number: @epci_number)
+
       end
     end
 
-    @city.epci_coordinates = @interco_coordinates
+    @city.intercommunalite_id = @intercommunalite.id
+
 
     authorize @city
     if @city.save
@@ -168,7 +184,6 @@ before_action :set_city, only: [:show, :edit, :update, :destroy]
           zip_code: city_details[7],
           code_commune: city_details[8],
           departement: city_details[2],
-          intercommunalite: city_details[5],
           population:city_details[10],
           density: city_details[11],
           current_maire: city_details[6],
