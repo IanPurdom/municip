@@ -12,7 +12,7 @@ before_action :set_city, only: [:show, :edit, :update, :destroy]
 
   def show
     @photos = Photo.where(city_id: params[:id])
-
+    @coordinates = @city.city_coordinates
 
     unless @city.latitude.nil? || @city.longitude.nil?
          @markers = [{
@@ -21,6 +21,19 @@ before_action :set_city, only: [:show, :edit, :update, :destroy]
           # infoWindow: { content: render_to_string(partial: "/flats/map_box", locals: { flat: flat }) }
           }]
     end
+
+  end
+
+  def new
+    @city = City.new
+    authorize @city
+  end
+
+  def create
+    @city = City.new(city_params)
+    @city.user = current_user
+
+    #get geocoding from geojson file
 
     unless @city.code_commune.nil?
       filepath = "db/polygon.json"
@@ -38,20 +51,46 @@ before_action :set_city, only: [:show, :edit, :update, :destroy]
        coord.each do |c|
           @coordinates << {lat: c[1], lng: c[0]}
         end
-      @coordinates
+      end
+
+      @city.city_coordinates = @coordinates
+
+    end
+
+
+    # get EPCI interco number
+
+    filepath = "db/intercommunalite_2017.json"
+    interco_serialized = open(filepath).read
+    interco = JSON.parse(interco_serialized)
+
+    interco.each do |p|
+      if p["fields"]["codgeo"] == @city.code_commune
+        @city.epci = p["fields"]["epci"]
+        @city.intercommunalite = p["fields"]["libepci"]
       end
     end
 
-  end
+    # get geojson interco
 
-  def new
-    @city = City.new
-    authorize @city
-  end
+    filepath = "db/contours_epci_2017.json"
+    epci_serialized = open(filepath).read
+    epci = JSON.parse(epci_serialized)
 
-  def create
-    @city = City.new(city_params)
-    @city.user = current_user
+    coord = []
+    epci.each do |p|
+      coord = p["fields"]["geo_shape"]["coordinates"].flatten(1) if p["fields"]["siren_epci"] == "200066462"
+    end
+
+    unless coord == []
+     @interco_coordinates = []
+     coord.each do |c|
+        @interco_coordinates << {lat: c[1], lng: c[0]}
+      end
+    end
+
+    @city.epci_coordinates = @interco_coordinates
+
     authorize @city
     if @city.save
       redirect_to city_path(@city)
@@ -86,6 +125,8 @@ before_action :set_city, only: [:show, :edit, :update, :destroy]
 
     if check_url(encoded_url)
 
+      # scrapping from wikipedia
+
       html = open(encoded_url).read
       html_doc = Nokogiri::HTML(html)
 
@@ -96,6 +137,28 @@ before_action :set_city, only: [:show, :edit, :update, :destroy]
           cells = tr.search ("td") if th != []
           city_details << cells.text.strip if cells.text != ""
         end
+      end
+
+      #get geocoding from geojson file
+
+      unless city_details[8].nil?
+        filepath = "db/polygon.json"
+        serialized_polygons = File.read(filepath)
+        polygons = JSON.parse(serialized_polygons)
+        coord = []
+        polygons["features"].each do |feature|
+         coord = feature["geometry"]["coordinates"].flatten(1) if feature["properties"]["code"] == city_details[8]
+        end
+
+        coord
+
+        unless coord == []
+         @coordinates = []
+         coord.each do |c|
+            @coordinates << {lat: c[1], lng: c[0]}
+          end
+        end
+
       end
 
       city_wiki = {
@@ -113,9 +176,9 @@ before_action :set_city, only: [:show, :edit, :update, :destroy]
           coordinates:city_details[12],
           height: city_details[13],
           superficy: city_details[14],
-          website: city_details[15]
+          website: city_details[15],
+          city_coordinates: @coordinates
       }
-
 
       @city = City.new(city_wiki)
       authorize @city
