@@ -30,81 +30,93 @@ before_action :set_city, only: [:show, :edit, :update, :destroy]
   end
 
   def create
+
     @city = City.new(city_params)
-    @city.user = current_user
 
-    #get geocoding from json polugon file
+    #get epci number and city coordinates
 
-    unless @city.code_commune.nil?
-      filepath = "db/polygon.json"
-      serialized_polygons = File.read(filepath)
-      polygons = JSON.parse(serialized_polygons)
-      coord = []
-      polygons["features"].each do |feature|
-       coord = feature["geometry"]["coordinates"].flatten(1) if feature["properties"]["code"] == @city.code_commune
+    filepath = "siren-2017.json"
+    siren_serialized = open(filepath).read
+    siren = JSON.parse(siren_serialized)
+
+    num = []
+    geo = []
+    siren.each do |p|
+      if p["fields"]["insee"] == "83073"
+        num << p["fields"]["siren_principal"]
+        geo <<  p["fields"]["geometry"]["coordinates"]
       end
+    end
 
-      coord
+    city_coord = geo.first
 
-      unless coord == []
-       @coordinates = []
-       coord.each do |c|
-          @coordinates << {lat: c[1], lng: c[0]}
-        end
+    unless city_coord == []
+     @coordinates = []
+     coord.each do |c|
+        @coordinates << {lat: c[1], lng: c[0]}
       end
+    end
 
       @city.city_coordinates = @coordinates
 
     end
 
+    #  get array with epcis with code_commune
 
-    # get EPCI interco number
+    filepath = "epci.json"
+    epci_serialized = open(filepath).read
+    epci = JSON.parse(epci_serialized)
 
-    filepath = "db/intercommunalite_2017.json"
-    interco_serialized = open(filepath).read
-    interco = JSON.parse(interco_serialized)
-
-    interco.each do |p|
-      if p["fields"]["codgeo"] == @city.code_commune
-        @epci_number = p["fields"]["epci"]
-        @intercommunalite_name = p["fields"]["libepci"]
-      end
+    my_epcis = epci.select do |p|
+      num.include?p["fields"]["ndeg_siren"]
     end
 
-    #if epci exist or not DB
-    unless @epci_number.nil?
+    #we loop over each epci
+    for my_epci in my_epcis
+      #if doesnt exist we create it
+      if Intercommunalite.find_by(epci_number: my_epci["fields"]["ndeg_siren"]).nil?
+      # get geojson interco
 
-      if Intercommunalite.find_by(epci_number: @epci_number).nil?
-
-        # get geojson interco
-
-        filepath = "db/contours_epci_2017.json"
-        epci_serialized = open(filepath).read
-        epci = JSON.parse(epci_serialized)
-
-        coord = []
-        epci.each do |p|
-          coord = p["fields"]["geo_shape"]["coordinates"].flatten(1) if p["fields"]["siren_epci"] == @epci_number
-        end
+        coord = my_epci["fields"]["geometry"]["coordinates"]
 
         unless coord == []
-         @interco_coordinates = []
-         coord.each do |c|
+          @interco_coordinates = []
+          coord.each do |c|
             @interco_coordinates << {lat: c[1], lng: c[0]}
           end
         end
 
-        @intercommunalite = Intercommunalite.create(epci_number: @epci_number, epci_coordinates: @interco_coordinates, name: @intercommunalite_name)
+        # get the competences into an array
+
+        competences = my_epci["fields"]"competences".split(",")
+
+        @intercommunalite = Intercommunalite.create(epci_number: my_epci["fields"]["ndeg_siren"],
+                                                    epci_coordinates: @interco_coordinates,
+                                                    name: my_epci["fields"]["nom_du_groupement"],
+                                                    repartition_siege:my_epci["fields"]["mode_de_repartition_des_sieges"],
+                                                    nature_juridique:my_epci["fields"]["nature_juridique"],
+                                                    financement:my_epci["fields"]["mode_de_financement"],
+                                                    siege:my_epci["fields"]["commune_siege"],
+                                                    group_interdept:my_epci["fields"]["groupement_interdepartemental"],
+                                                    date_creation:my_epci["fields"]["date_de_creation"],
+                                                    nombre_membres:my_epci["fields"]["nombre_de_membres"],
+                                                    population:my_epci["fields"]["population"],
+                                                    nombre_competences:my_epci["fields"]["nombre_de_competences_exercees"],
+                                                    president: my_epci["fields"]["prenom_president"] + my_epci["fields"]["nom_president"],
+                                                    competences: competences
+                                                    )
 
       else
 
         @intercommunalite = Intercommunalite.find_by(epci_number: @epci_number)
 
       end
-    end
 
-    @city.intercommunalite_id = @intercommunalite.id
+      # then we make the link with city
 
+      interco_city = IntercoCity.create(city_id: @city.id, intercommunalite_id: @intercommunalite.id)
+
+    end #end du for my_epci
 
     authorize @city
     if @city.save

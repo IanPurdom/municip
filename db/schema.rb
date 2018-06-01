@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180601100723) do
+ActiveRecord::Schema.define(version: 20180601135241) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -82,6 +82,15 @@ ActiveRecord::Schema.define(version: 20180601100723) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["question_id"], name: "index_indications_on_question_id"
+  end
+
+  create_table "interco_cities", force: :cascade do |t|
+    t.bigint "city_id"
+    t.bigint "intercommunalite_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["city_id"], name: "index_interco_cities_on_city_id"
+    t.index ["intercommunalite_id"], name: "index_interco_cities_on_intercommunalite_id"
   end
 
   create_table "intercommunalites", force: :cascade do |t|
@@ -215,6 +224,8 @@ ActiveRecord::Schema.define(version: 20180601100723) do
   add_foreign_key "deputies", "categories"
   add_foreign_key "deputies", "users"
   add_foreign_key "indications", "questions"
+  add_foreign_key "interco_cities", "cities"
+  add_foreign_key "interco_cities", "intercommunalites"
   add_foreign_key "interviews", "categories"
   add_foreign_key "interviews", "questionnaires"
   add_foreign_key "interviews", "statuses"
