@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  epci_number: MyString
+  epci_coordinates: MyString
+  name: MyString
+
+two:
+  epci_number: MyString
+  epci_coordinates: MyString
+  name: MyString

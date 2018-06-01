@@ -32,11 +32,33 @@ function initMap(mapElement) {
     strokeColor: '#FF0000',
     strokeOpacity: 0.8,
     strokeWeight: 2,
-    fillColor: '#FF0000',
+    // fillColor: '#FF0000',
     fillOpacity: 0.35
   });
   bermudaTriangle.setMap(map);
+
+  // Interco boundaries
+
+  const epciCoordinates = JSON.parse(mapElement.dataset.epci_coordinates);
+  var triangleCoordsEpci = epciCoordinates;
+
+  //construct interco polygon
+
+  var epciTriangle = new google.maps.Polygon({
+      paths: triangleCoordsEpci,
+      strokeColor: '#FF0000',
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: '#B6E3EB',
+      fillOpacity: 0.35
+    });
+    epciTriangle.setMap(map);
+
 };
+
+
+
+
 
 
 

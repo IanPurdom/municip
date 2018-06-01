@@ -2,14 +2,15 @@
     <h1 class="page_title blue-gray"><%= @city.name %></h1>
 </div>
 <div>
-  <div class="container">
+  <!-- <div class="container"> -->
     <div class="cat-title">
         <h1>Cartographie</h1>
     </div>
       <div
       id="map"
       data-markers="<%= @markers.to_json %>"
-      data-coordinates="<%= @coordinates.to_json%>">
+      data-coordinates="<%= @city.city_coordinates.to_json%>"
+      data-epci_coordinates = "<%= @intercommunalite.epci_coordinates.to_json %>">
       </div>
     <div class="cat-title">
         <h1>Informations utiles</h1>
@@ -21,7 +22,7 @@
         <p><strong>Departement: </strong><%= @city.departement %></p>
         <p><strong>Région: </strong><%= @city.region %></p>
         <p><strong>Canton: </strong><%= @city.canton %></p>
-        <p><strong>Intercommunalité: </strong><%= @city.intercommunalite %></p>
+        <p><strong>Intercommunalité: </strong><%= @intercommunalite.name %></p>
         <p><strong>Maire actuel: </strong><%= @city.current_maire %></p>
         <p><strong>Code Postal: </strong><%= @city.zip_code %></p>
         <p><strong>Code Commune: </strong><%= @city.code_commune %></p>
@@ -71,6 +72,6 @@
     </div>
   <br>
   <br>
-</div>
+<!-- </div> -->
 <%= javascript_pack_tag 'swal_city' %>
 <%= javascript_pack_tag 'questionnaire' %>

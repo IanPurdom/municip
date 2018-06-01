@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180409111914) do
+ActiveRecord::Schema.define(version: 20180601100723) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,7 +37,6 @@ ActiveRecord::Schema.define(version: 20180409111914) do
     t.string "zip_code"
     t.string "departement"
     t.string "region"
-    t.string "intercommunalite"
     t.string "population"
     t.string "density"
     t.integer "debt"
@@ -54,6 +53,9 @@ ActiveRecord::Schema.define(version: 20180409111914) do
     t.string "website"
     t.float "latitude"
     t.float "longitude"
+    t.json "city_coordinates"
+    t.bigint "intercommunalite_id"
+    t.index ["intercommunalite_id"], name: "index_cities_on_intercommunalite_id"
     t.index ["user_id"], name: "index_cities_on_user_id"
   end
 
@@ -80,6 +82,25 @@ ActiveRecord::Schema.define(version: 20180409111914) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["question_id"], name: "index_indications_on_question_id"
+  end
+
+  create_table "intercommunalites", force: :cascade do |t|
+    t.string "epci_number"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.json "epci_coordinates"
+    t.string "repartition_siege"
+    t.string "nature_juridique"
+    t.string "financement"
+    t.string "siege"
+    t.string "group_interdept"
+    t.string "date_creation"
+    t.string "nombre_membres"
+    t.string "population"
+    t.string "nombre_competences"
+    t.string "president"
+    t.text "competences", default: [], array: true
   end
 
   create_table "interviews", force: :cascade do |t|
@@ -189,6 +210,7 @@ ActiveRecord::Schema.define(version: 20180409111914) do
 
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "statuses"
+  add_foreign_key "cities", "intercommunalites"
   add_foreign_key "cities", "users"
   add_foreign_key "deputies", "categories"
   add_foreign_key "deputies", "users"
