@@ -12,7 +12,7 @@ before_action :set_city, only: [:show, :edit, :update, :destroy]
 
   def show
     @photos = Photo.where(city_id: params[:id])
-    @coordinates = @city.city_coordinates
+    @intercommunalite = Intercommunalite.find(@city.intercommunalite_id)
 
     unless @city.latitude.nil? || @city.longitude.nil?
          @markers = [{
@@ -95,7 +95,6 @@ before_action :set_city, only: [:show, :edit, :update, :destroy]
         end
 
         @intercommunalite = Intercommunalite.create(epci_number: @epci_number, epci_coordinates: @interco_coordinates, name: @intercommunalite_name)
-
 
       else
 

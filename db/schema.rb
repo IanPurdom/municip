@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180531193232) do
+ActiveRecord::Schema.define(version: 20180601091435) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,10 +86,10 @@ ActiveRecord::Schema.define(version: 20180531193232) do
 
   create_table "intercommunalites", force: :cascade do |t|
     t.string "epci_number"
-    t.string "epci_coordinates"
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.json "epci_coordinates"
   end
 
   create_table "interviews", force: :cascade do |t|
