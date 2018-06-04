@@ -10,19 +10,25 @@
       id="map"
       data-markers="<%= @markers.to_json %>"
       data-coordinates="<%= @city.city_coordinates.to_json%>"
-      data-epci_coordinates = "<%= @intercommunalite.epci_coordinates.to_json %>">
+      >
       </div>
+
+    <div class="tab">
+      <button class="tablinks" onclick="openCity(event, 'city')"><strong><%= @city.name %></strong></button>
+      <% @city.intercommunalites.each do |p|  %>
+      <%= link_to p.name, show_interco_city_path(@city, epci_number: p.epci_number), remote: true, class:"btn tablinks" %>
+      <% end %>
+    </div>
+
     <div class="cat-title">
         <h1>Informations utiles</h1>
     </div>
-    <!-- <div class="city-board"> -->
-    <div class="rubrique-show">
+    <div id= "city" class="tabcontent" style="display: block">
       <div class="rub-title beige">Administratif</div>
       <div class="rub-p">
         <p><strong>Departement: </strong><%= @city.departement %></p>
         <p><strong>Région: </strong><%= @city.region %></p>
         <p><strong>Canton: </strong><%= @city.canton %></p>
-        <p><strong>Intercommunalité: </strong><%= @intercommunalite.name %></p>
         <p><strong>Maire actuel: </strong><%= @city.current_maire %></p>
         <p><strong>Code Postal: </strong><%= @city.zip_code %></p>
         <p><strong>Code Commune: </strong><%= @city.code_commune %></p>
@@ -40,7 +46,40 @@
         <p><strong>Altitude: </strong><%= @city.height %></p>
         <p><strong>Superficie: </strong><%= @city.superficy %></p>
       </div>
+    <!-- </div> -->
     </div>
+
+    <% @city.intercommunalites.each do |p|  %>
+    <div id="<%= "#{p.epci_number}-tab" %>" class="tabcontent">
+      <h1><%= p.name %></h1>
+      <div class="rub-title beige">Administratif</div>
+        <div class="rub-p">
+          <p><strong>Numéro INSEE: </strong><%= p.epci_number %></p>
+          <p><strong>Mode de répartition des sièges: </strong><%= p.repartition_siege %></p>
+          <p><strong>Président: </strong><%= p.president %></p>
+          <p><strong>Nature juridique: </strong><%= p.nature_juridique %></p>
+          <p><strong>Financement: </strong><%= p.financement %></p>
+          <p><strong>Siège: </strong><%= p.siege %></p>
+          <p><strong>Groupement interdépartemental: </strong><%= p.group_interdept %></p>
+          <p><strong>Date de création: </strong><%= p.date_creation %></p>
+          <p><strong>Nombre de membres: </strong><%= p.nombre_membres %></p>
+        </div>
+      <div class="rub-title red">Démographie</div>
+        <div class="rub-p">
+          <p><strong>Population: </strong><%= p.population %></p>
+        </div>
+      <div class="rub-title dark-taupe">Compétences</div>
+        <div class="rub-p">
+          <p><strong>Nombre de compétences: </strong><%= p.nombre_competences %></p>
+          <% unless p.competences.nil? %>
+            <% p.competences.each_with_index do |c, index|%>
+            <p><strong>Compétence-<%= "#{index + 1}" %>: </strong><%= c %></p>
+            <% end  %>
+          <% end %>
+        </div>
+    </div>
+    <% end  %>
+
     <!-- </div> -->
     <div class="cat-title">
       <h1>Diaporama</h1>
@@ -75,3 +114,4 @@
 <!-- </div> -->
 <%= javascript_pack_tag 'swal_city' %>
 <%= javascript_pack_tag 'questionnaire' %>
+<%= javascript_pack_tag 'tabs' %>

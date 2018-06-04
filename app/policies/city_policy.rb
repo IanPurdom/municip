@@ -21,4 +21,8 @@ class CityPolicy < ApplicationPolicy
     true
   end
 
+  def show_interco?
+    true
+  end
+
 end

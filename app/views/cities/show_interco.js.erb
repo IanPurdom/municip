@@ -1,0 +1,61 @@
+//import GMaps from 'gmaps/gmaps.js';
+
+// console.log("<%= @intercommunalite.name %>");
+// console.log("<%= @intercommunalite.epci_number %>");
+console.log("<%= j raw @intercommunalite.epci_coordinates %>");
+// console.log("<%= j raw @markers[0] %>")
+
+function openEpci(epciNumber) {
+console.log(epciNumber)
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  var tab = document.getElementById(`${epciNumber}-tab`).style.display = "block";
+  tab.className += " active";
+};
+
+
+function intercoMap(mapElement) {
+
+  var myLatlng = new google.maps.LatLng("<%= j raw @markers[0] %>", "<%= j raw @markers[1] %>")
+
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 10,
+    center: myLatlng,
+    mapTypeId: 'terrain'
+  });
+
+
+  // Interco boundaries
+  const epciCoordinates = JSON.parse("<%= j raw @intercommunalite.epci_coordinates.to_json %>");
+  var triangleCoordsEpci = epciCoordinates;
+
+  //construct interco polygon
+
+  var epciTriangle = new google.maps.Polygon({
+      paths: triangleCoordsEpci,
+      strokeColor: '#163F8A',
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: '#88BBD9',
+      fillOpacity: 0.35
+    });
+    epciTriangle.setMap(map);
+
+};
+
+
+var epciNumber = ("<%= @intercommunalite.epci_number %>")
+openEpci(epciNumber);
+var mapElement = document.getElementById('map');
+if (mapElement) { intercoMap(mapElement);
+  };
+
+
+
