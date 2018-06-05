@@ -20,10 +20,10 @@
       <% end %>
     </div>
 
-    <div class="cat-title">
-        <h1>Informations utiles</h1>
-    </div>
     <div id= "city" class="tabcontent" style="display: block">
+      <div class="cat-title">
+          <h1><%= @city.name %></h1>
+      </div>
       <div class="rub-title beige">Administratif</div>
       <div class="rub-p">
         <p><strong>Departement: </strong><%= @city.departement %></p>
@@ -51,6 +51,9 @@
 
     <% @city.intercommunalites.each do |p|  %>
     <div id="<%= "#{p.epci_number}-tab" %>" class="tabcontent">
+      <div class="cat-title">
+          <h1>Mes collectivités territoriales</h1>
+      </div>
       <h1><%= p.name %></h1>
       <div class="rub-title beige">Administratif</div>
         <div class="rub-p">

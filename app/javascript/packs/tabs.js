@@ -23,7 +23,7 @@ function initMap() {
   const mapElement = document.getElementById('map');
   const markers = JSON.parse(mapElement.dataset.markers);
   var map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 13,
+    zoom: 12,
     center: markers[0],
     mapTypeId: 'terrain'
   });

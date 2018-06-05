@@ -48,6 +48,26 @@ function intercoMap(mapElement) {
     });
     epciTriangle.setMap(map);
 
+
+  // Interco boundaries
+  const cityCoordinates = JSON.parse("<%= j raw @city.city_coordinates.to_json %>");
+  var triangleCoordsCity = cityCoordinates;
+
+  //construct interco polygon
+
+  var cityTriangle = new google.maps.Polygon({
+      paths: triangleCoordsCity,
+      strokeColor: '#163F8A',
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: '#88BBD9',
+      fillOpacity: 0.35
+    });
+    cityTriangle.setMap(map);
+
+
+
+
 };
 
 
