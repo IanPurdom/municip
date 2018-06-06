@@ -85,64 +85,71 @@ before_action :set_city, only: [:show, :edit, :update, :destroy, :show_interco]
     if @city.save
     #  get array with epcis with code_commune (epcis_number aray from above)
 
-      filepath = "db/epci.json"
+      filepath = "db/groupements-collectivites-territoriales-2017.geojson"
       epci_serialized = open(filepath).read
       epci = JSON.parse(epci_serialized)
 
-      my_epcis = epci.select do |p|
-        epcis_number.include?p["fields"]["ndeg_siren"]
+      my_epcis = epci["features"].select do |p|
+        epcis_number.include?p["properties"]["ndeg_siren"]
       end
 
       #we loop over each epci
       for my_epci in my_epcis
+        epci_number = my_epci["properties"]["ndeg_siren"]
         #if doesnt exist we create it
-        if Intercommunalite.find_by(epci_number: my_epci["fields"]["ndeg_siren"]).nil?
+        if Intercommunalite.find_by(epci_number: epci_number).nil?
         # get geojson interco
 
-          coord = my_epci["fields"]["st_asgeojson"]["coordinates"]
-
-          #need to check if 4 nested array in json file
-          if coord.flatten(1).count < 70
-            n = 2
-          else
-            n = 1
-          end
+          coord = my_epci["geometry"]["coordinates"]
 
           unless coord == []
             @interco_coordinates = []
-            coord.flatten(n).each do |c|
-              @interco_coordinates << {lat: c[1], lng: c[0]}
+            if coord.count == 1
+              sub_coordinates = []
+              coord.first.each do |c|
+                sub_coordinates << {lat: c[1], lng: c[0]}
+              end
+              @interco_coordinates << sub_coordinates
+            else
+              coord.each do |c|
+                c = c.flatten(1) if c.count == 1
+                sub_coordinates = []
+                c.each do |s|
+                  sub_coordinates << {lat: s[1], lng: s[0]}
+                end
+                @interco_coordinates << sub_coordinates
+              end
             end
           end
 
-          markers_gross = my_epci["geometry"]["coordinates"]
+          markers_gross = my_epci["properties"]["geo_point_2d"]
           unless markers_gross.nil?
-            latitude = markers_gross[1].to_f
-            longitude = markers_gross[0].to_f
+            latitude = markers_gross[0].to_f
+            longitude = markers_gross[1].to_f
           end
 
           # get the competences into an array
 
-          unless my_epci["fields"]["competences"].nil?
-            competences = my_epci["fields"]["competences"].split(",")
+          unless my_epci["properties"]["competences"].nil?
+            competences = my_epci["properties"]["competences"].split(",")
           end
 
-          unless my_epci["fields"]["prenom_president"].nil? || my_epci["fields"]["nom_president"].nil?
-          president_name = "#{my_epci["fields"]["prenom_president"] + " " + my_epci["fields"]["nom_president"]}"
+          unless my_epci["properties"]["prenom_president"].nil? || my_epci["properties"]["nom_president"].nil?
+          president_name = "#{my_epci["properties"]["prenom_president"] + " " + my_epci["properties"]["nom_president"]}"
           end
 
-          @intercommunalite = Intercommunalite.create!(epci_number: my_epci["fields"]["ndeg_siren"],
+          @intercommunalite = Intercommunalite.create!(epci_number: epci_number,
                                                       epci_coordinates: @interco_coordinates,
-                                                      name: my_epci["fields"]["nom_du_groupement"],
-                                                      repartition_siege:my_epci["fields"]["mode_de_repartition_des_sieges"],
-                                                      nature_juridique:my_epci["fields"]["nature_juridique"],
-                                                      financement:my_epci["fields"]["mode_de_financement"],
-                                                      siege:my_epci["fields"]["commune_siege"],
-                                                      group_interdept:my_epci["fields"]["groupement_interdepartemental"],
-                                                      date_creation:my_epci["fields"]["date_de_creation"],
-                                                      nombre_membres:my_epci["fields"]["nombre_de_membres"],
-                                                      population:my_epci["fields"]["population"],
-                                                      nombre_competences:my_epci["fields"]["nombre_de_competences_exercees"],
+                                                      name: my_epci["properties"]["nom_du_groupement"],
+                                                      repartition_siege:my_epci["properties"]["mode_de_repartition_des_sieges"],
+                                                      nature_juridique:my_epci["properties"]["nature_juridique"],
+                                                      financement:my_epci["properties"]["mode_de_financement"],
+                                                      siege:my_epci["properties"]["commune_siege"],
+                                                      group_interdept:my_epci["properties"]["groupement_interdepartemental"],
+                                                      date_creation:my_epci["properties"]["date_de_creation"],
+                                                      nombre_membres:my_epci["properties"]["nombre_de_membres"],
+                                                      population:my_epci["properties"]["population"],
+                                                      nombre_competences:my_epci["properties"]["nombre_de_competences_exercees"],
                                                       president: president_name,
                                                       competences: competences,
                                                       latitude: latitude,
@@ -153,7 +160,7 @@ before_action :set_city, only: [:show, :edit, :update, :destroy, :show_interco]
 
         else
 
-          @intercommunalite = Intercommunalite.find_by(epci_number: my_epci["fields"]["ndeg_siren"])
+          @intercommunalite = Intercommunalite.find_by(epci_number: epci_number)
 
         end
 
@@ -212,28 +219,6 @@ before_action :set_city, only: [:show, :edit, :update, :destroy, :show_interco]
         end
       end
 
-      #get geocoding from geojson file
-
-      unless city_details[8].nil?
-        filepath = "db/polygon.json"
-        serialized_polygons = File.read(filepath)
-        polygons = JSON.parse(serialized_polygons)
-        coord = []
-        polygons["features"].each do |feature|
-         coord = feature["geometry"]["coordinates"].flatten(1) if feature["properties"]["code"] == city_details[8]
-        end
-
-        coord
-
-        unless coord == []
-         @coordinates = []
-         coord.each do |c|
-            @coordinates << {lat: c[1], lng: c[0]}
-          end
-        end
-
-      end
-
       city_wiki = {
           name: city,
           region: city_details[1],
@@ -248,8 +233,8 @@ before_action :set_city, only: [:show, :edit, :update, :destroy, :show_interco]
           coordinates:city_details[12],
           height: city_details[13],
           superficy: city_details[14],
-          website: city_details[15],
-          city_coordinates: @coordinates
+          website: city_details[15]
+          # city_coordinates: @coordinates
       }
 
       @city = City.new(city_wiki)
