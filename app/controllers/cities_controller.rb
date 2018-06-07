@@ -100,25 +100,25 @@ before_action :set_city, only: [:show, :edit, :update, :destroy, :show_interco]
         if Intercommunalite.find_by(epci_number: epci_number).nil?
         # get geojson interco
 
-          coord = my_epci["geometry"]["coordinates"]
+          a = my_epci["geometry"]["coordinates"]
 
-          unless coord == []
+
+          # with a : first array, b: second nested array, c: third nested array, d: fourth nested array
+
+          unless a == []
             @interco_coordinates = []
-            if coord.count == 1
-              sub_coordinates = []
-              coord.first.each do |c|
-                sub_coordinates << {lat: c[1], lng: c[0]}
-              end
-              @interco_coordinates << sub_coordinates
-            else
-              coord.each do |c|
-                c = c.flatten(1) if c.count == 1
-                sub_coordinates = []
-                c.each do |s|
-                  sub_coordinates << {lat: s[1], lng: s[0]}
+            a.each do |b|
+            @sub_coordinates = []
+              b.each do |c|
+                if c.count == 2
+                  @sub_coordinates << {lat: c[1], lng: c[0]}
+                else
+                  c.each do |d|
+                    @sub_coordinates << {lat: d[1], lng: d[0]}
+                  end
                 end
-                @interco_coordinates << sub_coordinates
               end
+            @interco_coordinates << @sub_coordinates
             end
           end
 

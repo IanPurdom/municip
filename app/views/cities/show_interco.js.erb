@@ -1,14 +1,3 @@
-// console.log("<%= j raw @intercommunalite.epci_coordinates.first%>");
-// console.log("<%= j raw @city.city_coordinates.first %>");
-
-
-
-//import GMaps from 'gmaps/gmaps.js';
-
-// console.log("<%= @intercommunalite.name %>");
-// console.log("<%= @intercommunalite.epci_number %>");
-// console.log("<%= j raw @intercommunalite.epci_coordinates.to_json %>");
-// console.log("<%= j raw @markers[0] %>")
 
 function openEpci(epciNumber) {
   var i, tabcontent, tablinks;
@@ -44,9 +33,6 @@ function intercoMap(mapElement) {
   <% @intercommunalite.epci_coordinates.each do |p|%>
     var epciCoordinates = JSON.parse("<%= j raw p.to_json %>");
     var triangleCoordsEpci = epciCoordinates;
-    // console.log(triangleCoordsEpci)
-
-  //   // construct interco polygon
 
     var epciTriangle = new google.maps.Polygon({
         paths: triangleCoordsEpci,
