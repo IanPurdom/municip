@@ -18,6 +18,9 @@ Rails.application.routes.draw do
   devise_for :users
   resources :deputies
   resources :cities do
+    member do
+    get 'show_interco', to: "cities#show_interco"
+    end
     collection do
       post 'retrieve', to: "cities#retrieve"
     end
