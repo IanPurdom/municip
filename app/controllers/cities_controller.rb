@@ -51,31 +51,27 @@ before_action :set_city, only: [:show, :edit, :update, :destroy, :show_interco]
     @city.user = current_user
 
     #get epci number and city coordinates from siren file
+    my_intercos = IntercoCommune.where(insee:@city.code_commune)
 
-    filepath = "db/siren-2017.json"
-    siren_serialized = open(filepath).read
-    siren = JSON.parse(siren_serialized)
+    city_coord = my_intercos.first.geometry
+    epcis_number = my_intercos.map {|i| i.siren_principal}
 
-    epcis_number = []
-    city_coord = []
-    siren.each do |p|
-      if p["fields"]["insee"] == @city.code_commune
-        epcis_number << p["fields"]["siren_principal"]
-        city_coord <<  p["fields"]["geometry"]["coordinates"]
-      end
-    end
-
-    #need to check if 4 nested array in json siren file
-    if city_coord.flatten(2).count < 70
-      i = 3
-    else
-      i = 2
-    end
+# with a : first array, b: second nested array, c: third nested array, d: fourth nested array
 
     unless city_coord == []
      @coordinates = []
-     city_coord.flatten(i).each do |c|
-        @coordinates << {lat: c[1], lng: c[0]}
+      city_coord.each do |b|
+        @city_sub_coordinates = []
+        b.each do |c|
+          if c.first.class == Float
+            @city_sub_coordinates << {lat: c[1], lng: c[0]}
+          else
+            c.each do |d|
+              @city_sub_coordinates << {lat: d[1], lng: d[0]}
+            end
+          end
+        end
+      @coordinates << @city_sub_coordinates
       end
     end
 

@@ -1,0 +1,2 @@
+class IntercoCommune < ApplicationRecord
+end

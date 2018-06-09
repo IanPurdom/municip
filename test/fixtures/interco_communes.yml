@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  siren_membre: MyString
+  siren_principal: MyString
+  insee: MyString
+  geometry: 
+
+two:
+  siren_membre: MyString
+  siren_principal: MyString
+  insee: MyString
+  geometry: 
