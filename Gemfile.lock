@@ -243,6 +243,7 @@ DEPENDENCIES
   rails (= 5.1.4)
   rails-sweetalert2-confirm
   redis
+  rest-client
   sass-rails
   simple_form
   spring
