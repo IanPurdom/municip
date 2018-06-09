@@ -327,7 +327,7 @@ puts "populating interco_communes table form opendatasoft API"
 # we can use delete_all because there's no dependencies and it' faster
 IntercoCommune.delete_all
 
-sirenos = RestClient.get 'https://public.opendatasoft.com/api/v2/catalog/datasets/perimetre-groupements-siren-2017/exports/json?rows=-1&pretty=false&timezone=UTC', {accept: :json}
+sirenos = RestClient.get 'https://public.opendatasoft.com/api/v2/catalog/datasets/perimetre-groupements-siren-2017/exports/json?rows=20000&pretty=false&timezone=UTC', {accept: :json}
 siren = JSON.parse(sirenos)
 siren.each do |p|
 
