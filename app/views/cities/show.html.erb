@@ -46,7 +46,8 @@
         <p><strong>Altitude: </strong><%= @city.height %></p>
         <p><strong>Superficie: </strong><%= @city.superficy %></p>
       </div>
-    <!-- </div> -->
+      <div class="rub-title blue-gray">Comptes <%= @city.name %></div>
+      <div data-amap = "<%= @amap.to_json %>"" id="curve_chart" style="width: 1500px; height: 1000px"></div>
     </div>
 
     <% @city.intercommunalites.each do |p|  %>
@@ -114,7 +115,10 @@
     </div>
   <br>
   <br>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <!-- </div> -->
 <%= javascript_pack_tag 'swal_city' %>
 <%= javascript_pack_tag 'questionnaire' %>
 <%= javascript_pack_tag 'tabs' %>
+<%= javascript_pack_tag 'graph' %>
+
