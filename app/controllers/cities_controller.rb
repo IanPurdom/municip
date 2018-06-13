@@ -12,8 +12,9 @@ before_action :set_city, only: [:show, :edit, :update, :destroy, :show_interco]
 
   def show
     @photos = Photo.where(city_id: params[:id])
-    a = CityAccount.where(code_commune:"27038").order(:annee)
+    a = CityAccount.where(code_commune:@city.code_commune).order(:annee)
     @amap = a.map {|i| [i.annee, i.cap_autofinancement_nette, i.charges_personnel,i.dette_encours_total, i.charges_financieres, i.produits_total]}
+    @amap.unshift(['Year', 'Autofinancement', 'Charges personnel', 'Dette', 'Charges financières', 'Produit total'])
 
     unless @city.latitude.nil? || @city.longitude.nil?
          @markers = [{
@@ -108,6 +109,7 @@ before_action :set_city, only: [:show, :edit, :update, :destroy, :show_interco]
       #calling method for interco creation, can be found at the bottom of the page in private section
       create_intercommunalites(@city)
       create_accounts(@city) unless CityAccount.find_by(code_commune: @city.code_commune)
+      # create_ratios(@city)
 
     else
 
@@ -384,6 +386,50 @@ before_action :set_city, only: [:show, :edit, :update, :destroy, :show_interco]
     end
 
   end
+
+  # def create_ratios
+
+  #   @accounts = CityAccount.find_by(code_commune: @city.code_commune)
+
+  #   #ratio_1
+  #   # dépenses réelles de fonctionnement (DRF) diminuées des travaux en régie / population
+
+  #   #ratio_2
+  #   # produit des impositions directes / population
+
+  #   #ratio_2bis
+  #   #produit net des impositions directes / population"
+
+  #   #ratio_3
+  #   #recettes réelles de fonctionnement (RRF) / population"
+
+  #   #ratio_4
+  #   #dépenses d’équipement brutes / population
+
+  #   #ratio_5
+  #   #dette / population
+
+  #   ratio_5 = @accounts.dette_annuite / @city.population
+
+  #   #ratio_6
+  #   #dotation globale de fonctionnement (DGF) / population
+
+  #   #ratio_7
+  #   #dépenses de personnel / DRF
+
+
+  #   #ratio_9
+  #   #marge d’autofinancement courant (MAC) = (DRF + remboursement de dette) / RRF"
+
+  #   #ratio_10
+  #   #dépenses d’équipement brutes / RRF = taux d’équipement"
+
+  #   #ratio_11
+  #   #dette / RRF = taux d’endettement
+
+
+  # end
+
 
 end
 

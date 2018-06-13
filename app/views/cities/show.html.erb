@@ -2,6 +2,8 @@
     <h1 class="page_title blue-gray"><%= @city.name %></h1>
 </div>
 <div>
+  <div class = "city-container">
+
   <!-- <div class="container"> -->
     <div class="cat-title">
         <h1>Cartographie</h1>
@@ -13,50 +15,51 @@
       >
       </div>
 
-    <div class="tab">
-      <button class="tablinks" onclick="openCity(event, 'city')"><strong><%= @city.name %></strong></button>
+    <div class="tabs">
+      <a id = "city-tab" class="tab active" onclick="openCity(this.id)"><strong><%= @city.name %></strong></button>
       <% @city.intercommunalites.each do |p|  %>
-      <%= link_to p.name, show_interco_city_path(@city, epci_number: p.epci_number), remote: true, class:"btn tablinks" %>
+      <%= link_to p.name, show_interco_city_path(@city, epci_number: p.epci_number), remote: true, id: "#{p.epci_number}-tab", class: "tab" %>
       <% end %>
     </div>
 
-    <div id= "city" class="tabcontent" style="display: block">
-      <div class="cat-title">
-          <h1><%= @city.name %></h1>
-      </div>
-      <div class="rub-title beige">Administratif</div>
-      <div class="rub-p">
-        <p><strong>Departement: </strong><%= @city.departement %></p>
-        <p><strong>Région: </strong><%= @city.region %></p>
-        <p><strong>Canton: </strong><%= @city.canton %></p>
-        <p><strong>Maire actuel: </strong><%= @city.current_maire %></p>
-        <p><strong>Code Postal: </strong><%= @city.zip_code %></p>
-        <p><strong>Code Commune: </strong><%= @city.code_commune %></p>
+    <div id= "city-tabcontent" class="tabcontent" style="display: block">
+<!--       <div class="cat-title">
+          <h1><%#= @city.name %></h1>
+      </div> -->
+      <div class= "rub-container">
+        <div class="rub-title beige">Administratif</div>
+        <div class="rub-p">
+          <p><strong>Departement: </strong><%= @city.departement %></p>
+          <p><strong>Région: </strong><%= @city.region %></p>
+          <p><strong>Canton: </strong><%= @city.canton %></p>
+          <p><strong>Maire actuel: </strong><%= @city.current_maire %></p>
+          <p><strong>Code Postal: </strong><%= @city.zip_code %></p>
+          <p><strong>Code Commune: </strong><%= @city.code_commune %></p>
+          </div>
+        <div class="rub-title red">Démographie</div>
+        <div class="rub-p">
+          <p><strong>Gentilé: </strong><%= @city.gentile %></p>
+          <p><strong>Population: </strong><%= @city.population %></p>
+          <p><strong>Densité: </strong><%= @city.density %></p>
         </div>
-      <div class="rub-title red">Démographie</div>
-      <div class="rub-p">
-        <p><strong>Gentilé: </strong><%= @city.gentile %></p>
-        <p><strong>Population: </strong><%= @city.population %></p>
-        <p><strong>Densité: </strong><%= @city.density %></p>
+        <div class="rub-title dark-taupe">Géographie</div>
+        <div class="rub-p">
+          <p><strong>Latitude: </strong><%= @city.latitude %></p>
+          <p><strong>Longitude: </strong><%= @city.longitude %></p>
+          <p><strong>Altitude: </strong><%= @city.height %></p>
+          <p><strong>Superficie: </strong><%= @city.superficy %></p>
+        </div>
+        <div class="rub-title blue-gray">Comptes <%= @city.name %></div>
+        <div data-amap = "<%= @amap.to_json %>"" id="curve_chart" style="width: 1500px; height: 1000px; margin-left: auto;
+      margin-right: auto"></div>
       </div>
-      <div class="rub-title dark-taupe">Géographie</div>
-      <div class="rub-p">
-        <p><strong>Latitude: </strong><%= @city.latitude %></p>
-        <p><strong>Longitude: </strong><%= @city.longitude %></p>
-        <p><strong>Altitude: </strong><%= @city.height %></p>
-        <p><strong>Superficie: </strong><%= @city.superficy %></p>
-      </div>
-      <div class="rub-title blue-gray">Comptes <%= @city.name %></div>
-      <div data-amap = "<%= @amap.to_json %>"" id="curve_chart" style="width: 1500px; height: 1000px"></div>
     </div>
 
     <% @city.intercommunalites.each do |p|  %>
-    <div id="<%= "#{p.epci_number}-tab" %>" class="tabcontent">
-      <div class="cat-title">
-          <h1>Mes collectivités territoriales</h1>
-      </div>
-      <h1><%= p.name %></h1>
-      <div class="rub-title beige">Administratif</div>
+    <div id="<%= "#{p.epci_number}-tabcontent" %>" class="tabcontent" style="display: none">
+      <div class= "rub-container">
+        <h1><%= p.name %></h1>
+        <div class="rub-title beige">Administratif</div>
         <div class="rub-p">
           <p><strong>Numéro INSEE: </strong><%= p.epci_number %></p>
           <p><strong>Mode de répartition des sièges: </strong><%= p.repartition_siege %></p>
@@ -68,11 +71,11 @@
           <p><strong>Date de création: </strong><%= p.date_creation %></p>
           <p><strong>Nombre de membres: </strong><%= p.nombre_membres %></p>
         </div>
-      <div class="rub-title red">Démographie</div>
+        <div class="rub-title red">Démographie</div>
         <div class="rub-p">
           <p><strong>Population: </strong><%= p.population %></p>
         </div>
-      <div class="rub-title dark-taupe">Compétences</div>
+        <div class="rub-title dark-taupe">Compétences</div>
         <div class="rub-p">
           <p><strong>Nombre de compétences: </strong><%= p.nombre_competences %></p>
           <% unless p.competences.nil? %>
@@ -81,6 +84,7 @@
             <% end  %>
           <% end %>
         </div>
+      </div>
     </div>
     <% end  %>
 
@@ -113,6 +117,7 @@
       <button type=button id="delete-city-button" class="btn-restart btn-red">Supprimer ma Ville</button>
       <%= link_to 'Supprimer ma ville', city_path(@city), method: :delete, class: "hidden", id:"delete-city" %>
     </div>
+</div>
   <br>
   <br>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>

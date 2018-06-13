@@ -4,6 +4,7 @@ class City < ApplicationRecord
   belongs_to :user
   has_many :interco_cities, dependent: :destroy
   has_many :intercommunalites, through: :interco_cities
+  has_many :city_ratios, dependent: :destroy
   validates :name, presence: true
   validates :zip_code, presence: true
   validates :code_commune, presence: true

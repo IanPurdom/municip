@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180611111731) do
+ActiveRecord::Schema.define(version: 20180613152302) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,7 +37,6 @@ ActiveRecord::Schema.define(version: 20180611111731) do
     t.string "zip_code"
     t.string "departement"
     t.string "region"
-    t.string "population"
     t.string "density"
     t.integer "debt"
     t.string "current_maire"
@@ -54,6 +53,7 @@ ActiveRecord::Schema.define(version: 20180611111731) do
     t.float "latitude"
     t.float "longitude"
     t.json "city_coordinates"
+    t.integer "population"
     t.index ["user_id"], name: "index_cities_on_user_id"
   end
 
@@ -94,6 +94,15 @@ ActiveRecord::Schema.define(version: 20180611111731) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["code_commune"], name: "index_city_accounts_on_code_commune"
+  end
+
+  create_table "city_ratios", force: :cascade do |t|
+    t.string "name"
+    t.float "ratio"
+    t.bigint "city_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["city_id"], name: "index_city_ratios_on_city_id"
   end
 
   create_table "deputies", force: :cascade do |t|
@@ -218,6 +227,15 @@ ActiveRecord::Schema.define(version: 20180611111731) do
     t.index ["questionnaire_id"], name: "index_questions_on_questionnaire_id"
   end
 
+  create_table "ratio_communes", force: :cascade do |t|
+    t.string "name"
+    t.string "strate"
+    t.string "description"
+    t.float "ratio"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "roles", force: :cascade do |t|
     t.string "role"
     t.datetime "created_at", null: false
@@ -269,6 +287,7 @@ ActiveRecord::Schema.define(version: 20180611111731) do
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "statuses"
   add_foreign_key "cities", "users"
+  add_foreign_key "city_ratios", "cities"
   add_foreign_key "deputies", "categories"
   add_foreign_key "deputies", "users"
   add_foreign_key "indications", "questions"
