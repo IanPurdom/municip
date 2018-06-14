@@ -2,22 +2,21 @@ import GMaps from 'gmaps/gmaps.js';
 import { autocomplete } from '../components/autocomplete';
 
 
-function openCity(evt, cityName) {
-  console.log(cityName)
+function openCity(id) {
   var i, tabcontent, tablinks;
   tabcontent = document.getElementsByClassName("tabcontent");
   for (i = 0; i < tabcontent.length; i++) {
       tabcontent[i].style.display = "none";
   }
-  tablinks = document.getElementsByClassName("tablinks");
-  for (i = 0; i < tablinks.length; i++) {
-      tablinks[i].className = tablinks[i].className.replace(" active", "");
+  var tab = document.getElementsByClassName("tab");
+  console.log(tab)
+  for (i = 0; i < tab.length; i++) {
+      tab[i].classList.remove("active");
   }
-  document.getElementById(cityName).style.display = "block";
-  evt.currentTarget.className += " active";
+  document.getElementById("city-tabcontent").style.display = "block";
+  document.getElementById("city-tab").classList.add("active")
   initMap();
 };
-
 
 function initMap() {
   const mapElement = document.getElementById('map');
@@ -30,7 +29,6 @@ function initMap() {
 
   //Define the LatLng coordinates for the polygon's path.
   const coordinates = JSON.parse(mapElement.dataset.coordinates)
-  console.log(coordinates)
   var triangleCoords = coordinates;
 
   // Construct the polygon.
@@ -45,11 +43,20 @@ function initMap() {
   bermudaTriangle.setMap(map);
 };
 
+// var tabs = document.querySelector(".tabs");
+// var tab = document.getElementsByClassName("tab");
 
-// const mapElement = document.getElementById('map');
-// if (mapElement) { initMap(mapElement);
-//   };
-// autocomplete();
+// for (var i=0; i < tab.length; i++){
+//   tab[i].addEventListener("click", function() {
+//     var active = document.getElementsByClassName("active");
+//     console.log(active);
+//     for (var j=0; j < active.length;j++){
+//     console.log(active[j])
+//     active[j].classList.remove("active");
+//     }
+//     this.className += " active"
+//   });
+// };
 
 window.openCity = openCity;
 

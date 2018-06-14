@@ -1,16 +1,15 @@
-
 function openEpci(epciNumber) {
   var i, tabcontent, tablinks;
   tabcontent = document.getElementsByClassName("tabcontent");
   for (i = 0; i < tabcontent.length; i++) {
       tabcontent[i].style.display = "none";
   }
-  tablinks = document.getElementsByClassName("tablinks");
-  for (i = 0; i < tablinks.length; i++) {
-      tablinks[i].className = tablinks[i].className.replace(" active", "");
+  tab = document.getElementsByClassName("tab");
+  for (i = 0; i < tab.length; i++) {
+      tab[i].classList.remove("active");
   }
-  var tab = document.getElementById(`${epciNumber}-tab`).style.display = "block";
-  tab.className += " active";
+  var tab = document.getElementById(`${epciNumber}-tabcontent`).style.display = "block";
+  document.getElementById(`${epciNumber}-tab`).classList.add("active")
 };
 
 
@@ -26,9 +25,6 @@ function intercoMap(mapElement) {
 
 
   // Interco boundaries
-
-
-  console.log("<%= @intercommunalite.epci_coordinates.count%>");
 
   <% @intercommunalite.epci_coordinates.each do |p|%>
     var epciCoordinates = JSON.parse("<%= j raw p.to_json %>");
@@ -50,7 +46,6 @@ function intercoMap(mapElement) {
   // city boundaries
   const cityCoordinates = JSON.parse("<%= j raw @city.city_coordinates.to_json %>");
   var triangleCoordsCity = cityCoordinates;
-  console.log(triangleCoordsCity)
 
   //construct city polygon
 
@@ -72,6 +67,3 @@ openEpci(epciNumber);
 var mapElement = document.getElementById('map');
 if (mapElement) { intercoMap(mapElement);
   };
-
-
-

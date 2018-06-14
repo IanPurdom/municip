@@ -1,3 +1,15 @@
+
+.city-container{
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 80px;
+    padding-right: 80px;
+    background-color: white;
+    border-radius: 6px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
 .header-show-flex{
   display: flex;
   justify-content: space-between;
@@ -29,16 +41,25 @@
   // border: 2px solid black;
 }
 
+.rub-container{
+  padding:20px;
+}
+
 .rub-title {
   padding: 10px;
   font-size: 25px;
   font-weight: bold;
   // background-color: #133859;
   color: white;
+  margin-left:24px;
+  margin-right:24px;
 }
 
 .rub-p {
   padding: 11px;
+  margin-left:24px;
+  margin-right:24px;
+
 }
 
 #map{
