@@ -69,6 +69,10 @@ GEM
       warden (~> 1.2.3)
     domain_name (0.5.20170404)
       unf (>= 0.0.5, < 1.0.0)
+    dotenv (2.5.0)
+    dotenv-rails (2.5.0)
+      dotenv (= 2.5.0)
+      railties (>= 3.2, < 6.0)
     erubi (1.7.0)
     execjs (2.7.0)
     ffi (1.9.18)
@@ -228,6 +232,7 @@ DEPENDENCIES
   carrierwave (~> 1.2)
   cloudinary
   devise
+  dotenv-rails
   figaro
   font-awesome-sass
   geocoder
@@ -257,4 +262,4 @@ RUBY VERSION
    ruby 2.3.5p376
 
 BUNDLED WITH
-   1.16.0
+   1.16.3

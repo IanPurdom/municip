@@ -137,7 +137,7 @@
     <% @categories.each do |category| %>
       <% if @questionnaires.where(category_id: category.id).where(activated:true) != [] %>
         <div class="home-sub-title"><strong><%= category.name %> :</strong></div>
-          <% @questionnaires.where(category_id: category.id).where(activated: true).each do |questionnaire|%>
+          <% @questionnaires.where(category_id: category.id).where(activated: true).order(:order).each do |questionnaire|%>
             <% if questionnaire.interviews.find_by(user: current_user).nil? %>
               <%= link_to questionnaire_interviews_path(questionnaire, Interview.new), method: :post do%>
               <div class="questionnaires <%= "questionnaire-int-#{questionnaire.id}" %> list-group-item dep-name-photo">
