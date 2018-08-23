@@ -33,6 +33,7 @@ end
 
 gem 'cloudinary'
 gem 'carrierwave', '~> 1.2'
+gem 'dotenv-rails', groups: [:development, :test]
 
 gem 'nokogiri', '~> 1.6', '>= 1.6.6.2'
 gem "geocoder"
