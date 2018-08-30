@@ -322,44 +322,44 @@ end
 
 ## import CSV for RatioCommune
 
-RatioCommune.destroy_all
+# RatioCommune.destroy_all
 
-require 'csv'
+# require 'csv'
 
-description = [
-["ratio_1", "dépenses réelles de fonctionnement (DRF) diminuées des travaux en régie / population"],
-["ratio_2", "produit des impositions directes / population"],
-["ratio_2bis", "produit net des impositions directes / population"],
-["ratio_3", "recettes réelles de fonctionnement (RRF) / population"],
-["ratio_4", "dépenses d’équipement brutes / population"],
-["ratio_5", "dette / population"],
-["ratio_6", "dotation globale de fonctionnement (DGF) / population"],
-["ratio_7", "dépenses de personnel / DRF"],
-["ratio_9","marge d’autofinancement courant (MAC) = (DRF + remboursement de dette) / RRF"],
-["ratio_10","dépenses d’équipement brutes / RRF = taux d’équipement"],
-["ratio_11","dette / RRF = taux d’endettement"]
-]
+# description = [
+# ["ratio_1", "dépenses réelles de fonctionnement (DRF) diminuées des travaux en régie / population"],
+# ["ratio_2", "produit des impositions directes / population"],
+# ["ratio_2bis", "produit net des impositions directes / population"],
+# ["ratio_3", "recettes réelles de fonctionnement (RRF) / population"],
+# ["ratio_4", "dépenses d’équipement brutes / population"],
+# ["ratio_5", "dette / population"],
+# ["ratio_6", "dotation globale de fonctionnement (DGF) / population"],
+# ["ratio_7", "dépenses de personnel / DRF"],
+# ["ratio_9","marge d’autofinancement courant (MAC) = (DRF + remboursement de dette) / RRF"],
+# ["ratio_10","dépenses d’équipement brutes / RRF = taux d’équipement"],
+# ["ratio_11","dette / RRF = taux d’endettement"]
+# ]
 
-# it's normal if we switch from 7 to 9. There's no 8 (2bis)
+# # it's normal if we switch from 7 to 9. There's no 8 (2bis)
 
-filepath    = 'db/ratio_communes_2015.csv'
-# csv_option = {converters: [CSV::Converters[:float]]}
-
-
-CSV.foreach(filepath) do |row|
- for i in 0..10 # i= 0
-  j = i + 1
+# filepath    = 'db/ratio_communes_2015.csv'
+# # csv_option = {converters: [CSV::Converters[:float]]}
 
 
+# CSV.foreach(filepath) do |row|
+#  for i in 0..10 # i= 0
+#   j = i + 1
 
-  RatioCommune.create(name: description[i][0], #ratio_1
-                      strate: row[0], #moins de 100
-                      ratio: row[j].to_f, #839
-                      description: description[i][1])
 
- puts " #{j} row#{i}, name: #{description[i][0]}, strate: #{row[0]}, ratio:#{row[j]}, description:#{description[i][1]}"
- end
-end
+
+#   RatioCommune.create(name: description[i][0], #ratio_1
+#                       strate: row[0], #moins de 100
+#                       ratio: row[j].to_f, #839
+#                       description: description[i][1])
+
+#  puts " #{j} row#{i}, name: #{description[i][0]}, strate: #{row[0]}, ratio:#{row[j]}, description:#{description[i][1]}"
+#  end
+# end
 
 ############!!! To be save for later. Will be used once we'll get all the siren data in DB
 
