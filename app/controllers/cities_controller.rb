@@ -142,61 +142,75 @@ before_action :set_city, only: [:show, :edit, :update, :destroy, :show_interco]
     # end
 
     city = city_params[:name].sub!(", France", "")
-    url = "https://fr.wikipedia.org/wiki/#{city.gsub(" ", "_")}"
-    encoded_url = URI.encode(url)
+    
+    unless city.nil? 
+      
+      url = "https://fr.wikipedia.org/wiki/#{city.gsub(" ", "_")}" 
+      encoded_url = URI.encode(url)
+    
+      if check_url(encoded_url)
 
-    if check_url(encoded_url)
+        # scrapping from wikipedia
 
-      # scrapping from wikipedia
+        html = open(encoded_url).read
+        html_doc = Nokogiri::HTML(html)
 
-      html = open(encoded_url).read
-      html_doc = Nokogiri::HTML(html)
+        city_details = []
 
-      city_details = []
-
-      html_doc.search('.infobox_v2 tr').each do |tr|
-        tr.search("th").each do |th|
-          cells = tr.search ("td") if th != []
-          city_details << cells.text.strip if cells.text != ""
+        html_doc.search('.infobox_v2 tr').each do |tr|
+          tr.search("th").each do |th|
+            cells = tr.search ("td") if th != []
+            city_details << cells.text.strip if cells.text != ""
+          end
         end
+
+        city_wiki = {
+            name: city,
+            region: city_details[1],
+            canton: city_details[4],
+            zip_code: city_details[7],
+            code_commune: city_details[8],
+            departement: city_details[2],
+            population:city_details[10],
+            density: city_details[11],
+            current_maire: city_details[6],
+            gentile: city_details[9],
+            coordinates:city_details[12],
+            height: city_details[13],
+            superficy: city_details[14],
+            website: city_details[15]
+            # city_coordinates: @coordinates
+        }
+
+        @city = City.new(city_wiki)
+        authorize @city
+        respond_to do |format|
+        format.html
+        format.js
+        end
+
+      else
+
+        city_not_found
+        
       end
-
-      city_wiki = {
-          name: city,
-          region: city_details[1],
-          canton: city_details[4],
-          zip_code: city_details[7],
-          code_commune: city_details[8],
-          departement: city_details[2],
-          population:city_details[10],
-          density: city_details[11],
-          current_maire: city_details[6],
-          gentile: city_details[9],
-          coordinates:city_details[12],
-          height: city_details[13],
-          superficy: city_details[14],
-          website: city_details[15]
-          # city_coordinates: @coordinates
-      }
-
-      @city = City.new(city_wiki)
-      authorize @city
-      respond_to do |format|
-      format.html
-      format.js
-      end
-
+    
     else
 
-      @city = City.new
-      authorize @city
-      redirect_to new_city_path, notice: "Votre ville n'a pas été trouvée. Vérifiez l'écriture exacte sur wikipédia (trait d'union etc..)"
-
+      city_not_found
+    
     end
 
   end
 
   private
+
+
+  def city_not_found
+     @city = City.new
+      authorize @city
+      redirect_to new_city_path, notice: "Votre ville n'a pas été trouvée. Vérifiez l'écriture exacte sur wikipédia (trait d'union etc..)"
+  end
 
   def check_url(my_url)
     url = URI.parse(my_url)

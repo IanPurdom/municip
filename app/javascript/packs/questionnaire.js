@@ -306,6 +306,12 @@ const deleteIndication = ((clicked_id) => {
   });
 });
 
+const showSpinner = (() => {
+ var spinner = document.querySelector(".spinner")
+ spinner.classList.remove("hidden")
+});
+
+window.showSpinner = showSpinner
 window.deleteIndication = deleteIndication
 window.deletePhoto = deletePhoto;
 window.loadPhoto = loadPhoto;

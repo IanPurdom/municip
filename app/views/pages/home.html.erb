@@ -39,7 +39,7 @@
         <%= f.submit id:"btn-#{category.name}" %>
         <% end %>
       </div>
-    <% end  %> <!-- each.categor -->
+    <% end  %> <!-- each.category -->
   </div>
 
 
@@ -52,7 +52,15 @@
     <div class="tab-title red">
       <h2>Ma ville</h2>
     </div>
-  <%= link_to '  Ajouter ma ville...', new_city_path, class: "fa fa-arrow-circle-right link" %>
+   <div class="f-new">
+    <ul>
+   <%= simple_form_for City.new, namespace: "wiki", url: retrieve_cities_path do |f| %>
+   <%= f.input :name, input_html: { class: 'city_name'}, label: "Rentrez le nom de votre ville"%>
+   <%= f.submit 'Wikipedia', onClick: 'showSpinner()'%>
+    <% end %>
+  <div class="spinner hidden"></div>
+ </ul>
+</div>
   </div>
 <% else %>
   <div class="encart-ville">
@@ -161,8 +169,6 @@
       <% end %> <!-- end if category == [] -->
     <% end %> <!-- end category.each -->
   </div>
-
-
 <% end %>
 </div>
 <br>

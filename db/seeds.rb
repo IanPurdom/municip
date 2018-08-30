@@ -226,7 +226,7 @@ p questionnaire_2
 questionnaire_2.save
 
 
-questionnaire_3.root_question_id = Question.find_by(question: "Diriez-vous que votre commune connait des problèmes d’insécurité ?").id
+questionnaire_3.root_question_id = Question.find_by(question: "La délinquance est-elle une délinquance issue de la ville ou une délinquance de transit ?").id
 p questionnaire_3
 questionnaire_3.save
 

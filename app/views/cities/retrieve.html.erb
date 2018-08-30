@@ -9,13 +9,12 @@
     <div class="f-new">
       <ul class="new-form">
         <%= simple_form_for @city do |f| %>
-          <%= f.input :name%>
+          <%= f.input :name %>
           <%= f.input :zip_code %>
           <%= f.input :code_commune %>
           <%= f.input :departement %>
           <%= f.input :canton %>
           <%= f.input :region %>
-          <%= f.input :intercommunalite %>
           <%= f.input :population %>
           <%= f.input :density %>
           <%= f.input :superficy %>
@@ -26,7 +25,6 @@
           <%= f.input :debt %>
           <%= f.input :coordinates %>
           <%= f.submit 'Ajouter'%>
-          <!-- [...] -->
         <% end %>
       </ul>
     </div>
