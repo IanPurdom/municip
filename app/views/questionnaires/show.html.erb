@@ -25,7 +25,7 @@
   <br>
   <br>
   <div class="header-button">
-    <a type="button" id="create-q" class= "btn-questionnaire green centerize" onClick="addQuestionForm()")>Ajouter une question</a>
+    <a type="button" id="create-q" class= "btn-questionnaire green centerize" onClick="addQuestionForm()">Ajouter une question</a>
     <% if @questionnaire.interviews.find_by(user: current_user).nil? %>
       <%= link_to "Tester", questionnaire_interviews_path(@questionnaire, Interview.new), method: :post, class: "btn-questionnaire blue" %>
     <% else %>
